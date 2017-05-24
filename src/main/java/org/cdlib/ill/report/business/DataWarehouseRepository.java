@@ -4,13 +4,11 @@ import java.time.LocalDate;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 import org.cdlib.ill.model.Loan;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author mmorrisp
  */
-@Repository
 public interface DataWarehouseRepository {
     
     // This is for reports to satisfy business as usual.
