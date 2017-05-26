@@ -10,7 +10,7 @@
 " >
 
     <bean id="jreportDB" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="${jreport.jdbc.url}" />
         <property name="username" value="${jreport.jdbc.username}" />
         <property name="password" value="${jreport.jdbc.password}" />
@@ -35,7 +35,7 @@
         <property name="databasePlatform" value="org.eclipse.persistence.platform.database.MySQLPlatform" />
     </bean>
     
-    <bean id="illReportTxMgr" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <bean id="illReportTxMgr" class="org.springframework.org.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="illReportEMF" />
     </bean>
     

@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public interface VdxRepository extends Repository<VdxBorrowing, Long> {
 
-    @Query("select b from VdxBorrowing b where b.recDate >= :begin and b.recDate < :end")
+    Stream<VdxBorrowing> findAll();
+    
+    @Query("select b from VdxBorrowing b where b.recDate >= ?1 and b.recDate < ?2")
     Stream<VdxBorrowing> findAllBorrowingInDateRange(LocalDate begin, LocalDate end);
     
 }

@@ -1,5 +1,7 @@
 package org.cdlib.ill.report.vdx;
 
+import java.util.Optional;
+
 /**
  * Mapping of category types in {@link VdxBorrowing} table.
  * 
@@ -21,4 +23,12 @@ public enum VdxCategory {
         return code;
     }
 
+    public static Optional<VdxCategory> fromCode(String code) {
+        for (VdxCategory category : values()) {
+            if (category.getCode().equalsIgnoreCase(code)) {
+                return Optional.of(category);
+            }
+        }
+        return Optional.empty();
+    }
 }

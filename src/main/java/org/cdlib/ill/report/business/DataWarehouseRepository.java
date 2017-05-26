@@ -15,6 +15,6 @@ public interface DataWarehouseRepository {
     void doBatchOperation(LocalDate beginDate, LocalDate endDate, Consumer<Loan> op);
     
     // This is for the new REST service.
-    Stream<Loan> getBorrowing(LocalDate beginDate, LocalDate endDate);
-    
-}
+    Stream<Loan> getBorrowingHistory(LocalDate beginDate, LocalDate endDate);
+    }
+

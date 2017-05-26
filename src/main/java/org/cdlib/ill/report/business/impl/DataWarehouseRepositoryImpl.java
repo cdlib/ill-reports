@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
+import javax.annotation.PostConstruct;
 import org.cdlib.ill.model.Institution;
 import org.cdlib.ill.model.Loan;
 import org.cdlib.ill.report.business.DataWarehouseRepository;
@@ -40,11 +41,11 @@ public class DataWarehouseRepositoryImpl implements DataWarehouseRepository {
      */
     @Override
     public void doBatchOperation(LocalDate beginDate, LocalDate endDate, Consumer<Loan> op) {
-        getBorrowing(beginDate, endDate).forEach(op);
+        getBorrowingHistory(beginDate, endDate).forEach(op);
     }
 
     @Override
-    public Stream<Loan> getBorrowing(LocalDate beginDate, LocalDate endDate) {
+    public Stream<Loan> getBorrowingHistory(LocalDate beginDate, LocalDate endDate) {
         return vdxRepo.findAllBorrowingInDateRange(beginDate, endDate).map(DataWarehouseRepositoryImpl::vdxBorrowingToCommonModel);
     }
 

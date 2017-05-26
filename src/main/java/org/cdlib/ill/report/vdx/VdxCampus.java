@@ -1,5 +1,7 @@
 package org.cdlib.ill.report.vdx;
 
+import java.util.Optional;
+
 /**
  * Mapping of campus identifiers in {@link VdxBorrowing} table.
  * 
@@ -30,6 +32,15 @@ public enum VdxCampus {
 
     public String getCode() {
         return code;
+    }
+    
+    public static Optional<VdxCampus> fromCode(String code) {
+        for (VdxCampus campus : values()) {
+            if (campus.getCode().equalsIgnoreCase(code)) {
+                return Optional.of(campus);
+            }
+        }
+        return Optional.empty();
     }
 
 }
