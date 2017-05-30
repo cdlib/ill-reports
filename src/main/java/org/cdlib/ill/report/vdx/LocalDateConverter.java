@@ -6,7 +6,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 /**
- * TODO: Moves this into common code.
+ * TODO: Spring Data JPA provides a converter that must be configured.
  * 
  * @author mmorrisp
  */

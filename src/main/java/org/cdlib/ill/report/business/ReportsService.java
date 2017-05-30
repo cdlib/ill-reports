@@ -1,6 +1,6 @@
-package org.cdlib.ill.report.business.impl;
+package org.cdlib.ill.report.business;
 
-import org.cdlib.ill.report.business.ReportService;
+import org.cdlib.ill.report.vdx.VdxBorrowing;
 import org.cdlib.ill.report.vdx.VdxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(readOnly = true)
 @Service
-public class ReportsServiceImpl implements ReportService {
+public class ReportsService {
 
     @Autowired
     VdxRepository repo;
 
-    @Override
-    public void test() {
-        System.err.println(repo.findAll().count());
+    public VdxBorrowing test() {
+        return repo.streamAll().findFirst().get();
     }
 
 }

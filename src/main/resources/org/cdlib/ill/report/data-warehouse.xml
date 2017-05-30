@@ -14,7 +14,6 @@
         <property name="url" value="${jreport.jdbc.url}" />
         <property name="username" value="${jreport.jdbc.username}" />
         <property name="password" value="${jreport.jdbc.password}" />
-        <property name="schema" value="${jreport.jdbc.schema}" />
     </bean>
     
     <bean id="illReportEMF" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -27,6 +26,8 @@
                 <entry key="eclipselink.ddl-generation" value="none" />
                 <entry key="eclipselink.weaving" value="false" />
                 <entry key="eclipselink.cache.shared.default" value="false" />
+                <entry key="eclipselink.logging.level" value="FINEST" />
+                <entry key="eclipselink.logging.level.sql" value="FINEST" />
             </map>
         </property>
     </bean>

@@ -11,7 +11,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <jpa.version>2.1.0</jpa.version>
-        <junit.version>4.12</junit.version>
         <eclipselink.version>2.6.4</eclipselink.version>
         <mysql.version>6.0.6</mysql.version>
     </properties>
@@ -58,7 +57,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

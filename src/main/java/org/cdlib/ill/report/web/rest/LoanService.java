@@ -1,7 +1,10 @@
 package org.cdlib.ill.report.web.rest;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.cdlib.ill.model.Loan;
-import org.cdlib.ill.report.business.ReportService;
+import org.cdlib.ill.report.business.DataWarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoanService {
     
     @Autowired
-    ReportService reports;
+    DataWarehouseRepository repo;
     
-    @GetMapping()
-    public void test() {
-        reports.test();
+    @GetMapping("/borrowing")
+    public List<Loan> query() {
+        return repo.getBorrowingHistory(LocalDate.MIN, LocalDate.MAX).collect(Collectors.toList());
     }
     
     @GetMapping("/{illno}")
