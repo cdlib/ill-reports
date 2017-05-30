@@ -18,6 +18,7 @@
         </form>
 
         <c:forEach var="campus" items="${campuses}">
+            <hr>
             <h2 id="${campus.code}">${campus.code}</h2>
             <table>
                 <caption>Borrowing</caption>
@@ -31,18 +32,18 @@
                 <c:forEach var="institution" items="${campus.institutions}">
                     <tr>
                         <th scope="row">${institution.name}</th>
-                        <td>${institution.totalISO}</td>
-                        <td>${institution.totalOCLC}</td>
-                        <td>${institution.totalUC}</td>
-                        <td>${institution.total}</td>
+                        <td>${institution.totalISOBorrowing}</td>
+                        <td>${institution.totalOCLCBorrowing}</td>
+                        <td>${institution.totalUCBorrowing}</td>
+                        <td>${institution.totalBorrowing}</td>
                     </tr>
                 </c:forEach>
                 <tr>
                     <th scope="row">All Institutions</th>
-                    <td>${campus.totalISO}</td>
-                    <td>${campus.totalOCLC}</td>
-                    <td>${campus.totalUC}</td>
-                    <td>${campus.total}</td>
+                    <td>${campus.totalISOLending}</td>
+                    <td>${campus.totalOCLCLending}</td>
+                    <td>${campus.totalUCLending}</td>
+                    <td>${campus.totalLending}</td>
                 </tr>
             </table>
         </c:forEach>

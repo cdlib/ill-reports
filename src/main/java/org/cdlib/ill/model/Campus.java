@@ -1,5 +1,6 @@
 package org.cdlib.ill.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,14 @@ public class Campus {
     private String code;
     private List<Institution> institutions;
 
+    public Campus() {
+    }
+
+    public Campus(String code) {
+        this.code = code;
+        this.institutions = new ArrayList<>();
+    }
+    
     public String getCode() {
         return code;
     }

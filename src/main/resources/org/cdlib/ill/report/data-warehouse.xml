@@ -28,6 +28,7 @@
                 <entry key="eclipselink.cache.shared.default" value="false" />
 <!--                <entry key="eclipselink.logging.level" value="FINEST" />
                 <entry key="eclipselink.logging.level.sql" value="FINEST" />-->
+                <entry key="eclipselink.logging.parameters" value="true" />
             </map>
         </property>
     </bean>

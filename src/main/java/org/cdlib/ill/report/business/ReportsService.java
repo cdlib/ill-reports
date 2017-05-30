@@ -17,8 +17,4 @@ public class ReportsService {
     @Autowired
     VdxRepository repo;
 
-    public VdxBorrowing test() {
-        return repo.streamAll().findFirst().get();
-    }
-
 }
