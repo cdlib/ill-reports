@@ -26,8 +26,8 @@
                 <entry key="eclipselink.ddl-generation" value="none" />
                 <entry key="eclipselink.weaving" value="false" />
                 <entry key="eclipselink.cache.shared.default" value="false" />
-                <entry key="eclipselink.logging.level" value="FINEST" />
-                <entry key="eclipselink.logging.level.sql" value="FINEST" />
+<!--                <entry key="eclipselink.logging.level" value="FINEST" />
+                <entry key="eclipselink.logging.level.sql" value="FINEST" />-->
             </map>
         </property>
     </bean>
