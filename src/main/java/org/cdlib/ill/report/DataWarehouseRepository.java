@@ -1,8 +1,11 @@
 package org.cdlib.ill.report;
 
 import java.time.LocalDate;
-import org.cdlib.ill.model.Campus;
-import org.cdlib.ill.model.Institution;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import org.cdlib.ill.model.CampusReport;
+import org.cdlib.ill.model.InstitutionReport;
 import org.cdlib.ill.report.vdx.VdxBorrowingSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,14 +24,39 @@ public class DataWarehouseRepository {
     @Autowired
     VdxBorrowingRepository vdxRepo;
 
-    public Campus getCampusBorrowingSummary(String code, LocalDate from, LocalDate to) {
-        Campus campus = new Campus(code);
-        vdxRepo.getBorrowingSummary(code, from, to).forEach((VdxBorrowingSummary summary) -> {
-            Institution institution = new Institution();
-            institution.setCampus(code);
-            institution.setName(summary.getReqName());
-            campus.getInstitutions().add(institution);
+    private void updateTotalsByCategory(InstitutionReport institution, VdxBorrowingSummary summary) {
+        switch (summary.getRespCategory()) {
+            case ISOPartners:
+                institution.setTotalISOBorrowing(summary.getCount());
+                break;
+            case OCLC:
+                institution.setTotalOCLCBorrowing(summary.getCount());
+                break;
+            case UC:
+                institution.setTotalUCBorrowing(summary.getCount());
+                break;
+        }
+    }
+
+    private void addInstitution(CampusReport campus, String campusCode, String institutionName, List<VdxBorrowingSummary> summaries) {
+        InstitutionReport institution = new InstitutionReport();
+        institution.setCampus(campusCode);
+        institution.setName(institutionName);
+        summaries.forEach((VdxBorrowingSummary summary) -> {
+            updateTotalsByCategory(institution, summary);
         });
+        campus.getInstitutions().add(institution);
+    }
+
+    public CampusReport getCampusBorrowingSummary(String code, LocalDate from, LocalDate to) {
+        Map<String, List<VdxBorrowingSummary>> institutions = vdxRepo.getBorrowingSummary(code, from, to)
+                .collect(Collectors.groupingBy(VdxBorrowingSummary::getReqName));
+
+        CampusReport campus = new CampusReport(code);
+        institutions.forEach((String name, List<VdxBorrowingSummary> summaries) -> {
+            addInstitution(campus, code, name, summaries);
+        });
+        
         return campus;
     }
 

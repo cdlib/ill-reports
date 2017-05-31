@@ -6,7 +6,7 @@ package org.cdlib.ill.model;
  *
  * @author mmorrisp
  */
-public class Institution {
+public class InstitutionReport {
 
     private String name;
     private String campus;

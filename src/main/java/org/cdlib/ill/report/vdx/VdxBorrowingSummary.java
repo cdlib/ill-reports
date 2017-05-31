@@ -1,13 +1,11 @@
 package org.cdlib.ill.report.vdx;
 
-import java.io.Serializable;
-
 /**
  * Mapping of output for stored procedure {@code sp_vdx_borrowing_summary}.
  *
  * @author mmorrisp
  */
-public class VdxBorrowingSummary implements Serializable {
+public class VdxBorrowingSummary {
 
     private VdxCampus reqCampus;
     private String reqName;

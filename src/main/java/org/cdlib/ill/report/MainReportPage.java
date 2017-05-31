@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.cdlib.ill.model.Campus;
+import org.cdlib.ill.model.CampusReport;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,11 +24,11 @@ public class MainReportPage {
     @Autowired
     private DataWarehouseRepository repo;
 
-    private Campus getCampusData(String campus) {
+    private CampusReport getCampusData(String campus) {
         return repo.getCampusBorrowingSummary(campus, LocalDate.now().minusMonths(1), LocalDate.now());
     }
 
-    private List<Campus> getCampusData() {
+    private List<CampusReport> getCampusData() {
         return EnumSet.complementOf(EnumSet.of(VdxCampus.None)).stream()
                 .map(VdxCampus::getCode)
                 .map(this::getCampusData)

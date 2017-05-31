@@ -3,7 +3,7 @@ package org.cdlib.ill.model;
 import java.time.LocalDate;
 
 /**
- * An exchange of an item between two {@link Institution}.
+ * An exchange of an item between two {@link InstitutionReport}.
  *
  * TODO: Talk to data analyst about the validity of existing JReports that
  * aggregate data on VDX ILL instances of undefined status. That is, should we
@@ -15,8 +15,8 @@ import java.time.LocalDate;
 public class Loan {
 
     private LocalDate requestDate;
-    private Institution borrower;
-    private Institution lender;
+    private InstitutionReport borrower;
+    private InstitutionReport lender;
 
     public LocalDate getRequestDate() {
         return requestDate;
@@ -26,19 +26,19 @@ public class Loan {
         this.requestDate = requestDate;
     }
 
-    public Institution getBorrower() {
+    public InstitutionReport getBorrower() {
         return borrower;
     }
 
-    public void setBorrower(Institution borrower) {
+    public void setBorrower(InstitutionReport borrower) {
         this.borrower = borrower;
     }
 
-    public Institution getLender() {
+    public InstitutionReport getLender() {
         return lender;
     }
 
-    public void setLender(Institution lender) {
+    public void setLender(InstitutionReport lender) {
         this.lender = lender;
     }
 
