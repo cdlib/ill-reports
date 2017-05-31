@@ -11,25 +11,25 @@ import java.util.stream.Collectors;
  */
 public class CampusReport {
 
-    private String code;
+    private String campusCode;
     private List<InstitutionReport> institutions;
-    private LocalDate beginDate;
-    private LocalDate endDate;
+    private LocalDate reportBeginDate;
+    private LocalDate reportEndDate;
 
     public CampusReport() {
     }
 
     public CampusReport(String code) {
-        this.code = code;
+        this.campusCode = code;
         this.institutions = new ArrayList<>();
     }
 
-    public String getCode() {
-        return code;
+    public String getCampusCode() {
+        return campusCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCampusCode(String campusCode) {
+        this.campusCode = campusCode;
     }
 
     public List<InstitutionReport> getInstitutions() {
@@ -40,20 +40,20 @@ public class CampusReport {
         this.institutions = institutions;
     }
 
-    public LocalDate getBeginDate() {
-        return beginDate;
+    public LocalDate getReportBeginDate() {
+        return reportBeginDate;
     }
 
-    public void setBeginDate(LocalDate beginDate) {
-        this.beginDate = beginDate;
+    public void setReportBeginDate(LocalDate reportBeginDate) {
+        this.reportBeginDate = reportBeginDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDate getReportEndDate() {
+        return reportEndDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setReportEndDate(LocalDate reportEndDate) {
+        this.reportEndDate = reportEndDate;
     }
 
     public Long getTotalISOBorrowing() {
