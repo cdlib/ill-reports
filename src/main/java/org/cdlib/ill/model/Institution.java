@@ -10,12 +10,12 @@ public class Institution {
 
     private String name;
     private String campus;
-    private Long totalISOBorrowing;
-    private Long totalOCLCBorrowing;
-    private Long totalUCBorrowing;
-    private Long totalISOLending;
-    private Long totalOCLCLending;
-    private Long totalUCLending;
+    private Long totalISOBorrowing = 0L;
+    private Long totalOCLCBorrowing = 0L;
+    private Long totalUCBorrowing = 0L;
+    private Long totalISOLending = 0L;
+    private Long totalOCLCLending = 0L;
+    private Long totalUCLending = 0L;
 
     public String getName() {
         return name;
@@ -80,7 +80,7 @@ public class Institution {
     public void setTotalUCLending(Long totalUCLending) {
         this.totalUCLending = totalUCLending;
     }
-    
+
     public Long getTotalBorrowing() {
         return this.totalISOBorrowing + this.totalOCLCBorrowing + this.totalUCBorrowing;
     }

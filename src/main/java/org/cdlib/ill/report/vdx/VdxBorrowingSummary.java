@@ -1,20 +1,28 @@
 package org.cdlib.ill.report.vdx;
 
 import java.io.Serializable;
-import javax.persistence.Embeddable;
 
 /**
  * Mapping of output for stored procedure {@code sp_vdx_borrowing_summary}.
  *
  * @author mmorrisp
  */
-@Embeddable
 public class VdxBorrowingSummary implements Serializable {
 
     private VdxCampus reqCampus;
     private String reqName;
     private VdxCategory respCategory;
     private Long count;
+
+    public VdxBorrowingSummary() {
+    }
+
+    public VdxBorrowingSummary(VdxCampus reqCampus, String reqName, VdxCategory respCategory, Long count) {
+        this.reqCampus = reqCampus;
+        this.reqName = reqName;
+        this.respCategory = respCategory;
+        this.count = count;
+    }
 
     public VdxCampus getReqCampus() {
         return reqCampus;
