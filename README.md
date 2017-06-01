@@ -10,6 +10,14 @@ The server will listen on port 8080 by default.
 
     java -jar JAR_PATH -Dserver.port=PORT_NUMBER
 
+## Configuration
+
+The server connects to a MySQL database containing VDX data associated with UC campuses.
+You must defined a properties file `jreport-jdbc.properties`.
+- `jreport.jdbc.url` The JDBC URL of the database.
+- `jreport.jdbc.username` The database login.
+- `jreport.jdbc.password` The databaes password.
+
 ## `text/html`
 
 The project includes an HTML form to access report data.
