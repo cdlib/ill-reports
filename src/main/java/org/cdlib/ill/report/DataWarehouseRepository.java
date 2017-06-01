@@ -45,14 +45,16 @@ public class DataWarehouseRepository {
         summaries.forEach((VdxBorrowingSummary summary) -> {
             updateTotalsByCategory(institution, summary);
         });
-        campus.getInstitutions().add(institution);
+        campus.getInstitutionReports().add(institution);
     }
 
     public CampusReport getCampusBorrowingSummary(String code, LocalDate from, LocalDate to) {
+        CampusReport campus = new CampusReport(code);
+        campus.setReportBeginDate(from);
+        campus.setReportEndDate(to);
+        
         Map<String, List<VdxBorrowingSummary>> institutions = vdxRepo.getBorrowingSummary(code, from, to)
                 .collect(Collectors.groupingBy(VdxBorrowingSummary::getReqName));
-
-        CampusReport campus = new CampusReport(code);
         institutions.forEach((String name, List<VdxBorrowingSummary> summaries) -> {
             addInstitution(campus, code, name, summaries);
         });

@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
  *
  * @author mmorrisp
  */
-public class InstitutionTest {
+public class InstitutionReportTest {
 
     @Test
     public void testGetTotalBorrowing() {
