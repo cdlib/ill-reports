@@ -6,8 +6,7 @@
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-" >
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd" >
 
     <bean id="jreportDB" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
@@ -26,9 +25,9 @@
                 <entry key="eclipselink.ddl-generation" value="none" />
                 <entry key="eclipselink.weaving" value="false" />
                 <entry key="eclipselink.cache.shared.default" value="false" />
-<!--                <entry key="eclipselink.logging.level" value="FINEST" />
-                <entry key="eclipselink.logging.level.sql" value="FINEST" />-->
-                <entry key="eclipselink.logging.parameters" value="true" />
+                <!--<entry key="eclipselink.logging.level" value="FINEST" />-->
+                <!--<entry key="eclipselink.logging.level.sql" value="FINEST" />-->
+                <!--<entry key="eclipselink.logging.parameters" value="true" />-->
             </map>
         </property>
     </bean>

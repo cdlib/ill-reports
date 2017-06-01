@@ -9,7 +9,7 @@ import java.util.Optional;
  */
 public enum VdxCampus {
 
-    None(""), // TODO: Talk with Joe/Debra about this assumption.
+    None(""),
     UCLADocumentDelivery("OELA"),
     NorthernRegionalLibraryFacility("NRLF"),
     SouthernRegionalLibraryFacility("SRLF"),
