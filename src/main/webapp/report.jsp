@@ -2,6 +2,7 @@
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <html lang="en">
     <head>
@@ -12,9 +13,11 @@
         <h1>UC Data Warehouse</h1>
 
         <form action="/home" method="post">
-            <input name="from" type="date" placeholder="MM/DD/YYYY" />
-            <input name="to" type="date" placeholder="MM/DD/YYYY" />
-            <input type="submit" value="Update" />
+            <fmt:formatDate value="${reportStartDate}" var="fmtStartDate" pattern="MM/dd/yyyy" />
+            <fmt:formatDate value="${reportEndDate}" var="fmtEndDate" pattern="MM/dd/yyyy" />
+            <input name="from" type="date" placeholder="MM/DD/YYYY" value="${fmtStartDate}" />
+            <input name="to" type="date" placeholder="MM/DD/YYYY" value="${fmtEndDate}" />
+            <input type="submit" value="Run Report" />
         </form>
 
         <c:forEach var="campus" items="${campuses}">
