@@ -6,7 +6,9 @@
 
 <html lang="en">
     <head>
-        <title>UC ILL Reports</title>
+        <meta charset="UTF-8" />
+        <title>ILL Reports</title>
+        <link rel="shortcut icon" href="http://intracdl.cdlib.org/favicon.ico" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,14 +17,14 @@
         <div class="container">
             <br>
             <p class="text-center"><img src="CDL_Logo.png" style="width: 20%" alt="University of California - California Digital Library" /></p>
-            <h1 class="page-header">UC ILL Reports</h1>
+            <h1 class="page-header">ILL Reports</h1>
 
             <h2>Search</h2>
             <form action="/" method="post" class="form-inline">
-
+                
                 <div class="form-group">
-                    <label for="campus" class="">Campus</label>
-                    <select id="campus" name="campus">
+                    <label for="campus" class="">Location</label>
+                    <select id="campus" name="campus" required>
                         <option value="">All Campuses</option>
                         <c:forEach var="campus" items="${campuses}">
                             <option value="${campus.code}" <c:if test="${campus.code eq campusDefault}">selected="selected"</c:if>>${campus.description}</option>
@@ -59,12 +61,26 @@
                     <c:if test="${report.institutionReports.size() gt 0}">
                         <p>
                         <dl>
+                            <dt>Summary Data (All Libraries)</dt>
+                            <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
+                                <a href="/ill/data/by-campus/${report.campusCode}.xml?startDate=${searchStartDate}&endDate=${searchEndDate}">XML</a>
+                                /
+                                <a href="/ill/data/by-campus/${report.campusCode}.json?startDate=${searchStartDate}&endDate=${searchEndDate}">JSON</a>
+                            </dd>
                             <dt>Borrowing Data (All Libraries)</dt>
-                            <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a href="">CSV</a></dd>
-                            <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a href="">XML/JSON</a></dd>
+                            <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
+                                <a href="">CSV</a>
+                            </dd>
+                            <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
+                                <a href="">XML / JSON</a>
+                            </dd>
                             <dt>Lending Data (All Libraries)</dt>
-                            <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a href="">CSV</a></dd>
-                            <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a href="">XML/JSON</a></dd>
+                            <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
+                                <a href="">CSV</a>
+                            </dd>
+                            <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
+                                <a href="">XML / JSON</a>
+                            </dd>
                         </dl>
                         </p>
                         <table class="table">
@@ -72,10 +88,10 @@
                                 <tr>
                                     <th scope="col">Library</th>
                                     <th scope="col">
-                                        # of Borrowings
+                                        Borrowings
                                     </th>
                                     <th scope="col">
-                                        # of Lendings
+                                        Lendings
                                     </th>
                                 </tr>
                             </thead>

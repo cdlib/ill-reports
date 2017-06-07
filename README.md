@@ -13,7 +13,7 @@ The server will listen on port 8080 by default.
 ## Configuration
 
 The server connects to a MySQL database containing VDX data associated with UC campuses.
-You must defined a properties file `jreport-jdbc.properties`.
+You must define a properties file `jreport-jdbc.properties`.
 - `jreport.jdbc.url` The JDBC URL of the database.
 - `jreport.jdbc.username` The database login.
 - `jreport.jdbc.password` The databaes password.
