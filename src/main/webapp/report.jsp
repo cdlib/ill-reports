@@ -7,7 +7,6 @@
 <html lang="en">
     <head>
         <title>UC ILL Reports</title>
-        <link rel="stylesheet" href="/css/report.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +25,7 @@
                     <select id="campus" name="campus">
                         <option value="">All Campuses</option>
                         <c:forEach var="campus" items="${campuses}">
-                            <option value="${campus.code}">${campus.description}</option>
+                            <option value="${campus.code}" <c:if test="${campus.code eq campusDefault}">selected="selected"</c:if>>${campus.description}</option>
                         </c:forEach>
                     </select>
                 </div>

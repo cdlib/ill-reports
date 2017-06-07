@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Repository
-public class VdxBorrowingRepository {
+public class VdxRepository {
 
     @Autowired
     private EntityManager em;
@@ -34,4 +34,18 @@ public class VdxBorrowingRepository {
         });
     }
 
+    public Stream<VdxLendingSummary> getLendingSummary(String campus, LocalDate beginDate, LocalDate endDate) {
+        List<Object[]> results = em.createNativeQuery("call sp_vdx_lending_summary(?1, ?2, ?3)")
+                .setParameter(1, campus)
+                .setParameter(2, beginDate)
+                .setParameter(3, endDate)
+                .getResultList();
+        return results.stream().map((Object[] values) -> {
+            return new VdxLendingSummary(
+                    VdxCampus.fromCode(String.valueOf(values[0])).get(),
+                    String.valueOf(values[1]),
+                    VdxCategory.fromCode(String.valueOf(values[2])).get(),
+                    Long.valueOf(String.valueOf(values[3])));
+        });
+    }
 }
