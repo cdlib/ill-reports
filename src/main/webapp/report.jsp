@@ -6,7 +6,7 @@
 
 <html lang="en">
     <head>
-        <title>CDL Discovery &amp; Delivery Data Warehouse</title>
+        <title>UC ILL Reports</title>
         <link rel="stylesheet" href="/css/report.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -26,22 +26,19 @@
                     <select id="campus" name="campus">
                         <option value="">All Campuses</option>
                         <c:forEach var="campus" items="${campuses}">
-                            <option value="${campus}">${campus}</option>
+                            <option value="${campus.code}">${campus.description}</option>
                         </c:forEach>
                     </select>
                 </div>
 
-                <fmt:formatDate value="${reportStartDate}" var="fmtStartDate" pattern="MM/dd/yyyy" />
-                <fmt:formatDate value="${reportEndDate}" var="fmtEndDate" pattern="MM/dd/yyyy" />
-
                 <div class="form-group">
                     <label for="from">Begin Date</label>
-                    <input id="from" name="from" type="date" placeholder="MM/DD/YYYY" value="${fmtStartDate}" />
+                    <input id="from" name="from" type="text" placeholder="YYYY-MM-DD" value="${searchStartDate}" required />
                 </div>
 
                 <div class="form-group">
                     <label for="to">End Date</label>
-                    <input id="to" name="to" type="date" placeholder="MM/DD/YYYY" value="${fmtEndDate}" />
+                    <input id="to" name="to" type="text" placeholder="YYYY-MM-DD" value="${searchEndDate}" required />
                 </div>
 
                 <div>
@@ -52,66 +49,81 @@
 
             <hr>
 
-            <section>
-                <h2>UC Davis (May 1, 2017 - June 1, 2017)</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Library</th>
-                            <th scope="col">
-                                Borrowing
-                                <span class="pull-right">
-                                    Download:
-                                    &nbsp;
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a href="">CSV</a>
-                                    <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a href="">XML/JSON</a>
-                                </span>
-                            </th>
-                            <th scope="col">
-                                Lending
-                                <span class="pull-right">
-                                    Download:
-                                    &nbsp;
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a href="">CSV</a>
-                                    <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a href="">XML/JSON</a>
-                                </span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">UCD Law Library</th>
-                            <td>
-                                <div class="well">
-                                    {borrowing summary}<br>
-                                    ISO/OCLC/UC/Total
-                                </div>
-                            </td>
-                            <td>
-                                <div class="well">
-                                    {lending summary}<br>
-                                    ISO/OCLC/UC/Total
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">UCD Shields Library</th>
-                            <td>
-                                <div class="well">
-                                    {borrowing summary}<br>
-                                    ISO/OCLC/UC/Total
-                                </div>
-                            </td>
-                            <td>
-                                <div class="well">
-                                    {lending summary}<br>
-                                    ISO/OCLC/UC/Total
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+            <c:forEach var="report" items="${reports}">
+                <section>
+                    <h2>${report.campusCode} (${searchStartDate} - ${searchEndDate})</h2>
+                    <c:if test="${report.institutionReports.size() eq 0}">
+                        <p>
+                            <em>No borrowing or lending to show.</em>
+                        </p>
+                    </c:if>
+                    <c:if test="${report.institutionReports.size() gt 0}">
+                        <p>
+                        <dl>
+                            <dt>Borrowing Data (All Libraries)</dt>
+                            <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a href="">CSV</a></dd>
+                            <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a href="">XML/JSON</a></dd>
+                            <dt>Lending Data (All Libraries)</dt>
+                            <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a href="">CSV</a></dd>
+                            <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a href="">XML/JSON</a></dd>
+                        </dl>
+                        </p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Library</th>
+                                    <th scope="col">
+                                        # of Borrowings
+                                    </th>
+                                    <th scope="col">
+                                        # of Lendings
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="library" items="${report.institutionReports}">
+                                    <tr>
+                                        <th scope="row">${library.name}</th>
+                                        <td>
+                                            <table class="table">
+                                                <tr>
+                                                    <th scope="col">ISO</th>
+                                                    <th scope="col">OCLC</th>
+                                                    <th scope="col">UC</th>
+                                                    <th scope="col">Total</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>${library.totalISOBorrowing}</td>
+                                                    <td>${library.totalOCLCBorrowing}</td>
+                                                    <td>${library.totalUCBorrowing}</td>
+                                                    <td>${library.totalBorrowing}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <table class="table">
+                                                <tr>
+                                                    <th scope="col">ISO</th>
+                                                    <th scope="col">OCLC</th>
+                                                    <th scope="col">UC</th>
+                                                    <th scope="col">Total</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>${library.totalISOLending}</td>
+                                                    <td>${library.totalOCLCLending}</td>
+                                                    <td>${library.totalUCLending}</td>
+                                                    <td>${library.totalLending}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                </section>
+            </c:forEach>
+
         </div>
     </body>
 </html>

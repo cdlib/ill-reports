@@ -1,7 +1,5 @@
 package org.cdlib.ill.report;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author mmorrisp
@@ -9,8 +7,8 @@ import java.time.LocalDate;
 public class ReportQuery {
 
     private String campus;
-    private LocalDate from;
-    private LocalDate to;
+    private String from;
+    private String to;
 
     public String getCampus() {
         return campus;
@@ -20,19 +18,19 @@ public class ReportQuery {
         this.campus = campus;
     }
 
-    public LocalDate getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public void setFrom(LocalDate from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
-    public LocalDate getTo() {
+    public String getTo() {
         return to;
     }
 
-    public void setTo(LocalDate to) {
+    public void setTo(String to) {
         this.to = to;
     }
 
