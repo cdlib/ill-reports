@@ -14,4 +14,8 @@ public class VdxRepositoryTest {
     public void testGetBorrowingSummary() {
     }
     
+    @Test
+    public void testGetLendingSummary() {
+    }
+    
 }

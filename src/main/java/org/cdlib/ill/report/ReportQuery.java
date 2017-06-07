@@ -1,7 +1,7 @@
 package org.cdlib.ill.report;
 
 /**
- *
+ * 
  * @author mmorrisp
  */
 public class ReportQuery {

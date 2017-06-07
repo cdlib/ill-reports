@@ -11,7 +11,7 @@ import org.junit.Test;
 public class DataWarehouseRepositoryTest {
     
     @Test
-    public void testGetCampusBorrowingSummary() {
+    public void testGetCampusReport() {
     }
     
 }

@@ -19,6 +19,8 @@ import org.cdlib.ill.report.vdx.VdxRepository;
 /**
  * Data warehouse for UC library ILL data, provided solely by VDX.
  *
+ * TODO: Refactor verbose & redundant code.
+ * 
  * @author mmorrisp
  */
 @Transactional(readOnly = true)
@@ -69,7 +71,7 @@ public class DataWarehouseRepository {
         campus.getInstitutionReports().add(institution);
     }
 
-    public CampusReport getCampusBorrowingSummary(String code, LocalDate from, LocalDate to) {
+    public CampusReport getCampusReport(String code, LocalDate from, LocalDate to) {
         CampusReport campus = new CampusReport(code);
         campus.setReportBeginDate(from);
         campus.setReportEndDate(to);

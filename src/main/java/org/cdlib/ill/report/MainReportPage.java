@@ -27,7 +27,7 @@ public class MainReportPage {
     private DataWarehouseRepository repo;
 
     private CampusReport getCampusReport(String campus, LocalDate reportStartDate, LocalDate reportEndDate) {
-        return repo.getCampusBorrowingSummary(campus, reportStartDate, reportEndDate);
+        return repo.getCampusReport(campus, reportStartDate, reportEndDate);
     }
 
     private List<CampusReport> getCampusReports(LocalDate reportStartDate, LocalDate reportEndDate) {
