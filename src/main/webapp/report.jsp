@@ -16,15 +16,15 @@
     <body>
         <div class="container">
             <br>
-            <p class="text-center"><img src="CDL_Logo.png" style="width: 20%" alt="University of California - California Digital Library" /></p>
+            <p class="text-center"><img src="CDL_Logo.png" style="height: 6em;" alt="University of California - California Digital Library" /></p>
             <h1 class="page-header">ILL Reports</h1>
 
             <h2>Search</h2>
             <form action="/" method="post" class="form-inline">
-                
+
                 <div class="form-group">
                     <label for="campus" class="">Location</label>
-                    <select id="campus" name="campus" required>
+                    <select id="campus" name="campus">
                         <option value="">All Campuses</option>
                         <c:forEach var="campus" items="${campuses}">
                             <option value="${campus.code}" <c:if test="${campus.code eq campusDefault}">selected="selected"</c:if>>${campus.description}</option>
@@ -87,52 +87,50 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Library</th>
-                                    <th scope="col">
-                                        Borrowings
+                                    <th scope="col" colspan="4">
+                                        Borrowing
                                     </th>
-                                    <th scope="col">
-                                        Lendings
+                                    <th scope="col" colspan="4">
+                                        Lending
                                     </th>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <th scope="col">ISO</th>
+                                    <th scope="col">OCLC</th>
+                                    <th scope="col">UC</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">ISO</th>
+                                    <th scope="col">OCLC</th>
+                                    <th scope="col">UC</th>
+                                    <th scope="col">Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="library" items="${report.institutionReports}">
                                     <tr>
                                         <th scope="row">${library.name}</th>
-                                        <td>
-                                            <table class="table">
-                                                <tr>
-                                                    <th scope="col">ISO</th>
-                                                    <th scope="col">OCLC</th>
-                                                    <th scope="col">UC</th>
-                                                    <th scope="col">Total</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>${library.totalISOBorrowing}</td>
-                                                    <td>${library.totalOCLCBorrowing}</td>
-                                                    <td>${library.totalUCBorrowing}</td>
-                                                    <td>${library.totalBorrowing}</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td>
-                                            <table class="table">
-                                                <tr>
-                                                    <th scope="col">ISO</th>
-                                                    <th scope="col">OCLC</th>
-                                                    <th scope="col">UC</th>
-                                                    <th scope="col">Total</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>${library.totalISOLending}</td>
-                                                    <td>${library.totalOCLCLending}</td>
-                                                    <td>${library.totalUCLending}</td>
-                                                    <td>${library.totalLending}</td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <td>${library.totalISOBorrowing}</td>
+                                        <td>${library.totalOCLCBorrowing}</td>
+                                        <td>${library.totalUCBorrowing}</td>
+                                        <td>${library.totalBorrowing}</td>
+                                        <td>${library.totalISOLending}</td>
+                                        <td>${library.totalOCLCLending}</td>
+                                        <td>${library.totalUCLending}</td>
+                                        <td>${library.totalLending}</td>
                                     </tr>
                                 </c:forEach>
+                                <tr style="font-weight: bold;">
+                                    <th scope="row">All Libraries</th>
+                                    <td>${report.totalISOBorrowing}</td>
+                                    <td>${report.totalOCLCBorrowing}</td>
+                                    <td>${report.totalUCBorrowing}</td>
+                                    <td>${report.totalBorrowing}</td>
+                                    <td>${report.totalISOLending}</td>
+                                    <td>${report.totalOCLCLending}</td>
+                                    <td>${report.totalUCLending}</td>
+                                    <td>${report.totalLending}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </c:if>
