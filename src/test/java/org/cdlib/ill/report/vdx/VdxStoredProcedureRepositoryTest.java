@@ -8,7 +8,7 @@ import org.junit.Ignore;
  * @author mmorrisp
  */
 @Ignore
-public class VdxRepositoryTest {
+public class VdxStoredProcedureRepositoryTest {
 
     @Test
     public void testGetBorrowingSummary() {

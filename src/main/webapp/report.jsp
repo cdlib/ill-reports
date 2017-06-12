@@ -67,53 +67,49 @@
                                 /
                                 <a href="/ill/data/by-campus/${report.campusCode}.json?startDate=${searchStartDate}&endDate=${searchEndDate}">JSON</a>
                             </dd>
-                            <dt>Borrowing Data (All Libraries)</dt>
+                            <dt>Raw Borrowing Data (All Libraries)</dt>
                             <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
-                                <a href="">CSV</a>
+                                <a href="/ill/data/by-campus/${report.campusCode}/borrowing.csv?startDate=${searchStartDate}&endDate=${searchEndDate}">CSV</a>
                             </dd>
                             <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
-                                <a href="">XML / JSON</a>
+                                <a href="/ill/data/by-campus/${report.campusCode}/borrowing.xml?startDate=${searchStartDate}&endDate=${searchEndDate}">XML</a>
+                                /
+                                <a href="/ill/data/by-campus/${report.campusCode}/borrowing.json?startDate=${searchStartDate}&endDate=${searchEndDate}">JSON</a>
                             </dd>
-                            <dt>Lending Data (All Libraries)</dt>
+                            <dt>Raw Lending Data (All Libraries)</dt>
                             <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
-                                <a href="">CSV</a>
+                                <a href="/ill/data/by-campus/${report.campusCode}/lending.csv?startDate=${searchStartDate}&endDate=${searchEndDate}">CSV</a>
                             </dd>
                             <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
-                                <a href="">XML / JSON</a>
+                                <a href="/ill/data/by-campus/${report.campusCode}/lending.xml?startDate=${searchStartDate}&endDate=${searchEndDate}">XML</a>
+                                /
+                                <a href="/ill/data/by-campus/${report.campusCode}/lending.json?startDate=${searchStartDate}&endDate=${searchEndDate}">JSON</a>
                             </dd>
                         </dl>
                         </p>
-                        <table class="table">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">Library</th>
-                                    <th scope="col" colspan="4">
-                                        Borrowing
-                                    </th>
-                                    <th scope="col" colspan="4">
-                                        Lending
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td></td>
+                                    <th></th>
                                     <th scope="col">ISO</th>
                                     <th scope="col">OCLC</th>
                                     <th scope="col">UC</th>
-                                    <th scope="col">Total</th>
-                                    <th scope="col">ISO</th>
-                                    <th scope="col">OCLC</th>
-                                    <th scope="col">UC</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col">All Categories</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="library" items="${report.institutionReports}">
                                     <tr>
-                                        <th scope="row">${library.name}</th>
+                                        <th scope="row" rowspan="2">${library.name}</th>
+                                        <th scope="row"><i class="fa fa-sign-in" aria-hidden="true"></i> Borrowing</th>
                                         <td>${library.totalISOBorrowing}</td>
                                         <td>${library.totalOCLCBorrowing}</td>
                                         <td>${library.totalUCBorrowing}</td>
                                         <td>${library.totalBorrowing}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><i class="fa fa-sign-out" aria-hidden="true"></i> Lending</th>
                                         <td>${library.totalISOLending}</td>
                                         <td>${library.totalOCLCLending}</td>
                                         <td>${library.totalUCLending}</td>
@@ -121,11 +117,15 @@
                                     </tr>
                                 </c:forEach>
                                 <tr style="font-weight: bold;">
-                                    <th scope="row">All Libraries</th>
+                                    <th scope="row" rowspan="2">All Libraries</th>
+                                    <th scope="row">Total Borrowing</th>
                                     <td>${report.totalISOBorrowing}</td>
                                     <td>${report.totalOCLCBorrowing}</td>
                                     <td>${report.totalUCBorrowing}</td>
                                     <td>${report.totalBorrowing}</td>
+                                </tr>
+                                <tr style="font-weight: bold;">
+                                    <th scope="row">Total Lending</th>
                                     <td>${report.totalISOLending}</td>
                                     <td>${report.totalOCLCLending}</td>
                                     <td>${report.totalUCLending}</td>

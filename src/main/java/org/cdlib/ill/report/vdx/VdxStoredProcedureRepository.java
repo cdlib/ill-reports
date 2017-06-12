@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author mmorrisp
  */
-@Transactional
+@Transactional(readOnly = true)
 @Repository
-public class VdxRepository {
+public class VdxStoredProcedureRepository {
 
     @Autowired
     private EntityManager em;
@@ -48,4 +48,21 @@ public class VdxRepository {
                     Long.valueOf(String.valueOf(values[3])));
         });
     }
+
+    public List<VdxBorrowing> getVdxBorrowing(String campus, LocalDate beginDate, LocalDate endDate) {
+        return em.createNativeQuery("call sp_vdx_borrowing_data_extract(?1, ?2, ?3)", VdxBorrowing.class)
+                .setParameter(1, campus)
+                .setParameter(2, beginDate)
+                .setParameter(3, endDate)
+                .getResultList();
+    }
+
+    public List<VdxLending> getVdxLending(String campus, LocalDate beginDate, LocalDate endDate) {
+        return em.createNativeQuery("call sp_vdx_lending_data_extract(?1, ?2, ?3)", VdxLending.class)
+                .setParameter(1, campus)
+                .setParameter(2, beginDate)
+                .setParameter(3, endDate)
+                .getResultList();
+    }
+    
 }

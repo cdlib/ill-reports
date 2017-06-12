@@ -19,7 +19,12 @@
         <property name="dataSource" ref="jreportDB" />
         <property name="persistenceUnitName" value="jreportPU" />
         <property name="jpaVendorAdapter" ref="eclipseLinkJpaAdapter" />
-        <property name="packagesToScan" value="org.cdlib.ill.report" />
+        <property name="packagesToScan">
+            <list>
+                <value>org.cdlib.ill.report</value>
+                <value>org.springframework.data.jpa.convert.threeten</value>
+            </list>
+        </property>
         <property name="jpaPropertyMap">
             <map>
                 <entry key="eclipselink.ddl-generation" value="none" />

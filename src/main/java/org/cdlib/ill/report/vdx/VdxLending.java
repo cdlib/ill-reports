@@ -1,11 +1,8 @@
 package org.cdlib.ill.report.vdx;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -15,14 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * A reduced mapping of the vdx_borrowing table in MySQL. Many columns are
- * omitted.
  *
  * @author mmorrisp
  */
 @Entity
-@Table(name = "vdx_borrowing")
-public class VdxBorrowing implements Serializable {
+@Table(name = "vdx_lending")
+public class VdxLending implements Serializable {
 
     @Id
     @Column(nullable = false)
@@ -34,7 +29,6 @@ public class VdxBorrowing implements Serializable {
     @Column(name = "entry_date", nullable = false)
     private LocalDateTime entryDate;
 
-    @JsonUnwrapped(prefix = "borrower_")
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "name", column = @Column(name = "req_name", nullable = false))
@@ -45,7 +39,6 @@ public class VdxBorrowing implements Serializable {
     })
     private VdxHolder borrower;
 
-    @JsonUnwrapped(prefix = "lender_")
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "name", column = @Column(name = "resp_name", nullable = false))
@@ -94,28 +87,6 @@ public class VdxBorrowing implements Serializable {
 
     public void setLender(VdxHolder lender) {
         this.lender = lender;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + (int) (this.illno ^ (this.illno >>> 32));
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final VdxBorrowing other = (VdxBorrowing) obj;
-        return Objects.equals(this.illno, other.illno);
     }
 
 }
