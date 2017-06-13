@@ -24,7 +24,7 @@ The project includes an HTML form to access report data.
 
     GET /
 
-## `application/json`, `application/xml`
+## `application/json`, `application/xml`, `text/csv`
 
 The project includes a web service for report data.
 
