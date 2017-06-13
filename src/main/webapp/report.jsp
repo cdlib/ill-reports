@@ -11,40 +11,43 @@
         <link rel="shortcut icon" href="http://intracdl.cdlib.org/favicon.ico" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="report.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         <div class="container">
             <br>
-            <p class="text-center"><img src="CDL_Logo.png" style="height: 6em;" alt="University of California - California Digital Library" /></p>
+            <p class="text-center"><img src="CDL_Logo.png" class="banner" alt="University of California - California Digital Library" /></p>
             <h1 class="page-header">ILL Reports</h1>
 
             <h2>Search</h2>
             <form action="/" method="post" class="form-inline">
-
-                <div class="form-group">
-                    <label for="campus" class="">Location</label>
-                    <select id="campus" name="campus">
-                        <option value="">All Campuses</option>
-                        <c:forEach var="campus" items="${campuses}">
-                            <option value="${campus.code}" <c:if test="${campus.code eq campusDefault}">selected="selected"</c:if>>${campus.description}</option>
-                        </c:forEach>
-                    </select>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label for="campus">Location</label><br>
+                        <select id="campus" name="campus" class="form-control">
+                            <option value="">All Campuses</option>
+                            <c:forEach var="campus" items="${campuses}">
+                                <option value="${campus.code}" <c:if test="${campus.code eq campusDefault}">selected="selected"</c:if>>${campus.description}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="from">Begin Date</label><br>
+                        <input id="from" name="from" class="form-control" type="text" placeholder="YYYY-MM-DD" value="${searchStartDate}" required />
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="to">End Date</label><br>
+                        <input id="to" name="to" class="form-control" type="text" placeholder="YYYY-MM-DD" value="${searchEndDate}" required />
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="from">Begin Date</label>
-                    <input id="from" name="from" type="text" placeholder="YYYY-MM-DD" value="${searchStartDate}" required />
-                </div>
-
-                <div class="form-group">
-                    <label for="to">End Date</label>
-                    <input id="to" name="to" type="text" placeholder="YYYY-MM-DD" value="${searchEndDate}" required />
-                </div>
-
-                <div>
-                    <input type="submit" value="Search" />
-                    <input type="button" value="Reset" />
+                <br>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input name="command" type="submit" value="Search" class="btn" />
+                        &nbsp;&nbsp;
+                        <input name="command" type="submit" value="Reset" class="btn" />
+                    </div>
                 </div>
             </form>
 
@@ -87,7 +90,7 @@
                             </dd>
                         </dl>
                         </p>
-                        <table class="table table-striped">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Library</th>
@@ -100,23 +103,23 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="library" items="${report.institutionReports}">
-                                    <tr>
-                                        <th scope="row" rowspan="2">${library.name}</th>
-                                        <th scope="row"><i class="fa fa-sign-in" aria-hidden="true"></i> Borrowing</th>
+                                    <tr class="borrowing-row">
+                                        <th scope="row" rowspan="2" style="background-color: white">${library.name}</th>
+                                        <td><i class="fa fa-sign-in" aria-hidden="true"></i> Borrowing</td>
                                         <td>${library.totalISOBorrowing}</td>
                                         <td>${library.totalOCLCBorrowing}</td>
                                         <td>${library.totalUCBorrowing}</td>
                                         <td>${library.totalBorrowing}</td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row"><i class="fa fa-sign-out" aria-hidden="true"></i> Lending</th>
+                                    <tr class="lending-row">
+                                        <td><i class="fa fa-sign-out" aria-hidden="true"></i> Lending</td>
                                         <td>${library.totalISOLending}</td>
                                         <td>${library.totalOCLCLending}</td>
                                         <td>${library.totalUCLending}</td>
                                         <td>${library.totalLending}</td>
                                     </tr>
                                 </c:forEach>
-                                <tr style="font-weight: bold;">
+                                <tr class="total-row">
                                     <th scope="row" rowspan="2">All Libraries</th>
                                     <th scope="row">Total Borrowing</th>
                                     <td>${report.totalISOBorrowing}</td>
@@ -124,7 +127,7 @@
                                     <td>${report.totalUCBorrowing}</td>
                                     <td>${report.totalBorrowing}</td>
                                 </tr>
-                                <tr style="font-weight: bold;">
+                                <tr class="total-row">
                                     <th scope="row">Total Lending</th>
                                     <td>${report.totalISOLending}</td>
                                     <td>${report.totalOCLCLending}</td>

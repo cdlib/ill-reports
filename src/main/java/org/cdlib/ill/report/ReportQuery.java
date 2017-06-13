@@ -1,14 +1,23 @@
 package org.cdlib.ill.report;
 
 /**
- * 
+ *
  * @author mmorrisp
  */
 public class ReportQuery {
 
+    private String command;
     private String campus;
     private String from;
     private String to;
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
 
     public String getCampus() {
         return campus;

@@ -51,8 +51,11 @@ public class MainReportPage {
         return "report";
     }
 
-    @PostMapping("/")
+    @PostMapping(value = "/")
     public String query(ReportQuery query, Model model) {
+        if ("Reset".equalsIgnoreCase(query.getCommand())) {
+            return home(model);
+        }
         model.addAttribute("campuses", EnumSet.complementOf(EnumSet.of(VdxCampus.None)));
         model.addAttribute("campusDefault", VdxCampus.fromCode(query.getCampus()).map(VdxCampus::getCode).orElse(""));
         model.addAttribute("searchStartDate", query.getFrom());

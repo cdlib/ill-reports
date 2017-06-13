@@ -1,0 +1,19 @@
+body {
+    color: #404b55;
+}
+
+img.banner {
+    height: 6em;
+}
+
+tr.borrowing-row {
+    background-color: rgba(255, 229, 82,0.2);
+}
+
+tr.lending-row {
+    background-color: rgba(111, 197, 222,0.2);   
+}
+
+tr.total-row {
+    font-weight: bold;
+}
