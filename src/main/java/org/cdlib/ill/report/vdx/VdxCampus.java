@@ -19,7 +19,7 @@ public enum VdxCampus {
     LosAngeles("UCLA", "UC Los Angeles"),
     Merced("UCM", "UC Merced"),
     Riverside("UCR", "UC Riverside"),
-    SantaBarbara("UCSB", "UC Santa Barabara"),
+    SantaBarbara("UCSB", "UC Santa Barbara"),
     SantaCruz("UCSC", "UC Santa Cruz"),
     SanDiego("UCSD", "UC San Diego"),
     SanFrancisco("UCSF", "UC San Francisco");

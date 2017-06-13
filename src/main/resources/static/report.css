@@ -17,3 +17,9 @@ tr.lending-row {
 tr.total-row {
     font-weight: bold;
 }
+
+th.library-header {
+    background-color: white;
+    border-right: 1px solid;
+    border-color: #404b55;
+}

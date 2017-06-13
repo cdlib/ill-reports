@@ -51,7 +51,7 @@ public class MainReportPage {
         return "report";
     }
 
-    @PostMapping(value = "/")
+    @PostMapping("/")
     public String query(ReportQuery query, Model model) {
         if ("Reset".equalsIgnoreCase(query.getCommand())) {
             return home(model);
