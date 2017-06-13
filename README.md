@@ -6,7 +6,7 @@ The project includes reporting tools for UC inter-library loans.
 
 A Maven build (`mvn install`) produces an executable JAR using Spring Boot & Tomcat.
 You can run the web server from the command line.
-The server will listen on port 8080 by default.
+The server will listen on port 18880 by default.
 
     java -jar JAR_PATH -Dserver.port=PORT_NUMBER
 
