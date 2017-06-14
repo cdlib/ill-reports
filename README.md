@@ -6,7 +6,7 @@ The project includes reporting tools for UC inter-library loans.
 
 A Maven build (`mvn install`) produces an executable JAR using Spring Boot & Tomcat.
 You can run the web server from the command line.
-The server will listen on port 8080 by default.
+The server will listen on port 18880 by default.
 
     java -jar JAR_PATH -Dserver.port=PORT_NUMBER
 
@@ -24,13 +24,13 @@ The project includes an HTML form to access report data.
 
     GET /
 
-## `application/json`, `application/xml`
+## `application/json`, `application/xml`, `text/csv`
 
 The project includes a web service for report data.
 
-    GET /ill/report/by-campus/{CAMPUS}?reportStartDate=2016-12-31&reportEndDate=2017-06-01
-
-The date range query parameters are optional. Their format is `yyyy-MM-dd`.
+    GET /ill/report/by-campus/{CAMPUS}.{EXTENSION}?reportStartDate={DATE}&reportEndDate={DATE}
+    GET /ill/report/by-campus/{CAMPUS}/borrowing.{EXTENSION}?reportStartDate={DATE}&reportEndDate={DATE}
+    GET /ill/report/by-campus/{CAMPUS}/lending.{EXTENSION}?reportStartDate={DATE}&reportEndDate={DATE}
 
 The `CAMPUS` component of the URI may be any of the following values:
 - `OELA` UCLA Document Delivery
@@ -46,3 +46,7 @@ The `CAMPUS` component of the URI may be any of the following values:
 - `UCSC` UC Santa Cruz
 - `UCSD` UC San Diego
 - `UCSF` UC San Francisco
+
+The `EXTENSION` may be `xml` for _application/xml_, `json` for _application/json_, or `csv` for _text/csv_.
+
+The format for `DATE` parameters is `yyyy-MM-dd`.
