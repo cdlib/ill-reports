@@ -56,7 +56,7 @@
             </div>
 
             <c:forEach var="report" items="${reports}">
-                <section>
+                <section class="page-break">
                     <h2>${report.campusCode} (${searchStartDate} - ${searchEndDate})</h2>
                     <c:if test="${report.institutionReports.size() eq 0}">
                         <p>
@@ -141,9 +141,9 @@
                     </c:if>
                 </section>
             </c:forEach>
-
         </div>
-        <p class="text-center">
+
+        <p class="text-center page-break">
             <br>
             <br>
             Copyright &copy; 2017 The Regents of The University of California &nbsp; <img src="uc_seal.gif" alt="University of California Seal"> &nbsp; California Digital Library

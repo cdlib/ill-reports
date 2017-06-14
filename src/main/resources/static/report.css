@@ -2,6 +2,10 @@ body {
     color: #404b55;
 }
 
+.page-break {
+    page-break-before: always;
+}
+
 img.banner {
     height: 6em;
 }
@@ -20,6 +24,6 @@ tr.total-row {
 
 th.library-header {
     background-color: white;
-    border-right: 1px solid;
-    border-color: #404b55;
+    border-right: 2px solid;
+    border-color: #ddd;
 }
