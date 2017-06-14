@@ -1,6 +1,7 @@
 package org.cdlib.ill.report.vdx;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -28,9 +29,11 @@ public class VdxBorrowing implements Serializable {
     @Column(nullable = false)
     private Long illno;
 
+    @JsonIgnore
     @Column(name = "rec_date", nullable = true)
     private LocalDate recDate;
 
+    @JsonIgnore
     @Column(name = "entry_date", nullable = false)
     private LocalDateTime entryDate;
 

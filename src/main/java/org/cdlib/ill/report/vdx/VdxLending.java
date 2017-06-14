@@ -1,5 +1,7 @@
 package org.cdlib.ill.report.vdx;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,12 +25,15 @@ public class VdxLending implements Serializable {
     @Column(nullable = false)
     private Long illno;
 
+    @JsonIgnore
     @Column(name = "rec_date", nullable = true)
     private LocalDate recDate;
 
+    @JsonIgnore
     @Column(name = "entry_date", nullable = false)
     private LocalDateTime entryDate;
 
+    @JsonUnwrapped(prefix = "borrower_")
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "name", column = @Column(name = "req_name", nullable = false))
@@ -39,6 +44,7 @@ public class VdxLending implements Serializable {
     })
     private VdxHolder borrower;
 
+    @JsonUnwrapped(prefix = "lender_")
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "name", column = @Column(name = "resp_name", nullable = false))

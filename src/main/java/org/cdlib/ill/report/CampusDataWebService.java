@@ -1,10 +1,13 @@
 package org.cdlib.ill.report;
 
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import java.io.IOException;
 import java.io.Writer;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.cdlib.ill.model.CampusReport;
 import org.cdlib.ill.report.vdx.VdxBorrowing;
 import org.cdlib.ill.report.vdx.VdxCampus;
@@ -65,8 +68,10 @@ public class CampusDataWebService {
             @PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(VdxBorrowing.class).withHeader();
         List<VdxBorrowing> data = repo.getBorrowing(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate);
-        new CsvMapper().writerFor(List.class).writeValue(output, data);
+        mapper.writer(schema).writeValue(output, data);
     }
 
     @RequestMapping(value = "{campusCode}/lending.xml", produces = {"application/xml"})
@@ -88,8 +93,10 @@ public class CampusDataWebService {
             @PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(VdxLending.class).withHeader();
         List<VdxLending> data = repo.getLending(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate);
-        new CsvMapper().writerFor(List.class).writeValue(output, data);
+        mapper.writer(schema).writeValue(output, data);
     }
 
 }
