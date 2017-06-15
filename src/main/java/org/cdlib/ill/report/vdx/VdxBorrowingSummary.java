@@ -1,5 +1,7 @@
 package org.cdlib.ill.report.vdx;
 
+import java.util.Objects;
+
 /**
  * Mapping of output for stored procedure {@code sp_vdx_borrowing_summary}.
  *
@@ -52,6 +54,43 @@ public class VdxBorrowingSummary {
 
     public void setCount(Long count) {
         this.count = count;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.reqCampus);
+        hash = 29 * hash + Objects.hashCode(this.reqName);
+        hash = 29 * hash + Objects.hashCode(this.respCategory);
+        hash = 29 * hash + Objects.hashCode(this.count);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final VdxBorrowingSummary other = (VdxBorrowingSummary) obj;
+        if (!Objects.equals(this.reqName, other.reqName)) {
+            return false;
+        }
+        if (this.reqCampus != other.reqCampus) {
+            return false;
+        }
+        if (this.respCategory != other.respCategory) {
+            return false;
+        }
+        if (!Objects.equals(this.count, other.count)) {
+            return false;
+        }
+        return true;
     }
 
 }
