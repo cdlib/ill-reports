@@ -1,6 +1,5 @@
 package org.cdlib.ill.report.vdx;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,9 +35,9 @@ public class VdxRepositoryTest {
     private VdxRepository repo;
 
     private static final List EXPECTED_SQL_RESULT = Arrays.asList(
-            new String[]{"UCB", "Library A", "", "1"},
-            new String[]{"UCD", "Library B", "I", "2"},
-            new String[]{"UCLA", "Library C", "U", "3"}
+            new Object[]{"UCB", "Library A", "", "1"},
+            new Object[]{"UCD", "Library B", "I", "2"},
+            new Object[]{"UCLA", "Library C", "U", "3"}
     );
 
     @Test
@@ -56,23 +55,35 @@ public class VdxRepositoryTest {
                         new VdxBorrowingSummary(VdxCampus.Davis, "Library B", VdxCategory.ISOPartners, 2L),
                         new VdxBorrowingSummary(VdxCampus.LosAngeles, "Library C", VdxCategory.UC, 3L)
                 ),
-                repo.getBorrowingSummary("UCLA", LocalDate.MIN, LocalDate.MAX).collect(Collectors.toSet())
+                repo.getBorrowingSummary(null, null, null).collect(Collectors.toSet())
         );
     }
-    
-    @Ignore
-    @Test(expected = NullPointerException.class)
+
+    private static final List UNEXPECTED_SQL_RESULT_NULL_LIBRARY = Arrays.asList(
+            new Object[]{"UCB", "Some Library", "", "1"},
+            new Object[]{"UCB", null, "", "1"}
+    );
+
+    @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingSummaryWhenLibraryNameIsNull() {
+        // given
+        Query query = Mockito.mock(Query.class);
+        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
+        Mockito.doReturn(UNEXPECTED_SQL_RESULT_NULL_LIBRARY).when(query).getResultList();
+        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
+
+        // expect an exception
+        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
-    
+
     @Ignore
-    @Test(expected = RuntimeException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingSummaryWhenCampusIsUnexpected() {
         // null or novel.
     }
-    
+
     @Ignore
-    @Test(expected = RuntimeException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingSummaryWhenCategoryIsUnexpected() {
         // null or novel.
     }

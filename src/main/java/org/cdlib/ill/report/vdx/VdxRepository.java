@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 /**
  *
@@ -26,6 +27,7 @@ public class VdxRepository {
                 .setParameter(3, endDate)
                 .getResultList();
         return results.stream().map((Object[] values) -> {
+            Assert.noNullElements(values, "Unexpected null database value.");
             return new VdxBorrowingSummary(
                     VdxCampus.fromCode(String.valueOf(values[0])).orElseThrow(() -> {
                         return new RuntimeException();
