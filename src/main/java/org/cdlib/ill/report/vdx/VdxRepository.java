@@ -17,10 +17,21 @@ import org.springframework.util.Assert;
 @Repository
 public class VdxRepository {
 
+    private static final RuntimeException BAD_DATA = new IllegalArgumentException("Unexpected data.");
+
     @Autowired
     private EntityManager em;
 
-    public Stream<VdxBorrowingSummary> getBorrowingSummary(String campus, LocalDate beginDate, LocalDate endDate) {
+    /**
+     *
+     * @param campus
+     * @param beginDate
+     * @param endDate
+     * @return
+     * @throws IllegalArgumentException When the database contains null values
+     * or unexpected campuses or categories. The DDL should forbid null values.
+     */
+    public Stream<VdxBorrowingSummary> getBorrowingSummary(String campus, LocalDate beginDate, LocalDate endDate) throws IllegalArgumentException {
         List<Object[]> results = em.createNativeQuery("call sp_vdx_borrowing_summary(?1, ?2, ?3)")
                 .setParameter(1, campus)
                 .setParameter(2, beginDate)
@@ -30,10 +41,12 @@ public class VdxRepository {
             Assert.noNullElements(values, "Unexpected null database value.");
             return new VdxBorrowingSummary(
                     VdxCampus.fromCode(String.valueOf(values[0])).orElseThrow(() -> {
-                        return new RuntimeException();
+                        return BAD_DATA;
                     }),
                     String.valueOf(values[1]),
-                    VdxCategory.fromCode(String.valueOf(values[2])).get(),
+                    VdxCategory.fromCode(String.valueOf(values[2])).orElseThrow(() -> {
+                        return BAD_DATA;
+                    }),
                     Long.valueOf(String.valueOf(values[3])));
         });
     }
@@ -68,5 +81,5 @@ public class VdxRepository {
                 .setParameter(3, endDate)
                 .getResultList();
     }
-    
+
 }
