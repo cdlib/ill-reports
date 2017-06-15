@@ -16,10 +16,9 @@ import org.mockito.internal.util.collections.Sets;
 import org.mockito.junit.MockitoJUnitRunner;
 
 /**
- * The borrowing and lending summary logic is in MySQL stored procedures. This
- * repository is responsible for converting the output of the stored procedure
- * into the domain model,
- * {@link VdxBorrowingSummary}, {@link VdxLendingSummary}.
+ * The borrowing summary logic is in MySQL stored procedures. This repository is
+ * responsible for converting the output of the stored procedure into the domain
+ * model, {@link VdxBorrowingSummary}.
  *
  * This conversion might fail if the database produces unexpected campus codes
  * or categories.
@@ -27,12 +26,12 @@ import org.mockito.junit.MockitoJUnitRunner;
  * @author mmorrisp
  */
 @RunWith(MockitoJUnitRunner.class)
-public class VdxRepositoryTest {
+public class VdxBorrowingRepositoryTest {
 
     @Mock
     private EntityManager em;
     @InjectMocks
-    private VdxRepository repo;
+    private VdxBorrowingRepository repo;
 
     private void setupSqlResult(List<Object[]> result) {
         Query query = Mockito.mock(Query.class);
@@ -76,6 +75,21 @@ public class VdxRepositoryTest {
         repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
 
+    @Test
+    public void testGetBorrowingSummaryWhenCampusIsBlank() {
+        setupSqlResult(Arrays.asList(
+                new Object[]{"UCB", "Some Library", "", "1"},
+                new Object[]{"", "Some Library", "", "1"}
+        ));
+        Assert.assertEquals(
+                Sets.newSet(
+                        new VdxBorrowingSummary(VdxCampus.Berkeley, "Some Library", VdxCategory.OCLC, 1L),
+                        new VdxBorrowingSummary(VdxCampus.None, "Some Library", VdxCategory.OCLC, 1L)
+                ),
+                repo.getBorrowingSummary(null, null, null).collect(Collectors.toSet())
+        );
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingSummaryWhenCampusIsNew() {
         setupSqlResult(Arrays.asList(
@@ -101,10 +115,6 @@ public class VdxRepositoryTest {
                 new Object[]{"UCB", "Some Library", "Z", "1"}
         ));
         repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test
-    public void testGetLendingSummary() {
     }
 
 }

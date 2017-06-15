@@ -13,7 +13,8 @@ import org.cdlib.ill.report.vdx.VdxBorrowingSummary;
 import org.cdlib.ill.report.vdx.VdxLendingSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.cdlib.ill.report.vdx.VdxRepository;
+import org.cdlib.ill.report.vdx.VdxBorrowingRepository;
+import org.cdlib.ill.report.vdx.VdxLendingRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,7 +29,9 @@ import org.springframework.stereotype.Service;
 public class CampusReportService {
 
     @Autowired
-    VdxRepository vdxRepo;
+    VdxBorrowingRepository vdxBorrowingRepo;
+    @Autowired
+    VdxLendingRepository vdxLendingRepo;
 
     private void updateBorrowingTotalsByCategory(InstitutionReport institution, VdxBorrowingSummary summary) {
         switch (summary.getRespCategory()) {
@@ -76,9 +79,9 @@ public class CampusReportService {
         campus.setReportBeginDate(from);
         campus.setReportEndDate(to);
 
-        Map<String, List<VdxBorrowingSummary>> borrowingSummaries = vdxRepo.getBorrowingSummary(campusCode, from, to)
+        Map<String, List<VdxBorrowingSummary>> borrowingSummaries = vdxBorrowingRepo.getBorrowingSummary(campusCode, from, to)
                 .collect(Collectors.groupingBy(VdxBorrowingSummary::getReqName));
-        Map<String, List<VdxLendingSummary>> lendingSummaries = vdxRepo.getLendingSummary(campusCode, from, to)
+        Map<String, List<VdxLendingSummary>> lendingSummaries = vdxLendingRepo.getLendingSummary(campusCode, from, to)
                 .collect(Collectors.groupingBy(VdxLendingSummary::getRespName));
 
         Set<String> libraries = Stream.concat(borrowingSummaries.keySet().stream(), lendingSummaries.keySet().stream()).collect(Collectors.toSet());
