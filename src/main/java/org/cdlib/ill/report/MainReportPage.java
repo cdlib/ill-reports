@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class MainReportPage {
 
     @Autowired
-    private DataWarehouseRepository repo;
+    private CampusReportService repo;
 
     private CampusReport getCampusReport(String campus, LocalDate reportStartDate, LocalDate reportEndDate) {
         return repo.getCampusReport(campus, reportStartDate, reportEndDate);

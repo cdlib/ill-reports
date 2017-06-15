@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(readOnly = true)
 @Repository
-public class VdxStoredProcedureRepository {
+public class VdxRepository {
 
     @Autowired
     private EntityManager em;

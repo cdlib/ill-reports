@@ -8,7 +8,7 @@ import org.junit.Test;
  * @author mmorrisp
  */
 @Ignore
-public class DataWarehouseRepositoryTest {
+public class CampusReportServiceTest {
     
     @Test
     public void testGetCampusReport() {
