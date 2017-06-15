@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -58,10 +59,27 @@ public class VdxRepositoryTest {
                 repo.getBorrowingSummary("UCLA", LocalDate.MIN, LocalDate.MAX).collect(Collectors.toSet())
         );
     }
+    
+    @Ignore
+    @Test(expected = NullPointerException.class)
+    public void testGetBorrowingSummaryWhenLibraryNameIsNull() {
+    }
+    
+    @Ignore
+    @Test(expected = RuntimeException.class)
+    public void testGetBorrowingSummaryWhenCampusIsUnexpected() {
+        // null or novel.
+    }
+    
+    @Ignore
+    @Test(expected = RuntimeException.class)
+    public void testGetBorrowingSummaryWhenCategoryIsUnexpected() {
+        // null or novel.
+    }
 
+    @Ignore
     @Test
     public void testGetLendingSummary() {
-
     }
 
 }

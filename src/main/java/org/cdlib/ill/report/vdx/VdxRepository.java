@@ -27,7 +27,9 @@ public class VdxRepository {
                 .getResultList();
         return results.stream().map((Object[] values) -> {
             return new VdxBorrowingSummary(
-                    VdxCampus.fromCode(String.valueOf(values[0])).get(),
+                    VdxCampus.fromCode(String.valueOf(values[0])).orElseThrow(() -> {
+                        return new RuntimeException();
+                    }),
                     String.valueOf(values[1]),
                     VdxCategory.fromCode(String.valueOf(values[2])).get(),
                     Long.valueOf(String.valueOf(values[3])));
