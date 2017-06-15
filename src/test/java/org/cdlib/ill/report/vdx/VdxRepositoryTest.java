@@ -34,21 +34,20 @@ public class VdxRepositoryTest {
     @InjectMocks
     private VdxRepository repo;
 
-    private static final List EXPECTED_SQL_RESULT = Arrays.asList(
-            new Object[]{"UCB", "Library A", "", "1"},
-            new Object[]{"UCD", "Library B", "I", "2"},
-            new Object[]{"UCLA", "Library C", "U", "3"}
-    );
+    private void setupSqlResult(List<Object[]> result) {
+        Query query = Mockito.mock(Query.class);
+        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
+        Mockito.doReturn(result).when(query).getResultList();
+        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
+    }
 
     @Test
     public void testGetBorrowingSummary() {
-        // given
-        Query query = Mockito.mock(Query.class);
-        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
-        Mockito.doReturn(EXPECTED_SQL_RESULT).when(query).getResultList();
-        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
-
-        // expect
+        setupSqlResult(Arrays.asList(
+                new Object[]{"UCB", "Library A", "", "1"},
+                new Object[]{"UCD", "Library B", "I", "2"},
+                new Object[]{"UCLA", "Library C", "U", "3"}
+        ));
         Assert.assertEquals(
                 Sets.newSet(
                         new VdxBorrowingSummary(VdxCampus.Berkeley, "Library A", VdxCategory.OCLC, 1L),
@@ -59,91 +58,51 @@ public class VdxRepositoryTest {
         );
     }
 
-    private static final List UNEXPECTED_SQL_RESULT_NULL_LIBRARY = Arrays.asList(
-            new Object[]{"UCB", "Some Library", "", "1"},
-            new Object[]{"UCB", null, "", "1"}
-    );
-
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingSummaryWhenLibraryNameIsNull() {
-        // given
-        Query query = Mockito.mock(Query.class);
-        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
-        Mockito.doReturn(UNEXPECTED_SQL_RESULT_NULL_LIBRARY).when(query).getResultList();
-        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
-
-        // expect an exception
+        setupSqlResult(Arrays.asList(
+                new Object[]{"UCB", "Some Library", "", "1"},
+                new Object[]{"UCB", null, "", "1"}
+        ));
         repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
-
-    private static final List UNEXPECTED_SQL_RESULT_NULL_CAMPUS = Arrays.asList(
-            new Object[]{"UCB", "Some Library", "", "1"},
-            new Object[]{null, "Some Library", "", "1"}
-    );
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingSummaryWhenCampusIsNull() {
-        // given
-        Query query = Mockito.mock(Query.class);
-        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
-        Mockito.doReturn(UNEXPECTED_SQL_RESULT_NULL_CAMPUS).when(query).getResultList();
-        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
-
-        // expect an exception
+        setupSqlResult(Arrays.asList(
+                new Object[]{"UCB", "Some Library", "", "1"},
+                new Object[]{null, "Some Library", "", "1"}
+        ));
         repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
-
-    private static final List UNEXPECTED_SQL_RESULT_NEW_CAMPUS = Arrays.asList(
-            new Object[]{"UCB", "Some Library", "", "1"},
-            new Object[]{"UCZ", "Some Library", "", "1"}
-    );
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingSummaryWhenCampusIsNew() {
-        // given
-        Query query = Mockito.mock(Query.class);
-        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
-        Mockito.doReturn(UNEXPECTED_SQL_RESULT_NEW_CAMPUS).when(query).getResultList();
-        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
-
-        // expect an exception
+        setupSqlResult(Arrays.asList(
+                new Object[]{"UCB", "Some Library", "", "1"},
+                new Object[]{"UCZ", "Some Library", "", "1"}
+        ));
         repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
 
-    private static final List UNEXPECTED_SQL_RESULT_NULL_CATEGORY = Arrays.asList(
-            new Object[]{"UCB", "Some Library", "", "1"},
-            new Object[]{"UCB", "Some Library", null, "1"}
-    );
-    
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingSummaryWhenCategoryIsNull() {
-        // given
-        Query query = Mockito.mock(Query.class);
-        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
-        Mockito.doReturn(UNEXPECTED_SQL_RESULT_NULL_CATEGORY).when(query).getResultList();
-        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
-
-        // expect an exception
+        setupSqlResult(Arrays.asList(
+                new Object[]{"UCB", "Some Library", "", "1"},
+                new Object[]{"UCB", "Some Library", null, "1"}
+        ));
         repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
-    
-    private static final List UNEXPECTED_SQL_RESULT_NEW_CATEGORY = Arrays.asList(
-            new Object[]{"UCB", "Some Library", "", "1"},
-            new Object[]{"UCB", "Some Library", "Z", "1"}
-    );
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingSummaryWhenCategoryIsNew() {
-        // given
-        Query query = Mockito.mock(Query.class);
-        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
-        Mockito.doReturn(UNEXPECTED_SQL_RESULT_NEW_CATEGORY).when(query).getResultList();
-        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
-
-        // expect an exception
+        setupSqlResult(Arrays.asList(
+                new Object[]{"UCB", "Some Library", "", "1"},
+                new Object[]{"UCB", "Some Library", "Z", "1"}
+        ));
         repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
-    
+
     @Test
     public void testGetLendingSummary() {
     }
