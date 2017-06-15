@@ -110,13 +110,40 @@ public class VdxRepositoryTest {
         repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
 
-    @Ignore
+    private static final List UNEXPECTED_SQL_RESULT_NULL_CATEGORY = Arrays.asList(
+            new Object[]{"UCB", "Some Library", "", "1"},
+            new Object[]{"UCB", "Some Library", null, "1"}
+    );
+    
     @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingSummaryWhenCategoryIsUnexpected() {
-        // null or novel.
-    }
+    public void testGetBorrowingSummaryWhenCategoryIsNull() {
+        // given
+        Query query = Mockito.mock(Query.class);
+        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
+        Mockito.doReturn(UNEXPECTED_SQL_RESULT_NULL_CATEGORY).when(query).getResultList();
+        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
 
-    @Ignore
+        // expect an exception
+        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
+    }
+    
+    private static final List UNEXPECTED_SQL_RESULT_NEW_CATEGORY = Arrays.asList(
+            new Object[]{"UCB", "Some Library", "", "1"},
+            new Object[]{"UCB", "Some Library", "Z", "1"}
+    );
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetBorrowingSummaryWhenCategoryIsNew() {
+        // given
+        Query query = Mockito.mock(Query.class);
+        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
+        Mockito.doReturn(UNEXPECTED_SQL_RESULT_NEW_CATEGORY).when(query).getResultList();
+        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
+
+        // expect an exception
+        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
+    }
+    
     @Test
     public void testGetLendingSummary() {
     }
