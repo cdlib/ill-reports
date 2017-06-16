@@ -2,11 +2,6 @@ package org.cdlib.ill.report.vdx;
 
 import java.util.Optional;
 
-/**
- * Mapping of category types in {@link VdxBorrowing} table.
- * 
- * @author mmorrisp
- */
 public enum VdxCategory {
 
     UC("U"),

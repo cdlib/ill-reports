@@ -3,15 +3,11 @@ package org.cdlib.ill.model;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author mmorrisp
- */
-public class InstitutionReportTest {
+public class InstitutionILLReportTest {
 
     @Test
     public void testGetTotalBorrowing() {
-        InstitutionReport institution = new InstitutionReport();
+        InstitutionILLReport institution = new InstitutionILLReport();
         assertEquals(0L, (Object) institution.getTotalBorrowing());
         institution.setTotalISOBorrowing(1L);
         assertEquals(1L, (Object) institution.getTotalBorrowing());
@@ -23,7 +19,7 @@ public class InstitutionReportTest {
 
     @Test
     public void testGetTotalLending() {
-        InstitutionReport institution = new InstitutionReport();
+        InstitutionILLReport institution = new InstitutionILLReport();
         assertEquals(0L, (Object) institution.getTotalLending());
         institution.setTotalISOLending(1L);
         assertEquals(1L, (Object) institution.getTotalLending());

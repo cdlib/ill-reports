@@ -2,11 +2,6 @@ package org.cdlib.ill.report.vdx;
 
 import java.util.Optional;
 
-/**
- * Mapping of campus identifiers in {@link VdxBorrowing} table.
- *
- * @author mmorrisp
- */
 public enum VdxCampus {
 
     None("", "None"),

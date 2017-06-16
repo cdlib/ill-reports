@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.cdlib.ill.model.CampusReport;
+import org.cdlib.ill.model.CampusILLReport;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,22 +15,17 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-/**
- * HTML page with a form for querying campus ILL data.
- *
- * @author mmorrisp
- */
 @Controller
-public class MainReportPage {
+public class ReportHtmlController {
 
     @Autowired
-    private CampusReportService repo;
+    private CampusILLReportService repo;
 
-    private CampusReport getCampusReport(String campus, LocalDate reportStartDate, LocalDate reportEndDate) {
-        return repo.getCampusReport(campus, reportStartDate, reportEndDate);
+    private CampusILLReport getCampusReport(String campus, LocalDate reportStartDate, LocalDate reportEndDate) {
+        return repo.getILLCampusReport(campus, reportStartDate, reportEndDate);
     }
 
-    private List<CampusReport> getCampusReports(LocalDate reportStartDate, LocalDate reportEndDate) {
+    private List<CampusILLReport> getCampusReports(LocalDate reportStartDate, LocalDate reportEndDate) {
         return EnumSet.complementOf(EnumSet.of(VdxCampus.None)).stream()
                 .map(VdxCampus::getCode)
                 .map((String campus) -> {
@@ -52,7 +47,7 @@ public class MainReportPage {
     }
 
     @PostMapping("/")
-    public String query(ReportQuery query, Model model) {
+    public String query(ReportHtmlForm query, Model model) {
         if ("Reset".equalsIgnoreCase(query.getCommand())) {
             return home(model);
         }

@@ -13,10 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- *
- * @author mmorrisp
- */
 @Entity
 @Table(name = "vdx_lending")
 public class VdxLending implements Serializable {

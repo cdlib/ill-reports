@@ -6,22 +6,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.hateoas.ResourceSupport;
 
-/**
- * 
- * @author mmorrisp
- */
-public class CampusReport extends ResourceSupport {
+public class CampusILLReport extends ResourceSupport {
 
     private String campusCode;
-    private List<InstitutionReport> institutionReports;
+    private List<InstitutionILLReport> institutionReports;
     private LocalDate reportBeginDate;
     private LocalDate reportEndDate;
 
-    public CampusReport() {
+    public CampusILLReport() {
         this.institutionReports = new ArrayList<>();
     }
 
-    public CampusReport(String code) {
+    public CampusILLReport(String code) {
         this.campusCode = code;
         this.institutionReports = new ArrayList<>();
     }
@@ -34,11 +30,11 @@ public class CampusReport extends ResourceSupport {
         this.campusCode = campusCode;
     }
 
-    public List<InstitutionReport> getInstitutionReports() {
+    public List<InstitutionILLReport> getInstitutionReports() {
         return institutionReports;
     }
 
-    public void setInstitutionReports(List<InstitutionReport> institutionReports) {
+    public void setInstitutionReports(List<InstitutionILLReport> institutionReports) {
         this.institutionReports = institutionReports;
     }
 
@@ -59,34 +55,34 @@ public class CampusReport extends ResourceSupport {
     }
 
     public Long getTotalISOBorrowing() {
-        return institutionReports.stream().collect(Collectors.summingLong(InstitutionReport::getTotalISOBorrowing));
+        return institutionReports.stream().collect(Collectors.summingLong(InstitutionILLReport::getTotalISOBorrowing));
     }
 
     public Long getTotalISOLending() {
-        return institutionReports.stream().collect(Collectors.summingLong(InstitutionReport::getTotalISOLending));
+        return institutionReports.stream().collect(Collectors.summingLong(InstitutionILLReport::getTotalISOLending));
     }
 
     public Long getTotalOCLCBorrowing() {
-        return institutionReports.stream().collect(Collectors.summingLong(InstitutionReport::getTotalOCLCBorrowing));
+        return institutionReports.stream().collect(Collectors.summingLong(InstitutionILLReport::getTotalOCLCBorrowing));
     }
 
     public Long getTotalOCLCLending() {
-        return institutionReports.stream().collect(Collectors.summingLong(InstitutionReport::getTotalOCLCLending));
+        return institutionReports.stream().collect(Collectors.summingLong(InstitutionILLReport::getTotalOCLCLending));
     }
 
     public Long getTotalUCBorrowing() {
-        return institutionReports.stream().collect(Collectors.summingLong(InstitutionReport::getTotalUCBorrowing));
+        return institutionReports.stream().collect(Collectors.summingLong(InstitutionILLReport::getTotalUCBorrowing));
     }
 
     public Long getTotalUCLending() {
-        return institutionReports.stream().collect(Collectors.summingLong(InstitutionReport::getTotalUCLending));
+        return institutionReports.stream().collect(Collectors.summingLong(InstitutionILLReport::getTotalUCLending));
     }
 
     public Long getTotalBorrowing() {
-        return institutionReports.stream().collect(Collectors.summingLong(InstitutionReport::getTotalBorrowing));
+        return institutionReports.stream().collect(Collectors.summingLong(InstitutionILLReport::getTotalBorrowing));
     }
 
     public Long getTotalLending() {
-        return institutionReports.stream().collect(Collectors.summingLong(InstitutionReport::getTotalLending));
+        return institutionReports.stream().collect(Collectors.summingLong(InstitutionILLReport::getTotalLending));
     }
 }

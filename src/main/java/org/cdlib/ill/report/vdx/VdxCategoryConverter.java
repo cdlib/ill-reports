@@ -3,10 +3,6 @@ package org.cdlib.ill.report.vdx;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-/**
- *
- * @author mmorrisp
- */
 @Converter(autoApply = true)
 public class VdxCategoryConverter implements AttributeConverter<VdxCategory, String> {
 

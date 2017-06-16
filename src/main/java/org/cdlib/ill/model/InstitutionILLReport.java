@@ -1,12 +1,6 @@
 package org.cdlib.ill.model;
 
-/**
- * Any lending or borrowing institution. Not all institutions belong to the UC
- * system, in which case {@code campus} will be null.
- *
- * @author mmorrisp
- */
-public class InstitutionReport {
+public class InstitutionILLReport {
 
     private String name;
     private String campus;
@@ -17,10 +11,10 @@ public class InstitutionReport {
     private Long totalOCLCLending = 0L;
     private Long totalUCLending = 0L;
 
-    public InstitutionReport() {
+    public InstitutionILLReport() {
     }
 
-    public InstitutionReport(String name, String campus) {
+    public InstitutionILLReport(String name, String campus) {
         this.name = name;
         this.campus = campus;
     }

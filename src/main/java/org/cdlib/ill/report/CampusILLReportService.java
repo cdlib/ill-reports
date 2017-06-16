@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.cdlib.ill.model.CampusReport;
-import org.cdlib.ill.model.InstitutionReport;
+import org.cdlib.ill.model.CampusILLReport;
+import org.cdlib.ill.model.InstitutionILLReport;
 import org.cdlib.ill.report.vdx.VdxBorrowingSummary;
 import org.cdlib.ill.report.vdx.VdxLendingSummary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +17,16 @@ import org.cdlib.ill.report.vdx.VdxBorrowingRepository;
 import org.cdlib.ill.report.vdx.VdxLendingRepository;
 import org.springframework.stereotype.Service;
 
-/**
- * Data warehouse for UC library ILL data, provided solely by VDX.
- *
- * TODO: Refactor verbose & redundant code.
- *
- * @author mmorrisp
- */
 @Transactional(readOnly = true)
 @Service
-public class CampusReportService {
+public class CampusILLReportService {
 
     @Autowired
     VdxBorrowingRepository vdxBorrowingRepo;
     @Autowired
     VdxLendingRepository vdxLendingRepo;
 
-    private void updateBorrowingTotalsByCategory(InstitutionReport institution, VdxBorrowingSummary summary) {
+    private void updateBorrowingTotalsByCategory(InstitutionILLReport institution, VdxBorrowingSummary summary) {
         switch (summary.getRespCategory()) {
             case ISOPartners:
                 institution.setTotalISOBorrowing(summary.getCount());
@@ -47,7 +40,7 @@ public class CampusReportService {
         }
     }
 
-    private void updateLendingTotalsByCategory(InstitutionReport institution, VdxLendingSummary summary) {
+    private void updateLendingTotalsByCategory(InstitutionILLReport institution, VdxLendingSummary summary) {
         switch (summary.getReqCategory()) {
             case ISOPartners:
                 institution.setTotalISOLending(summary.getCount());
@@ -61,8 +54,8 @@ public class CampusReportService {
         }
     }
 
-    private void addInstitution(CampusReport campus, String campusCode, String institutionName, List<VdxBorrowingSummary> borrowingSummaries, List<VdxLendingSummary> lendingSummaries) {
-        InstitutionReport institution = new InstitutionReport();
+    private void addInstitution(CampusILLReport campus, String campusCode, String institutionName, List<VdxBorrowingSummary> borrowingSummaries, List<VdxLendingSummary> lendingSummaries) {
+        InstitutionILLReport institution = new InstitutionILLReport();
         institution.setCampus(campusCode);
         institution.setName(institutionName);
         borrowingSummaries.forEach((VdxBorrowingSummary summary) -> {
@@ -74,8 +67,8 @@ public class CampusReportService {
         campus.getInstitutionReports().add(institution);
     }
 
-    public CampusReport getCampusReport(String campusCode, LocalDate from, LocalDate to) {
-        CampusReport campus = new CampusReport(campusCode);
+    public CampusILLReport getILLCampusReport(String campusCode, LocalDate from, LocalDate to) {
+        CampusILLReport campus = new CampusILLReport(campusCode);
         campus.setReportBeginDate(from);
         campus.setReportEndDate(to);
 

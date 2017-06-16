@@ -1,7 +1,6 @@
 package org.cdlib.ill.report.vdx;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import java.io.Serializable;
 import java.time.LocalDate;

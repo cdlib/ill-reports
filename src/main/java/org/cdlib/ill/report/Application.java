@@ -9,10 +9,6 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
-/**
- *
- * @author mmorrisp
- */
 @ImportResource("classpath:org/cdlib/ill/report/data-warehouse.xml")
 @ComponentScan("org.cdlib.ill.report")
 @PropertySources({

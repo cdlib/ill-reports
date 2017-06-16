@@ -2,11 +2,6 @@ package org.cdlib.ill.report.vdx;
 
 import java.util.Objects;
 
-/**
- * Mapping of output for stored procedure {@code sp_vdx_borrowing_summary}.
- *
- * @author mmorrisp
- */
 public class VdxBorrowingSummary {
 
     private VdxCampus reqCampus;
