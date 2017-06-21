@@ -66,13 +66,13 @@
                     <c:if test="${report.institutionReports.size() gt 0}">
                         <p>
                         <dl>
-                            <dt>Summary Data (All Libraries)</dt>
+                            <dt>Borrowing and Lending Summaries (All Libraries)</dt>
                             <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
                                 <a href="/ill/data/by-campus/${report.campusCode}.xml?startDate=${searchStartDate}&endDate=${searchEndDate}">XML</a>
                                 /
                                 <a href="/ill/data/by-campus/${report.campusCode}.json?startDate=${searchStartDate}&endDate=${searchEndDate}">JSON</a>
                             </dd>
-                            <dt>Raw Borrowing Data (All Libraries)</dt>
+                            <dt>Borrowing Data Extract (All Libraries)</dt>
                             <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
                                 <a href="/ill/data/by-campus/${report.campusCode}/borrowing.csv?startDate=${searchStartDate}&endDate=${searchEndDate}">CSV</a>
                             </dd>
@@ -81,7 +81,7 @@
                                 /
                                 <a href="/ill/data/by-campus/${report.campusCode}/borrowing.json?startDate=${searchStartDate}&endDate=${searchEndDate}">JSON</a>
                             </dd>
-                            <dt>Raw Lending Data (All Libraries)</dt>
+                            <dt>Lending Data Extract(All Libraries)</dt>
                             <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
                                 <a href="/ill/data/by-campus/${report.campusCode}/lending.csv?startDate=${searchStartDate}&endDate=${searchEndDate}">CSV</a>
                             </dd>
