@@ -17,20 +17,20 @@
 
             <div class="hidden-print">
                 <h2>Search</h2>
-                <form action="/" method="post" class="form-inline">
+                <form action="/" method="post">
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <label for="campus">Location</label><br/>
                             <select id="campus" name="campus" class="form-control">
                                 <option value="">All Campuses</option>
                                 <option th:each="campus : ${campuses}" th:value="${campus.code}" th:text="${campus.description}" th:selected="${campus.code eq campusDefault}"></option>
                             </select>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <label for="from">Begin Date</label><br/>
                             <input id="from" name="from" class="form-control" type="text" placeholder="YYYY-MM-DD" th:value="${searchStartDate}" required="required" />
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <label for="to">End Date</label><br/>
                             <input id="to" name="to" class="form-control" type="text" placeholder="YYYY-MM-DD" th:value="${searchEndDate}" required="required" />
                         </div>
