@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>ILL Reports (VDX)</title>
+        <link rel="shortcut icon" href="http://intracdl.cdlib.org/favicon.ico" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+        <link rel="stylesheet" href="report.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        <div class="container">
+            <br/>
+            <p class="text-center"><img src="CDL_Logo.png" class="banner" alt="University of California - California Digital Library" /></p>
+            <h1 class="page-header">ILL Reports (VDX)</h1>
+
+            <div class="hidden-print">
+                <h2>Search</h2>
+                <form action="/" method="post" class="form-inline">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="campus">Location</label><br/>
+                            <select id="campus" name="campus" class="form-control">
+                                <option value="">All Campuses</option>
+                                <option th:each="campus : ${campuses}" th:value="${campus.code}" th:text="${campus.description}" th:selected="${campus.code eq campusDefault}"></option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="from">Begin Date</label><br/>
+                            <input id="from" name="from" class="form-control" type="text" placeholder="YYYY-MM-DD" th:value="${searchStartDate}" required="required" />
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="to">End Date</label><br/>
+                            <input id="to" name="to" class="form-control" type="text" placeholder="YYYY-MM-DD" th:value="${searchEndDate}" required="required" />
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <input name="command" type="submit" value="Search" class="btn" />
+                            &nbsp;&nbsp;
+                            <input name="command" type="submit" value="Reset" class="btn" />
+                        </div>
+                    </div>
+                </form>
+
+                <hr />
+            </div>
+
+            <section class="page-break" th:each="report : ${reports}">
+                <h2 th:text="|${report.campusCode} (${searchStartDate} &mdash; ${searchEndDate})|"></h2>
+                <p th:if="${#lists.isEmpty(report.institutionReports)}">
+                    <em>No borrowing or lending to show.</em>
+                </p>
+                <p th:if="${not #lists.isEmpty(report.institutionReports)}">
+                <dl>
+                    <dt>Borrowing and Lending Summaries (All Libraries)</dt>
+                    <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
+                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
+                        /
+                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                    </dd>
+                    <dt>Borrowing Data Extract (All Libraries)</dt>
+                    <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
+                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                    </dd>
+                    <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
+                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
+                        /
+                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                    </dd>
+                    <dt>Lending Data Extract(All Libraries)</dt>
+                    <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
+                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                    </dd>
+                    <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
+                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
+                        /
+                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                    </dd>
+                </dl>
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Library</th>
+                            <th></th>
+                            <th scope="col">ISO</th>
+                            <th scope="col">OCLC</th>
+                            <th scope="col">UC</th>
+                            <th scope="col">All Categories</th>
+                        </tr>
+                    </thead>
+                    <tbody th:each="library : ${report.institutionReports}">
+                        <tr class="borrowing-row">
+                            <th scope="row" rowspan="2" class="library-header" th:text="${library.name}"></th>
+                            <td><i class="fa fa-sign-in" aria-hidden="true"></i> Borrowing</td>
+                            <td th:text="${library.totalISOBorrowing}"></td>
+                            <td th:text="${library.totalOCLCBorrowing}"></td>
+                            <td th:text="${library.totalUCBorrowing}"></td>
+                            <td th:text="${library.totalBorrowing}"></td>
+                        </tr>
+                        <tr class="lending-row">
+                            <td><i class="fa fa-sign-out" aria-hidden="true"></i> Lending</td>
+                            <td th:text="${library.totalISOLending}"></td>
+                            <td th:text="${library.totalOCLCLending}"></td>
+                            <td th:text="${library.totalUCLending}"></td>
+                            <td th:text="${library.totalLending}"></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr class="total-row">
+                            <th scope="row" rowspan="2">All Libraries</th>
+                            <th scope="row">Total Borrowing</th>
+                            <td th:text="${report.totalISOBorrowing}"></td>
+                            <td th:text="${report.totalOCLCBorrowing}"></td>
+                            <td th:text="${report.totalUCBorrowing}"></td>
+                            <td th:text="${report.totalBorrowing}"></td>
+                        </tr>
+                        <tr class="total-row">
+                            <th scope="row">Total Lending</th>
+                            <td th:text="${report.totalISOLending}"></td>
+                            <td th:text="${report.totalOCLCLending}"></td>
+                            <td th:text="${report.totalUCLending}"></td>
+                            <td th:text="${report.totalLending}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+
+        <p class="text-center page-break">
+            <br/>
+            <br/>
+            Copyright &copy; 2017 The Regents of The University of California &nbsp; <img src="uc_seal.gif" alt="University of California Seal" /> &nbsp; California Digital Library
+            <br/>
+            <a href="mailto:vdxtrouble-l@ucop.edu">Questions? Comments?</a>
+        </p>
+    </body>
+</html>

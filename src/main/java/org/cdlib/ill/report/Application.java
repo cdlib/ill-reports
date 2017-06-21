@@ -13,7 +13,7 @@ import org.springframework.context.annotation.PropertySources;
 @ComponentScan("org.cdlib.ill.report")
 @PropertySources({
     @PropertySource("file:jreport-jdbc.properties")
-    , @PropertySource("classpath:spring-boot.properties")})
+    , @PropertySource("classpath:application.properties")})
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
 
