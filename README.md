@@ -8,7 +8,7 @@ A Maven build (`mvn install`) produces an executable JAR using Spring Boot & Tom
 You can run the web server from the command line.
 The server will listen on port 18880 by default.
 
-    java -jar JAR_PATH -Dserver.port=PORT_NUMBER
+    java -jar -Dserver.port=PORT_NUMBER JAR_PATH
 
 ## Configuration
 
