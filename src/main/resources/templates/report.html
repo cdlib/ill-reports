@@ -55,13 +55,17 @@
                 </p>
                 <p th:if="${not #lists.isEmpty(report.institutionReports)}">
                 <dl>
-                    <dt>Borrowing and Lending Summaries (All Libraries)</dt>
+                    <dt>Borrowing and Lending Summary Statistics (All Libraries)</dt>
                     <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
-                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
+                        <a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
                         /
-                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                        <a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
                     </dd>
-                    <dt>Borrowing Data Extract (All Libraries)</dt>
+                    <dt>UC Borrowing Statistics (All Libraries)</dt>
+                    <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
+                        <a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_uc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                    </dd>
+                    <dt>All Borrowing Data (All Libraries)</dt>
                     <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
                         <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
@@ -70,7 +74,7 @@
                         /
                         <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
                     </dd>
-                    <dt>Lending Data Extract(All Libraries)</dt>
+                    <dt>All Lending Data (All Libraries)</dt>
                     <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
                         <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
