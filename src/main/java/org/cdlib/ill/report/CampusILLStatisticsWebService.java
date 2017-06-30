@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.cdlib.ill.model.CampusILLReport;
 import org.cdlib.ill.report.vdx.VdxBorrowingRepository;
 import org.cdlib.ill.report.vdx.VdxBorrowingUC;
+import org.cdlib.ill.report.vdx.VdxBorrowingUCRepository;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,14 +27,14 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author mmorrisp
  */
-@RestController()
+@RestController
 @RequestMapping("/ill/stats/by-campus/")
 public class CampusILLStatisticsWebService {
 
     @Autowired
     private CampusILLReportService reportService;
     @Autowired
-    private VdxBorrowingRepository vdxBorrowingRepo;
+    private VdxBorrowingUCRepository vdxBorrowingUCRepo;
 
     @RequestMapping(value = "{campusCode}.xml", produces = {"application/xml"})
     public HttpEntity<CampusILLReport> getCampusXml(
@@ -58,7 +59,7 @@ public class CampusILLStatisticsWebService {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(VdxBorrowingUC.class).withHeader();
-        List<VdxBorrowingUC> data = vdxBorrowingRepo.getBorrowingUC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<VdxBorrowingUC> data = vdxBorrowingUCRepo.getBorrowingUC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 }

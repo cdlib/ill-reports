@@ -14,16 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.internal.util.collections.Sets;
 import org.mockito.junit.MockitoJUnitRunner;
 
-/**
- * The borrowing summary logic is in MySQL stored procedures. This repository is
- * responsible for converting the output of the stored procedure into the domain
- * model, {@link VdxBorrowingSummary}.
- *
- * This conversion might fail if the database produces unexpected campus codes
- * or categories.
- *
- * @author mmorrisp
- */
 @RunWith(MockitoJUnitRunner.class)
 public class VdxBorrowingRepositoryTest {
 
