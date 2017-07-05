@@ -17,7 +17,7 @@
 
             <div class="hidden-print">
                 <h2>Search</h2>
-                <form action="/" method="post">
+                <form action="/#results" method="post">
                     <div class="row">
                         <div class="col-sm-4">
                             <label for="campus">Location</label><br/>
@@ -42,10 +42,10 @@
                         </div>
                     </div>
                 </form>
-
-                <hr />
             </div>
 
+            <hr id="results" th:if="${not #lists.isEmpty(reports)}" aria-label="Search Results" class="hidden-print"/>
+                
             <section class="page-break" th:each="report : ${reports}">
                 <h2 th:text="|${report.campusCode} (${searchStartDate} &mdash; ${searchEndDate})|"></h2>
                 <p th:if="${#lists.isEmpty(report.institutionReports)}">
@@ -124,6 +124,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <hr class="hidden-print" />
             </section>
         </div>
 
