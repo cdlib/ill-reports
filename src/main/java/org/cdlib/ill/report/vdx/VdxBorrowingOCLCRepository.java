@@ -11,7 +11,7 @@ import org.springframework.util.Assert;
 
 @Transactional(readOnly = true)
 @Repository
-public class VdxBorrowingUCRepository extends VdxBaseRepository {
+public class VdxBorrowingOCLCRepository extends VdxBaseRepository {
 
     @Autowired
     private EntityManager em;
@@ -25,19 +25,16 @@ public class VdxBorrowingUCRepository extends VdxBaseRepository {
      * @throws IllegalArgumentException When the database contains null values
      * or unexpected campuses or categories. The DDL should forbid null values.
      */
-    public Stream<VdxBorrowingByCategory> getBorrowingUC(String campus, LocalDate beginDate, LocalDate endDate) {
-        List<Object[]> results = em.createNativeQuery("call sp_vdx_borrowing_uc(?1, ?2, ?3)").setParameter(1, campus).setParameter(2, beginDate).setParameter(3, endDate).getResultList();
+    public Stream<VdxBorrowingByCategory> getBorrowingOCLC(String campus, LocalDate beginDate, LocalDate endDate) {
+        List<Object[]> results = em.createNativeQuery("call sp_vdx_borrowing_oclc(?1, ?2, ?3)").setParameter(1, campus).setParameter(2, beginDate).setParameter(3, endDate).getResultList();
         return results.stream().map((Object[] values) -> {
-            Assert.isTrue(values.length == 6, BAD_PROCEDURE_MSG);
+            Assert.isTrue(values.length == 5, BAD_PROCEDURE_MSG);
             Assert.noNullElements(values, NULL_DATA_MSG);
             return new VdxBorrowingByCategory(VdxCampus.fromCode(String.valueOf(values[0])).orElseThrow(() -> {
                 return BAD_DATA_EX;
             }), String.valueOf(values[1]), String.valueOf(values[2]), VdxServiceType.fromCode(String.valueOf(values[3])).orElseThrow(() -> {
                 return BAD_DATA_EX;
-            }), VdxShipDeliveryMethod.fromCode(String.valueOf(values[4])).orElseThrow(() -> {
-                return BAD_DATA_EX;
-            }), Long.valueOf(String.valueOf(values[5])));
+            }), null, Long.valueOf(String.valueOf(values[4])));
         });
     }
-
 }

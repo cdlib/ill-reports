@@ -12,7 +12,7 @@ import java.util.Objects;
     "shipDeliveryMethod",
     "count"
 })
-public class VdxBorrowingUC {
+public class VdxBorrowingByCategory {
 
     @JsonProperty("borrowing campus")
     private VdxCampus reqCampus;
@@ -27,10 +27,10 @@ public class VdxBorrowingUC {
     @JsonProperty("total")
     private Long count;
 
-    public VdxBorrowingUC() {
+    public VdxBorrowingByCategory() {
     }
 
-    public VdxBorrowingUC(VdxCampus reqCampus, String reqName, String respName, VdxServiceType serviceTp, VdxShipDeliveryMethod shipDeliveryMethod, Long count) {
+    public VdxBorrowingByCategory(VdxCampus reqCampus, String reqName, String respName, VdxServiceType serviceTp, VdxShipDeliveryMethod shipDeliveryMethod, Long count) {
         this.reqCampus = reqCampus;
         this.reqName = reqName;
         this.respName = respName;
@@ -110,7 +110,7 @@ public class VdxBorrowingUC {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final VdxBorrowingUC other = (VdxBorrowingUC) obj;
+        final VdxBorrowingByCategory other = (VdxBorrowingByCategory) obj;
         if (!Objects.equals(this.reqName, other.reqName)) {
             return false;
         }
