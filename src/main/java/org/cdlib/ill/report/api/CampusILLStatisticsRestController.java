@@ -1,4 +1,4 @@
-package org.cdlib.ill.report;
+package org.cdlib.ill.report.api;
 
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
@@ -23,11 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * A web service for precomputed ILL statistics.
  *
+ * TODO: Throw an exception => 400 when the campus is not an enumerated value &
+ * unit test.
+ * 
+ * TODO: Unit test the marshalling for expected column names & column order.
+ * 
  * @author mmorrisp
  */
 @RestController
 @RequestMapping("/ill/stats/by-campus/")
-public class CampusILLStatisticsWebService {
+public class CampusILLStatisticsRestController {
 
     @Autowired
     private SpVdxBorrowingUCRepository spVdxBorrowingUCRepo;

@@ -1,4 +1,4 @@
-package org.cdlib.ill.report;
+package org.cdlib.ill.report.api;
 
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
@@ -22,13 +22,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * A web service for original ILL data.
+ * A web service for ILL data. UC ILL data are derived from VDX data.
+ *
+ * TODO: Throw an exception => 400 when the campus is not an enumerated value &
+ * unit test.
  *
  * @author mmorrisp
  */
 @RestController()
 @RequestMapping("/ill/data/by-campus/")
-public class CampusILLDataWebService {
+public class CampusILLDataRestController {
 
     @Autowired
     private VdxBorrowingRepository vdxBorrowingRepo;
