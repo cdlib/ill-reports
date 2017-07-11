@@ -52,7 +52,7 @@
                     <em>No borrowing or lending to show.</em>
                 </p>
                 <dl th:if="${not #lists.isEmpty(report.institutionReports)}">
-                    <dt>Raw Data Extract (All Libraries)</dt>
+                    <dt>Raw Data Extract</dt>
                     <dd>Download All Borrowing Data:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
@@ -63,12 +63,16 @@
                         <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
                         {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
                     </dd>
-                    <dt>Borrowing Statistics (All Libraries)</dt>
+                    <dt>Borrowing Statistics</dt>
                     <dd>Download UC Borrowing Report:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_uc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
                     <dd>Download OCLC Borrowing Report:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_oclc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                    </dd>
+                    <dt>Lending Statistics</dt>
+                    <dd>Download Lending Report:
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
                     <dt>Summary Statistics</dt>
                     <dd>Download Summary Report:
@@ -77,7 +81,7 @@
                     </dd>
                 </dl>
                 <table class="table">
-                    <caption>Borrowing and Lending Statistics
+                    <caption>Summary Statistics
                     </caption>
                     <thead>
                         <tr>
