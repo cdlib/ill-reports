@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import org.cdlib.ill.report.Constants;
+import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.VdxServiceType;
+import org.cdlib.ill.report.vdx.VdxShipDeliveryMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +29,14 @@ public class SpVdxLendingRepository {
         return results.stream().map((Object[] values) -> {
             Assert.isTrue(values.length == 7, Constants.BAD_PROCEDURE_MSG);
             Assert.noNullElements(values, Constants.NULL_DATA_MSG);
-            return new SpVdxLending();
+            return new SpVdxLending(
+                    VdxCampus.fromCode(String.valueOf(values[0])).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER),
+                    String.valueOf(values[1]),
+                    String.valueOf(values[2]),
+                    String.valueOf(values[3]),
+                    VdxServiceType.fromCode(String.valueOf(values[4])).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER),
+                    VdxShipDeliveryMethod.fromCode(String.valueOf(values[5])).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER),
+                    Long.valueOf(String.valueOf(values[6])));
         });
     }
 }

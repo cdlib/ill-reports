@@ -12,6 +12,8 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingByCategory;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLCRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUCRepository;
 import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
@@ -34,9 +36,11 @@ public class CampusILLStatisticsWebService {
     @Autowired
     private CampusILLReportService reportService;
     @Autowired
-    private SpVdxBorrowingUCRepository vdxBorrowingUCRepo;
+    private SpVdxBorrowingUCRepository spVdxBorrowingUCRepo;
     @Autowired
-    private SpVdxBorrowingOCLCRepository vdxBorrowingOCLCRepo;
+    private SpVdxBorrowingOCLCRepository spVdxBorrowingOCLCRepo;
+    @Autowired
+    private SpVdxLendingRepository spVdxLendingRepo;
 
     @RequestMapping(value = "{campusCode}.xml", produces = {"application/xml"})
     public HttpEntity<CampusILLReport> getCampusXml(
@@ -61,7 +65,7 @@ public class CampusILLStatisticsWebService {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxBorrowingByCategory.class).withHeader();
-        List<SpVdxBorrowingByCategory> data = vdxBorrowingUCRepo.getBorrowingUC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxBorrowingByCategory> data = spVdxBorrowingUCRepo.getBorrowingUC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
     
@@ -72,7 +76,18 @@ public class CampusILLStatisticsWebService {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxBorrowingByCategory.class).withHeader();
-        List<SpVdxBorrowingByCategory> data = vdxBorrowingOCLCRepo.getBorrowingOCLC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxBorrowingByCategory> data = spVdxBorrowingOCLCRepo.getBorrowingOCLC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        mapper.writer(schema).writeValue(output, data);
+    }
+    
+    @RequestMapping(value = "{campusCode}/lending.csv", produces = {"text/csv"})
+    public void getVdxLendingCsv(Writer output,
+            @PathVariable("campusCode") String campusCode,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(SpVdxLending.class).withHeader();
+        List<SpVdxLending> data = spVdxLendingRepo.getLending(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 }
