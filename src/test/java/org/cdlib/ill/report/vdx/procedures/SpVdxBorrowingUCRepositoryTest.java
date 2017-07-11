@@ -9,7 +9,6 @@ import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxServiceType;
 import org.cdlib.ill.report.vdx.VdxShipDeliveryMethod;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -52,9 +51,13 @@ public class SpVdxBorrowingUCRepositoryTest {
         );
     }
 
-    @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingUCWhenProcedureGivesWrongOutputs() {
+        setupSqlResult(Arrays.asList(
+                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "", "1", "extra"},
+                new Object[]{"UCI", "Library B", "Library C", "Copy non returnable", "Courier", "2", "extra"}
+        ));
+        repo.getBorrowingUC(null, null, null).collect(Collectors.toList());
     }
 
     @Test(expected = IllegalArgumentException.class)
