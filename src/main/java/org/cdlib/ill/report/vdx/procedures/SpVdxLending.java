@@ -1,25 +1,31 @@
-package org.cdlib.ill.report.vdx;
+package org.cdlib.ill.report.vdx.procedures;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Objects;
+import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.VdxServiceType;
+import org.cdlib.ill.report.vdx.VdxShipDeliveryMethod;
 
 @JsonPropertyOrder({
-    "reqCampus",
-    "reqName",
+    "respCampus",
     "respName",
+    "reqLocType",
+    "reqName",
     "serviceTp",
     "shipDeliveryMethod",
     "count"
 })
-public class VdxBorrowingByCategory {
+public class SpVdxLending {
 
-    @JsonProperty("borrowing campus")
-    private VdxCampus reqCampus;
-    @JsonProperty("borrowing library")
-    private String reqName;
+    @JsonProperty("lending campus")
+    private VdxCampus respCampus;
     @JsonProperty("lending library")
     private String respName;
+    @JsonProperty("borrower's location type")
+    private String reqLocType;
+    @JsonProperty("borrowing library")
+    private String reqName;
     @JsonProperty("loan service")
     private VdxServiceType serviceTp;
     @JsonProperty("delivery method")
@@ -27,32 +33,25 @@ public class VdxBorrowingByCategory {
     @JsonProperty("total")
     private Long count;
 
-    public VdxBorrowingByCategory() {
+    public SpVdxLending() {
     }
 
-    public VdxBorrowingByCategory(VdxCampus reqCampus, String reqName, String respName, VdxServiceType serviceTp, VdxShipDeliveryMethod shipDeliveryMethod, Long count) {
-        this.reqCampus = reqCampus;
-        this.reqName = reqName;
+    public SpVdxLending(VdxCampus respCampus, String respName, String reqLocType, String reqName, VdxServiceType serviceTp, VdxShipDeliveryMethod shipDeliveryMethod, Long count) {
+        this.respCampus = respCampus;
         this.respName = respName;
+        this.reqLocType = reqLocType;
+        this.reqName = reqName;
         this.serviceTp = serviceTp;
         this.shipDeliveryMethod = shipDeliveryMethod;
         this.count = count;
     }
 
-    public VdxCampus getReqCampus() {
-        return reqCampus;
+    public VdxCampus getRespCampus() {
+        return respCampus;
     }
 
-    public void setReqCampus(VdxCampus reqCampus) {
-        this.reqCampus = reqCampus;
-    }
-
-    public String getReqName() {
-        return reqName;
-    }
-
-    public void setReqName(String reqName) {
-        this.reqName = reqName;
+    public void setRespCampus(VdxCampus respCampus) {
+        this.respCampus = respCampus;
     }
 
     public String getRespName() {
@@ -61,6 +60,22 @@ public class VdxBorrowingByCategory {
 
     public void setRespName(String respName) {
         this.respName = respName;
+    }
+
+    public String getReqLocType() {
+        return reqLocType;
+    }
+
+    public void setReqLocType(String reqLocType) {
+        this.reqLocType = reqLocType;
+    }
+
+    public String getReqName() {
+        return reqName;
+    }
+
+    public void setReqName(String reqName) {
+        this.reqName = reqName;
     }
 
     public VdxServiceType getServiceTp() {
@@ -89,13 +104,14 @@ public class VdxBorrowingByCategory {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 73 * hash + Objects.hashCode(this.reqCampus);
-        hash = 73 * hash + Objects.hashCode(this.reqName);
-        hash = 73 * hash + Objects.hashCode(this.respName);
-        hash = 73 * hash + Objects.hashCode(this.serviceTp);
-        hash = 73 * hash + Objects.hashCode(this.shipDeliveryMethod);
-        hash = 73 * hash + Objects.hashCode(this.count);
+        int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.respCampus);
+        hash = 17 * hash + Objects.hashCode(this.respName);
+        hash = 17 * hash + Objects.hashCode(this.reqLocType);
+        hash = 17 * hash + Objects.hashCode(this.reqName);
+        hash = 17 * hash + Objects.hashCode(this.serviceTp);
+        hash = 17 * hash + Objects.hashCode(this.shipDeliveryMethod);
+        hash = 17 * hash + Objects.hashCode(this.count);
         return hash;
     }
 
@@ -110,14 +126,17 @@ public class VdxBorrowingByCategory {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final VdxBorrowingByCategory other = (VdxBorrowingByCategory) obj;
-        if (!Objects.equals(this.reqName, other.reqName)) {
-            return false;
-        }
+        final SpVdxLending other = (SpVdxLending) obj;
         if (!Objects.equals(this.respName, other.respName)) {
             return false;
         }
-        if (this.reqCampus != other.reqCampus) {
+        if (!Objects.equals(this.reqLocType, other.reqLocType)) {
+            return false;
+        }
+        if (!Objects.equals(this.reqName, other.reqName)) {
+            return false;
+        }
+        if (this.respCampus != other.respCampus) {
             return false;
         }
         if (this.serviceTp != other.serviceTp) {

@@ -1,10 +1,12 @@
-package org.cdlib.ill.report.vdx;
+package org.cdlib.ill.report.vdx.procedures;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.VdxCategory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 /**
  * The lending summary logic is in MySQL stored procedures. This repository is
  * responsible for converting the output of the stored procedure into the domain
- * model, {@link VdxLendingSummary}.
+ * model, {@link SpVdxLendingSummary}.
  *
  * This conversion might fail if the database produces unexpected campus codes
  * or categories.
@@ -25,12 +27,12 @@ import org.mockito.junit.MockitoJUnitRunner;
  * @author mmorrisp
  */
 @RunWith(MockitoJUnitRunner.class)
-public class VdxLendingRepositoryTest {
-    
+public class SpVdxLendingSummaryRepositoryTest {
+
     @Mock
     private EntityManager em;
     @InjectMocks
-    private VdxLendingRepository repo;
+    private SpVdxLendingSummaryRepository repo;
 
     private void setupSqlResult(List<Object[]> result) {
         Query query = Mockito.mock(Query.class);
@@ -46,12 +48,10 @@ public class VdxLendingRepositoryTest {
                 new Object[]{"UCD", "Library B", "I", "2"},
                 new Object[]{"UCLA", "Library C", "U", "3"}
         ));
-        Assert.assertEquals(
-                Sets.newSet(
-                        new VdxLendingSummary(VdxCampus.Berkeley, "Library A", VdxCategory.OCLC, 1L),
-                        new VdxLendingSummary(VdxCampus.Davis, "Library B", VdxCategory.ISOPartners, 2L),
-                        new VdxLendingSummary(VdxCampus.LosAngeles, "Library C", VdxCategory.UC, 3L)
-                ),
+        Assert.assertEquals(Sets.newSet(new SpVdxLendingSummary(VdxCampus.Berkeley, "Library A", VdxCategory.OCLC, 1L),
+                new SpVdxLendingSummary(VdxCampus.Davis, "Library B", VdxCategory.ISOPartners, 2L),
+                new SpVdxLendingSummary(VdxCampus.LosAngeles, "Library C", VdxCategory.UC, 3L)
+        ),
                 repo.getLendingSummary(null, null, null).collect(Collectors.toSet())
         );
     }
@@ -73,17 +73,16 @@ public class VdxLendingRepositoryTest {
         ));
         repo.getLendingSummary(null, null, null).collect(Collectors.toList());
     }
+
     @Test
     public void testGetLendingSummaryWhenCampusIsBlank() {
         setupSqlResult(Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"", "Some Library", "", "1"}
         ));
-        Assert.assertEquals(
-                Sets.newSet(
-                        new VdxLendingSummary(VdxCampus.Berkeley, "Some Library", VdxCategory.OCLC, 1L),
-                        new VdxLendingSummary(VdxCampus.None, "Some Library", VdxCategory.OCLC, 1L)
-                ),
+        Assert.assertEquals(Sets.newSet(new SpVdxLendingSummary(VdxCampus.Berkeley, "Some Library", VdxCategory.OCLC, 1L),
+                new SpVdxLendingSummary(VdxCampus.None, "Some Library", VdxCategory.OCLC, 1L)
+        ),
                 repo.getLendingSummary(null, null, null).collect(Collectors.toSet())
         );
     }
@@ -114,5 +113,5 @@ public class VdxLendingRepositoryTest {
         ));
         repo.getLendingSummary(null, null, null).collect(Collectors.toList());
     }
-    
+
 }

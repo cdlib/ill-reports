@@ -1,10 +1,13 @@
-package org.cdlib.ill.report.vdx;
+package org.cdlib.ill.report.vdx.procedures;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.VdxServiceType;
+import org.cdlib.ill.report.vdx.VdxShipDeliveryMethod;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -16,12 +19,12 @@ import org.mockito.internal.util.collections.Sets;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class VdxBorrowingUCRepositoryTest {
+public class SpVdxBorrowingUCRepositoryTest {
 
     @Mock
     private EntityManager em;
     @InjectMocks
-    private VdxBorrowingUCRepository repo;
+    private SpVdxBorrowingUCRepository repo;
 
     private void setupSqlResult(List<Object[]> result) {
         Query query = Mockito.mock(Query.class);
@@ -39,13 +42,11 @@ public class VdxBorrowingUCRepositoryTest {
                 new Object[]{"UCI", "Library D", "Library E", "Loan", "FTP", "4"},
                 new Object[]{"UCI", "Library E", "Library A", "Loan", "Postal", "5"}
         ));
-        Assert.assertEquals(
-                Sets.newSet(
-                        new VdxBorrowingByCategory(VdxCampus.Irvine, "Library A", "Library B", VdxServiceType.CopyNonReturnable, VdxShipDeliveryMethod.Other, 1L),
-                        new VdxBorrowingByCategory(VdxCampus.Irvine, "Library B", "Library C", VdxServiceType.CopyNonReturnable, VdxShipDeliveryMethod.Courier, 2L),
-                        new VdxBorrowingByCategory(VdxCampus.Irvine, "Library C", "Library D", VdxServiceType.CopyNonReturnable, VdxShipDeliveryMethod.Email, 3L),
-                        new VdxBorrowingByCategory(VdxCampus.Irvine, "Library D", "Library E", VdxServiceType.Loan, VdxShipDeliveryMethod.FTP, 4L),
-                        new VdxBorrowingByCategory(VdxCampus.Irvine, "Library E", "Library A", VdxServiceType.Loan, VdxShipDeliveryMethod.Postal, 5L)
+        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library A", "Library B", VdxServiceType.CopyNonReturnable, VdxShipDeliveryMethod.Other, 1L),
+                        new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library B", "Library C", VdxServiceType.CopyNonReturnable, VdxShipDeliveryMethod.Courier, 2L),
+                        new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library C", "Library D", VdxServiceType.CopyNonReturnable, VdxShipDeliveryMethod.Email, 3L),
+                        new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library D", "Library E", VdxServiceType.Loan, VdxShipDeliveryMethod.FTP, 4L),
+                        new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library E", "Library A", VdxServiceType.Loan, VdxShipDeliveryMethod.Postal, 5L)
                 ),
                 repo.getBorrowingUC(null, null, null).collect(Collectors.toSet())
         );
@@ -107,10 +108,8 @@ public class VdxBorrowingUCRepositoryTest {
                 new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "", "1"},
                 new Object[]{"", "Library B", "Library A", "Copy non returnable", "", "2"}
         ));
-        Assert.assertEquals(
-                Sets.newSet(
-                        new VdxBorrowingByCategory(VdxCampus.Irvine, "Library A", "Library B", VdxServiceType.CopyNonReturnable, VdxShipDeliveryMethod.Other, 1L),
-                        new VdxBorrowingByCategory(VdxCampus.None, "Library B", "Library A", VdxServiceType.CopyNonReturnable, VdxShipDeliveryMethod.Other, 2L)
+        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library A", "Library B", VdxServiceType.CopyNonReturnable, VdxShipDeliveryMethod.Other, 1L),
+                        new SpVdxBorrowingByCategory(VdxCampus.None, "Library B", "Library A", VdxServiceType.CopyNonReturnable, VdxShipDeliveryMethod.Other, 2L)
                 ),
                 repo.getBorrowingUC(null, null, null).collect(Collectors.toSet())
         );
@@ -149,10 +148,8 @@ public class VdxBorrowingUCRepositoryTest {
                 new Object[]{"UCI", "Library A", "Library B", "Loan", "", "1"},
                 new Object[]{"UCI", "Library B", "Library A", "Loan", "", "2"}
         ));
-        Assert.assertEquals(
-                Sets.newSet(
-                        new VdxBorrowingByCategory(VdxCampus.Irvine, "Library A", "Library B", VdxServiceType.Loan, VdxShipDeliveryMethod.Other, 1L),
-                        new VdxBorrowingByCategory(VdxCampus.Irvine, "Library B", "Library A", VdxServiceType.Loan, VdxShipDeliveryMethod.Other, 2L)
+        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library A", "Library B", VdxServiceType.Loan, VdxShipDeliveryMethod.Other, 1L),
+                        new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library B", "Library A", VdxServiceType.Loan, VdxShipDeliveryMethod.Other, 2L)
                 ),
                 repo.getBorrowingUC(null, null, null).collect(Collectors.toSet())
         );

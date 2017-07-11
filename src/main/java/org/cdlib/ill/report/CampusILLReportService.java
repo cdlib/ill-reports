@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.cdlib.ill.model.CampusILLReport;
 import org.cdlib.ill.model.InstitutionILLReport;
-import org.cdlib.ill.report.vdx.VdxBorrowingSummary;
-import org.cdlib.ill.report.vdx.VdxLendingSummary;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingSummary;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.cdlib.ill.report.vdx.VdxBorrowingRepository;
-import org.cdlib.ill.report.vdx.VdxLendingRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingSummaryRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingSummaryRepository;
 import org.springframework.stereotype.Service;
 
 @Transactional(readOnly = true)
@@ -22,11 +22,11 @@ import org.springframework.stereotype.Service;
 public class CampusILLReportService {
 
     @Autowired
-    VdxBorrowingRepository vdxBorrowingRepo;
+    SpVdxBorrowingSummaryRepository vdxBorrowingRepo;
     @Autowired
-    VdxLendingRepository vdxLendingRepo;
+    SpVdxLendingSummaryRepository vdxLendingRepo;
 
-    private void updateBorrowingTotalsByCategory(InstitutionILLReport institution, VdxBorrowingSummary summary) {
+    private void updateBorrowingTotalsByCategory(InstitutionILLReport institution, SpVdxBorrowingSummary summary) {
         switch (summary.getRespCategory()) {
             case ISOPartners:
                 institution.setTotalISOBorrowing(summary.getCount());
@@ -40,7 +40,7 @@ public class CampusILLReportService {
         }
     }
 
-    private void updateLendingTotalsByCategory(InstitutionILLReport institution, VdxLendingSummary summary) {
+    private void updateLendingTotalsByCategory(InstitutionILLReport institution, SpVdxLendingSummary summary) {
         switch (summary.getReqCategory()) {
             case ISOPartners:
                 institution.setTotalISOLending(summary.getCount());
@@ -54,14 +54,14 @@ public class CampusILLReportService {
         }
     }
 
-    private void addInstitution(CampusILLReport campus, String campusCode, String institutionName, List<VdxBorrowingSummary> borrowingSummaries, List<VdxLendingSummary> lendingSummaries) {
+    private void addInstitution(CampusILLReport campus, String campusCode, String institutionName, List<SpVdxBorrowingSummary> borrowingSummaries, List<SpVdxLendingSummary> lendingSummaries) {
         InstitutionILLReport institution = new InstitutionILLReport();
         institution.setCampus(campusCode);
         institution.setName(institutionName);
-        borrowingSummaries.forEach((VdxBorrowingSummary summary) -> {
+        borrowingSummaries.forEach((SpVdxBorrowingSummary summary) -> {
             updateBorrowingTotalsByCategory(institution, summary);
         });
-        lendingSummaries.forEach((VdxLendingSummary summary) -> {
+        lendingSummaries.forEach((SpVdxLendingSummary summary) -> {
             updateLendingTotalsByCategory(institution, summary);
         });
         campus.getInstitutionReports().add(institution);
@@ -72,10 +72,10 @@ public class CampusILLReportService {
         campus.setReportBeginDate(from);
         campus.setReportEndDate(to);
 
-        Map<String, List<VdxBorrowingSummary>> borrowingSummaries = vdxBorrowingRepo.getBorrowingSummary(campusCode, from, to)
-                .collect(Collectors.groupingBy(VdxBorrowingSummary::getReqName));
-        Map<String, List<VdxLendingSummary>> lendingSummaries = vdxLendingRepo.getLendingSummary(campusCode, from, to)
-                .collect(Collectors.groupingBy(VdxLendingSummary::getRespName));
+        Map<String, List<SpVdxBorrowingSummary>> borrowingSummaries = vdxBorrowingRepo.getBorrowingSummary(campusCode, from, to)
+                .collect(Collectors.groupingBy(SpVdxBorrowingSummary::getReqName));
+        Map<String, List<SpVdxLendingSummary>> lendingSummaries = vdxLendingRepo.getLendingSummary(campusCode, from, to)
+                .collect(Collectors.groupingBy(SpVdxLendingSummary::getRespName));
 
         Set<String> libraries = Stream.concat(borrowingSummaries.keySet().stream(), lendingSummaries.keySet().stream()).collect(Collectors.toSet());
 

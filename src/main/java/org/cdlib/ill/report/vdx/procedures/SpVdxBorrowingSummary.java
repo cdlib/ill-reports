@@ -1,18 +1,20 @@
-package org.cdlib.ill.report.vdx;
+package org.cdlib.ill.report.vdx.procedures;
 
 import java.util.Objects;
+import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.VdxCategory;
 
-public class VdxBorrowingSummary {
+public class SpVdxBorrowingSummary {
 
     private VdxCampus reqCampus;
     private String reqName;
     private VdxCategory respCategory;
     private Long count;
 
-    public VdxBorrowingSummary() {
+    public SpVdxBorrowingSummary() {
     }
 
-    public VdxBorrowingSummary(VdxCampus reqCampus, String reqName, VdxCategory respCategory, Long count) {
+    public SpVdxBorrowingSummary(VdxCampus reqCampus, String reqName, VdxCategory respCategory, Long count) {
         this.reqCampus = reqCampus;
         this.reqName = reqName;
         this.respCategory = respCategory;
@@ -72,7 +74,7 @@ public class VdxBorrowingSummary {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final VdxBorrowingSummary other = (VdxBorrowingSummary) obj;
+        final SpVdxBorrowingSummary other = (SpVdxBorrowingSummary) obj;
         if (!Objects.equals(this.reqName, other.reqName)) {
             return false;
         }

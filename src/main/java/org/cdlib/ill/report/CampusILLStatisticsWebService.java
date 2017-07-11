@@ -8,9 +8,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.cdlib.ill.model.CampusILLReport;
-import org.cdlib.ill.report.vdx.VdxBorrowingByCategory;
-import org.cdlib.ill.report.vdx.VdxBorrowingOCLCRepository;
-import org.cdlib.ill.report.vdx.VdxBorrowingUCRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingByCategory;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLCRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUCRepository;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,9 +34,9 @@ public class CampusILLStatisticsWebService {
     @Autowired
     private CampusILLReportService reportService;
     @Autowired
-    private VdxBorrowingUCRepository vdxBorrowingUCRepo;
+    private SpVdxBorrowingUCRepository vdxBorrowingUCRepo;
     @Autowired
-    private VdxBorrowingOCLCRepository vdxBorrowingOCLCRepo;
+    private SpVdxBorrowingOCLCRepository vdxBorrowingOCLCRepo;
 
     @RequestMapping(value = "{campusCode}.xml", produces = {"application/xml"})
     public HttpEntity<CampusILLReport> getCampusXml(
@@ -60,8 +60,8 @@ public class CampusILLStatisticsWebService {
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
-        CsvSchema schema = mapper.schemaFor(VdxBorrowingByCategory.class).withHeader();
-        List<VdxBorrowingByCategory> data = vdxBorrowingUCRepo.getBorrowingUC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        CsvSchema schema = mapper.schemaFor(SpVdxBorrowingByCategory.class).withHeader();
+        List<SpVdxBorrowingByCategory> data = vdxBorrowingUCRepo.getBorrowingUC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
     
@@ -71,8 +71,8 @@ public class CampusILLStatisticsWebService {
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
-        CsvSchema schema = mapper.schemaFor(VdxBorrowingByCategory.class).withHeader();
-        List<VdxBorrowingByCategory> data = vdxBorrowingOCLCRepo.getBorrowingOCLC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        CsvSchema schema = mapper.schemaFor(SpVdxBorrowingByCategory.class).withHeader();
+        List<SpVdxBorrowingByCategory> data = vdxBorrowingOCLCRepo.getBorrowingOCLC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 }
