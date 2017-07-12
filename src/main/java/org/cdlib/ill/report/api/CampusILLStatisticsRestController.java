@@ -11,6 +11,8 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingByCategory;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLCRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUCRepository;
 import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.procedures.SpVdxCopyright;
+import org.cdlib.ill.report.vdx.procedures.SpVdxCopyrightRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,8 @@ public class CampusILLStatisticsRestController {
     private SpVdxBorrowingOCLCRepository spVdxBorrowingOCLCRepo;
     @Autowired
     private SpVdxLendingRepository spVdxLendingRepo;
+    @Autowired
+    private SpVdxCopyrightRepository spVdxCopyrightRepo;
 
     @RequestMapping(value = "{campusCode}/borrowing_uc.csv", produces = {"text/csv"})
     public void getVdxBorrowingUCCsv(Writer output,
@@ -71,6 +75,17 @@ public class CampusILLStatisticsRestController {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxLending.class).withHeader();
         List<SpVdxLending> data = spVdxLendingRepo.getLending(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        mapper.writer(schema).writeValue(output, data);
+    }
+    
+    @RequestMapping(value = "{campusCode}/copyright.csv", produces = {"text/csv"})
+    public void getVdxCopyrightCsv(Writer output,
+            @PathVariable("campusCode") String campusCode,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(SpVdxCopyright.class).withHeader();
+        List<SpVdxCopyright> data = spVdxCopyrightRepo.getCopyright(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 }

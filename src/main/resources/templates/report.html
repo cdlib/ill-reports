@@ -52,7 +52,7 @@
                     <em>No borrowing or lending to show.</em>
                 </p>
                 <dl th:if="${not #lists.isEmpty(report.institutionReports)}">
-                    <dt>Raw Data Extract</dt>
+                    <dt>Raw Data</dt>
                     <dd>Download All Borrowing Data:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
@@ -73,6 +73,10 @@
                     <dt>Lending Statistics</dt>
                     <dd>Download Lending Report:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                    </dd>
+                    <dt>Other Statistics</dt>
+                    <dd>Download Copyright Report:
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/copyright.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
                 </dl>
                 <table class="table">
