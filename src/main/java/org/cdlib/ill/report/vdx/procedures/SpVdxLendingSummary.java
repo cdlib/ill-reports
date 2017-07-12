@@ -2,19 +2,19 @@ package org.cdlib.ill.report.vdx.procedures;
 
 import java.util.Objects;
 import org.cdlib.ill.report.vdx.VdxCampus;
-import org.cdlib.ill.report.vdx.VdxCategory;
+import org.cdlib.ill.report.vdx.VdxILLCategory;
 
 public class SpVdxLendingSummary {
 
     private VdxCampus respCampus;
     private String respName;
-    private VdxCategory reqCategory;
+    private VdxILLCategory reqCategory;
     private Long count;
 
     public SpVdxLendingSummary() {
     }
 
-    public SpVdxLendingSummary(VdxCampus respCampus, String respName, VdxCategory reqCategory, Long count) {
+    public SpVdxLendingSummary(VdxCampus respCampus, String respName, VdxILLCategory reqCategory, Long count) {
         this.respCampus = respCampus;
         this.respName = respName;
         this.reqCategory = reqCategory;
@@ -37,11 +37,11 @@ public class SpVdxLendingSummary {
         this.respName = respName;
     }
 
-    public VdxCategory getReqCategory() {
+    public VdxILLCategory getReqCategory() {
         return reqCategory;
     }
 
-    public void setReqCategory(VdxCategory reqCategory) {
+    public void setReqCategory(VdxILLCategory reqCategory) {
         this.reqCategory = reqCategory;
     }
 

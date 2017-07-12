@@ -2,10 +2,14 @@ package org.cdlib.ill.report.vdx.procedures;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Objects;
 import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.VdxCampusSerializer;
 import org.cdlib.ill.report.vdx.VdxServiceType;
+import org.cdlib.ill.report.vdx.VdxServiceTypeSerializer;
 import org.cdlib.ill.report.vdx.VdxShipDeliveryMethod;
+import org.cdlib.ill.report.vdx.VdxShipDeliveryMethodSerializer;
 
 /**
  * Both sp_vdx_borrowing_uc and sp_vdx_borrowing_oclc can be mapped to this
@@ -24,14 +28,17 @@ import org.cdlib.ill.report.vdx.VdxShipDeliveryMethod;
 public class SpVdxBorrowingByCategory {
 
     @JsonProperty("borrowing campus")
+    @JsonSerialize(using = VdxCampusSerializer.class)
     private VdxCampus reqCampus;
     @JsonProperty("borrowing library")
     private String reqName;
     @JsonProperty("lending library")
     private String respName;
     @JsonProperty("loan service")
+    @JsonSerialize(using = VdxServiceTypeSerializer.class)
     private VdxServiceType serviceTp;
     @JsonProperty("delivery method")
+    @JsonSerialize(using = VdxShipDeliveryMethodSerializer.class)
     private VdxShipDeliveryMethod shipDeliveryMethod;
     @JsonProperty("total")
     private Long count;

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.YearSerializer;
 import java.time.Year;
 import java.util.Objects;
 import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.VdxCampusSerializer;
 
 @JsonPropertyOrder({
     "reqCampus",
@@ -17,6 +18,7 @@ import org.cdlib.ill.report.vdx.VdxCampus;
 public class SpVdxCopyright {
 
     @JsonProperty("borrowing campus")
+    @JsonSerialize(using = VdxCampusSerializer.class)
     private VdxCampus reqCampus;
     @JsonProperty("requested title")
     private String reqTitle;

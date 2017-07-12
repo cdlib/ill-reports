@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.cdlib.ill.report.vdx.VdxCampus;
-import org.cdlib.ill.report.vdx.VdxCategory;
+import org.cdlib.ill.report.vdx.VdxILLCategory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,9 +38,9 @@ public class SpVdxBorrowingSummaryRepositoryTest {
                 new Object[]{"UCD", "Library B", "I", "2"},
                 new Object[]{"UCLA", "Library C", "U", "3"}
         ));
-        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingSummary(VdxCampus.Berkeley, "Library A", VdxCategory.OCLC, 1L),
-                        new SpVdxBorrowingSummary(VdxCampus.Davis, "Library B", VdxCategory.ISOPartners, 2L),
-                        new SpVdxBorrowingSummary(VdxCampus.LosAngeles, "Library C", VdxCategory.UC, 3L)
+        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingSummary(VdxCampus.Berkeley, "Library A", VdxILLCategory.OCLC, 1L),
+                        new SpVdxBorrowingSummary(VdxCampus.Davis, "Library B", VdxILLCategory.ISOPartners, 2L),
+                        new SpVdxBorrowingSummary(VdxCampus.LosAngeles, "Library C", VdxILLCategory.UC, 3L)
                 ),
                 repo.getBorrowingSummary(null, null, null).collect(Collectors.toSet())
         );
@@ -70,8 +70,8 @@ public class SpVdxBorrowingSummaryRepositoryTest {
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"", "Some Library", "", "1"}
         ));
-        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingSummary(VdxCampus.Berkeley, "Some Library", VdxCategory.OCLC, 1L),
-                        new SpVdxBorrowingSummary(VdxCampus.None, "Some Library", VdxCategory.OCLC, 1L)
+        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingSummary(VdxCampus.Berkeley, "Some Library", VdxILLCategory.OCLC, 1L),
+                        new SpVdxBorrowingSummary(VdxCampus.None, "Some Library", VdxILLCategory.OCLC, 1L)
                 ),
                 repo.getBorrowingSummary(null, null, null).collect(Collectors.toSet())
         );

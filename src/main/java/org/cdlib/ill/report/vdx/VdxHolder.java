@@ -20,7 +20,7 @@ public class VdxHolder implements Serializable {
     private VdxCampus campus;
 
     @Column(nullable = false)
-    private VdxCategory category;
+    private VdxILLCategory category;
 
     public String getName() {
         return name;
@@ -38,11 +38,11 @@ public class VdxHolder implements Serializable {
         this.campus = campus;
     }
 
-    public VdxCategory getCategory() {
+    public VdxILLCategory getCategory() {
         return category;
     }
 
-    public void setCategory(VdxCategory category) {
+    public void setCategory(VdxILLCategory category) {
         this.category = category;
     }
 

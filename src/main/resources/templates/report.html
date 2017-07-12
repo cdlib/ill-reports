@@ -78,6 +78,9 @@
                     <dd>Download Copyright Report:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/copyright.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
+                    <dd>Download Journal Borrowing Report:
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/journal_borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                    </dd>
                 </dl>
                 <table class="table">
                     <caption>Summary Statistics

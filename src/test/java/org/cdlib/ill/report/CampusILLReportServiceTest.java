@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import org.cdlib.ill.model.CampusILLReport;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingSummary;
 import org.cdlib.ill.report.vdx.VdxCampus;
-import org.cdlib.ill.report.vdx.VdxCategory;
+import org.cdlib.ill.report.vdx.VdxILLCategory;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingSummaryRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingSummaryRepository;
 import org.junit.Assert;
@@ -33,9 +33,9 @@ public class CampusILLReportServiceTest {
     @Test
     public void testGetCampusILLReportAggregatesCategoricalBorrowingByLibrary() {
         Mockito.doReturn(Arrays.stream(new SpVdxBorrowingSummary[]{
-                    new SpVdxBorrowingSummary(VdxCampus.Davis, LIBRARY_A, VdxCategory.UC, 1L),
-                    new SpVdxBorrowingSummary(VdxCampus.Davis, LIBRARY_A, VdxCategory.OCLC, 2L),
-                    new SpVdxBorrowingSummary(VdxCampus.Davis, LIBRARY_B, VdxCategory.UC, 4L)
+                    new SpVdxBorrowingSummary(VdxCampus.Davis, LIBRARY_A, VdxILLCategory.UC, 1L),
+                    new SpVdxBorrowingSummary(VdxCampus.Davis, LIBRARY_A, VdxILLCategory.OCLC, 2L),
+                    new SpVdxBorrowingSummary(VdxCampus.Davis, LIBRARY_B, VdxILLCategory.UC, 4L)
                 }))
                 .when(vdxBorrowingRepo)
                 .getBorrowingSummary(Mockito.any(), Mockito.any(), Mockito.any());

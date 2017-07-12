@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import org.cdlib.ill.report.Constants;
 import org.cdlib.ill.report.vdx.VdxCampus;
-import org.cdlib.ill.report.vdx.VdxCategory;
+import org.cdlib.ill.report.vdx.VdxILLCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +41,7 @@ public class SpVdxBorrowingSummaryRepository {
                         return Constants.BAD_DATA_EX;
                     }),
                     String.valueOf(values[1]),
-                    VdxCategory.fromCode(String.valueOf(values[2])).orElseThrow(() -> {
+                    VdxILLCategory.fromCode(String.valueOf(values[2])).orElseThrow(() -> {
                         return Constants.BAD_DATA_EX;
                     }),
                     Long.valueOf(String.valueOf(values[3])));
