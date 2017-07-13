@@ -45,7 +45,7 @@
             </div>
 
             <hr id="results" th:if="${not #lists.isEmpty(reports)}" aria-label="Search Results" class="hidden-print"/>
-                
+
             <section class="page-break" th:each="report : ${reports}">
                 <h2 th:text="|${report.campusCode} (${searchStartDate} &mdash; ${searchEndDate})|"></h2>
                 <p th:if="${#lists.isEmpty(report.institutionReports)}">
@@ -78,9 +78,9 @@
                         <tr>
                             <th scope="col">Library</th>
                             <th></th>
-                            <th scope="col">ISO</th>
-                            <th scope="col">OCLC</th>
                             <th scope="col">UC</th>
+                            <th scope="col">OCLC</th>
+                            <th scope="col">ISO</th>
                             <th scope="col">All Categories</th>
                         </tr>
                     </thead>
@@ -88,16 +88,16 @@
                         <tr class="borrowing-row">
                             <th scope="row" rowspan="2" class="library-header" th:text="${library.name}"></th>
                             <td><i class="fa fa-sign-in" aria-hidden="true"></i> Borrowing</td>
-                            <td th:text="${library.totalISOBorrowing}"></td>
-                            <td th:text="${library.totalOCLCBorrowing}"></td>
                             <td th:text="${library.totalUCBorrowing}"></td>
+                            <td th:text="${library.totalOCLCBorrowing}"></td>
+                            <td th:text="${library.totalISOBorrowing}"></td>
                             <td th:text="${library.totalBorrowing}"></td>
                         </tr>
                         <tr class="lending-row">
                             <td><i class="fa fa-sign-out" aria-hidden="true"></i> Lending</td>
-                            <td th:text="${library.totalISOLending}"></td>
-                            <td th:text="${library.totalOCLCLending}"></td>
                             <td th:text="${library.totalUCLending}"></td>
+                            <td th:text="${library.totalOCLCLending}"></td>
+                            <td th:text="${library.totalISOLending}"></td>
                             <td th:text="${library.totalLending}"></td>
                         </tr>
                     </tbody>
@@ -105,16 +105,16 @@
                         <tr class="total-row">
                             <th scope="row" rowspan="2">All Libraries</th>
                             <th scope="row">Total Borrowing</th>
-                            <td th:text="${report.totalISOBorrowing}"></td>
-                            <td th:text="${report.totalOCLCBorrowing}"></td>
                             <td th:text="${report.totalUCBorrowing}"></td>
+                            <td th:text="${report.totalOCLCBorrowing}"></td>
+                            <td th:text="${report.totalISOBorrowing}"></td>
                             <td th:text="${report.totalBorrowing}"></td>
                         </tr>
                         <tr class="total-row">
                             <th scope="row">Total Lending</th>
-                            <td th:text="${report.totalISOLending}"></td>
-                            <td th:text="${report.totalOCLCLending}"></td>
                             <td th:text="${report.totalUCLending}"></td>
+                            <td th:text="${report.totalOCLCLending}"></td>
+                            <td th:text="${report.totalISOLending}"></td>
                             <td th:text="${report.totalLending}"></td>
                         </tr>
                     </tbody>
