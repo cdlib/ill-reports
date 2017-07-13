@@ -7,6 +7,7 @@ public enum VdxShipDeliveryMethod {
     Other("", "Other"),
     Courier("Courier", "Courier"),
     Email("Email", "Email"),
+    Fax("Fax", "Fax"),
     FTP("FTP", "FTP"),
     Postal("Postal", "Postal");
 

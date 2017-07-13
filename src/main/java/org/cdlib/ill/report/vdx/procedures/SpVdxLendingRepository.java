@@ -20,6 +20,15 @@ public class SpVdxLendingRepository {
     @Autowired
     private EntityManager em;
 
+    /**
+     *
+     * @param campus
+     * @param beginDate
+     * @param endDate
+     * @return
+     * @throws IllegalArgumentException When the database contains null values
+     * or unexpected campuses or categories. The DDL should forbid null values.
+     */
     public Stream<SpVdxLending> getLending(String campus, LocalDate beginDate, LocalDate endDate) {
         List<Object[]> results = em.createNativeQuery("call sp_vdx_lending(?1, ?2, ?3)")
                 .setParameter(1, campus)
