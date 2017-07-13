@@ -1,10 +1,12 @@
-package org.cdlib.ill.report.vdx;
+package org.cdlib.ill.report.vdx.procedures;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.VdxILLCategory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,23 +16,13 @@ import org.mockito.Mockito;
 import org.mockito.internal.util.collections.Sets;
 import org.mockito.junit.MockitoJUnitRunner;
 
-/**
- * The lending summary logic is in MySQL stored procedures. This repository is
- * responsible for converting the output of the stored procedure into the domain
- * model, {@link VdxLendingSummary}.
- *
- * This conversion might fail if the database produces unexpected campus codes
- * or categories.
- *
- * @author mmorrisp
- */
 @RunWith(MockitoJUnitRunner.class)
-public class VdxLendingRepositoryTest {
-    
+public class SpVdxBorrowingSummaryRepositoryTest {
+
     @Mock
     private EntityManager em;
     @InjectMocks
-    private VdxLendingRepository repo;
+    private SpVdxBorrowingSummaryRepository repo;
 
     private void setupSqlResult(List<Object[]> result) {
         Query query = Mockito.mock(Query.class);
@@ -40,79 +32,76 @@ public class VdxLendingRepositoryTest {
     }
 
     @Test
-    public void testGetLendingSummary() {
+    public void testGetBorrowingSummary() {
         setupSqlResult(Arrays.asList(
                 new Object[]{"UCB", "Library A", "", "1"},
                 new Object[]{"UCD", "Library B", "I", "2"},
                 new Object[]{"UCLA", "Library C", "U", "3"}
         ));
-        Assert.assertEquals(
-                Sets.newSet(
-                        new VdxLendingSummary(VdxCampus.Berkeley, "Library A", VdxCategory.OCLC, 1L),
-                        new VdxLendingSummary(VdxCampus.Davis, "Library B", VdxCategory.ISOPartners, 2L),
-                        new VdxLendingSummary(VdxCampus.LosAngeles, "Library C", VdxCategory.UC, 3L)
+        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingSummary(VdxCampus.Berkeley, "Library A", VdxILLCategory.OCLC, 1L),
+                        new SpVdxBorrowingSummary(VdxCampus.Davis, "Library B", VdxILLCategory.ISOPartners, 2L),
+                        new SpVdxBorrowingSummary(VdxCampus.LosAngeles, "Library C", VdxILLCategory.UC, 3L)
                 ),
-                repo.getLendingSummary(null, null, null).collect(Collectors.toSet())
+                repo.getBorrowingSummary(null, null, null).collect(Collectors.toSet())
         );
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingSummaryWhenLibraryNameIsNull() {
+    public void testGetBorrowingSummaryWhenLibraryNameIsNull() {
         setupSqlResult(Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"UCB", null, "", "1"}
         ));
-        repo.getLendingSummary(null, null, null).collect(Collectors.toList());
+        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingSummaryWhenCampusIsNull() {
+    public void testGetBorrowingSummaryWhenCampusIsNull() {
         setupSqlResult(Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{null, "Some Library", "", "1"}
         ));
-        repo.getLendingSummary(null, null, null).collect(Collectors.toList());
+        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
+
     @Test
-    public void testGetLendingSummaryWhenCampusIsBlank() {
+    public void testGetBorrowingSummaryWhenCampusIsBlank() {
         setupSqlResult(Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"", "Some Library", "", "1"}
         ));
-        Assert.assertEquals(
-                Sets.newSet(
-                        new VdxLendingSummary(VdxCampus.Berkeley, "Some Library", VdxCategory.OCLC, 1L),
-                        new VdxLendingSummary(VdxCampus.None, "Some Library", VdxCategory.OCLC, 1L)
+        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingSummary(VdxCampus.Berkeley, "Some Library", VdxILLCategory.OCLC, 1L),
+                        new SpVdxBorrowingSummary(VdxCampus.None, "Some Library", VdxILLCategory.OCLC, 1L)
                 ),
-                repo.getLendingSummary(null, null, null).collect(Collectors.toSet())
+                repo.getBorrowingSummary(null, null, null).collect(Collectors.toSet())
         );
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingSummaryWhenCampusIsNew() {
+    public void testGetBorrowingSummaryWhenCampusIsNew() {
         setupSqlResult(Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"UCZ", "Some Library", "", "1"}
         ));
-        repo.getLendingSummary(null, null, null).collect(Collectors.toList());
+        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingSummaryWhenCategoryIsNull() {
+    public void testGetBorrowingSummaryWhenCategoryIsNull() {
         setupSqlResult(Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"UCB", "Some Library", null, "1"}
         ));
-        repo.getLendingSummary(null, null, null).collect(Collectors.toList());
+        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingSummaryWhenCategoryIsNew() {
+    public void testGetBorrowingSummaryWhenCategoryIsNew() {
         setupSqlResult(Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"UCB", "Some Library", "Z", "1"}
         ));
-        repo.getLendingSummary(null, null, null).collect(Collectors.toList());
+        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
-    
+
 }

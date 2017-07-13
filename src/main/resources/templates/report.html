@@ -17,7 +17,7 @@
 
             <div class="hidden-print">
                 <h2>Search</h2>
-                <form action="/" method="post">
+                <form action="/#results" method="post">
                     <div class="row">
                         <div class="col-sm-4">
                             <label for="campus">Location</label><br/>
@@ -39,56 +39,48 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <input name="command" type="submit" value="Search" class="btn" />
-                            &nbsp;&nbsp;
-                            <input name="command" type="submit" value="Reset" class="btn" />
                         </div>
                     </div>
                 </form>
-
-                <hr />
             </div>
+
+            <hr id="results" th:if="${not #lists.isEmpty(reports)}" aria-label="Search Results" class="hidden-print"/>
 
             <section class="page-break" th:each="report : ${reports}">
                 <h2 th:text="|${report.campusCode} (${searchStartDate} &mdash; ${searchEndDate})|"></h2>
                 <p th:if="${#lists.isEmpty(report.institutionReports)}">
                     <em>No borrowing or lending to show.</em>
                 </p>
-                <p th:if="${not #lists.isEmpty(report.institutionReports)}">
-                <dl>
-                    <dt>Borrowing and Lending Summaries (All Libraries)</dt>
-                    <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
-                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
-                        /
-                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                <dl th:if="${not #lists.isEmpty(report.institutionReports)}">
+                    <dt>Borrowing Statistics</dt>
+                    <dd>Download UC Borrowing Report:
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_uc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
-                    <dt>Borrowing Data Extract (All Libraries)</dt>
-                    <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
-                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                    <dd>Download OCLC Borrowing Report:
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_oclc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
-                    <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
-                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
-                        /
-                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                    <dt>Lending Statistics</dt>
+                    <dd>Download Lending Report:
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
-                    <dt>Lending Data Extract(All Libraries)</dt>
-                    <dd><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;
-                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                    <dt>Other Statistics</dt>
+                    <dd>Download Copyright Report:
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/copyright.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
-                    <dd><i class="fa fa-code" aria-hidden="true"></i>&nbsp;
-                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
-                        /
-                        <a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                    <dd>Download Journal Borrowing Report:
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/journal_borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
                 </dl>
-                </p>
                 <table class="table">
+                    <caption>Summary Statistics
+                    </caption>
                     <thead>
                         <tr>
                             <th scope="col">Library</th>
                             <th></th>
-                            <th scope="col">ISO</th>
-                            <th scope="col">OCLC</th>
                             <th scope="col">UC</th>
+                            <th scope="col">OCLC</th>
+                            <th scope="col">ISO</th>
                             <th scope="col">All Categories</th>
                         </tr>
                     </thead>
@@ -96,16 +88,16 @@
                         <tr class="borrowing-row">
                             <th scope="row" rowspan="2" class="library-header" th:text="${library.name}"></th>
                             <td><i class="fa fa-sign-in" aria-hidden="true"></i> Borrowing</td>
-                            <td th:text="${library.totalISOBorrowing}"></td>
-                            <td th:text="${library.totalOCLCBorrowing}"></td>
                             <td th:text="${library.totalUCBorrowing}"></td>
+                            <td th:text="${library.totalOCLCBorrowing}"></td>
+                            <td th:text="${library.totalISOBorrowing}"></td>
                             <td th:text="${library.totalBorrowing}"></td>
                         </tr>
                         <tr class="lending-row">
                             <td><i class="fa fa-sign-out" aria-hidden="true"></i> Lending</td>
-                            <td th:text="${library.totalISOLending}"></td>
-                            <td th:text="${library.totalOCLCLending}"></td>
                             <td th:text="${library.totalUCLending}"></td>
+                            <td th:text="${library.totalOCLCLending}"></td>
+                            <td th:text="${library.totalISOLending}"></td>
                             <td th:text="${library.totalLending}"></td>
                         </tr>
                     </tbody>
@@ -113,20 +105,21 @@
                         <tr class="total-row">
                             <th scope="row" rowspan="2">All Libraries</th>
                             <th scope="row">Total Borrowing</th>
-                            <td th:text="${report.totalISOBorrowing}"></td>
-                            <td th:text="${report.totalOCLCBorrowing}"></td>
                             <td th:text="${report.totalUCBorrowing}"></td>
+                            <td th:text="${report.totalOCLCBorrowing}"></td>
+                            <td th:text="${report.totalISOBorrowing}"></td>
                             <td th:text="${report.totalBorrowing}"></td>
                         </tr>
                         <tr class="total-row">
                             <th scope="row">Total Lending</th>
-                            <td th:text="${report.totalISOLending}"></td>
-                            <td th:text="${report.totalOCLCLending}"></td>
                             <td th:text="${report.totalUCLending}"></td>
+                            <td th:text="${report.totalOCLCLending}"></td>
+                            <td th:text="${report.totalISOLending}"></td>
                             <td th:text="${report.totalLending}"></td>
                         </tr>
                     </tbody>
                 </table>
+                <hr class="hidden-print" />
             </section>
         </div>
 

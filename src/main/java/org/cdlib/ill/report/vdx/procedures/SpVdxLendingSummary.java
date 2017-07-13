@@ -1,18 +1,20 @@
-package org.cdlib.ill.report.vdx;
+package org.cdlib.ill.report.vdx.procedures;
 
 import java.util.Objects;
+import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.VdxILLCategory;
 
-public class VdxLendingSummary {
+public class SpVdxLendingSummary {
 
     private VdxCampus respCampus;
     private String respName;
-    private VdxCategory reqCategory;
+    private VdxILLCategory reqCategory;
     private Long count;
 
-    public VdxLendingSummary() {
+    public SpVdxLendingSummary() {
     }
 
-    public VdxLendingSummary(VdxCampus respCampus, String respName, VdxCategory reqCategory, Long count) {
+    public SpVdxLendingSummary(VdxCampus respCampus, String respName, VdxILLCategory reqCategory, Long count) {
         this.respCampus = respCampus;
         this.respName = respName;
         this.reqCategory = reqCategory;
@@ -35,11 +37,11 @@ public class VdxLendingSummary {
         this.respName = respName;
     }
 
-    public VdxCategory getReqCategory() {
+    public VdxILLCategory getReqCategory() {
         return reqCategory;
     }
 
-    public void setReqCategory(VdxCategory reqCategory) {
+    public void setReqCategory(VdxILLCategory reqCategory) {
         this.reqCategory = reqCategory;
     }
 
@@ -72,7 +74,7 @@ public class VdxLendingSummary {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final VdxLendingSummary other = (VdxLendingSummary) obj;
+        final SpVdxLendingSummary other = (SpVdxLendingSummary) obj;
         if (!Objects.equals(this.respName, other.respName)) {
             return false;
         }

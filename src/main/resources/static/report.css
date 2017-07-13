@@ -27,3 +27,7 @@ th.library-header {
     border-right: 2px solid;
     border-color: #ddd;
 }
+
+dl > dt ~ dt {
+    margin-top: 1em;
+}

@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
 import org.cdlib.ill.model.CampusILLReport;
-import org.cdlib.ill.report.vdx.VdxBorrowingRepository;
-import org.cdlib.ill.report.vdx.VdxBorrowingSummary;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingSummary;
 import org.cdlib.ill.report.vdx.VdxCampus;
-import org.cdlib.ill.report.vdx.VdxCategory;
-import org.cdlib.ill.report.vdx.VdxLendingRepository;
+import org.cdlib.ill.report.vdx.VdxILLCategory;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingSummaryRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingSummaryRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,9 +21,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 public class CampusILLReportServiceTest {
 
     @Mock
-    private VdxBorrowingRepository vdxBorrowingRepo;
+    private SpVdxBorrowingSummaryRepository vdxBorrowingRepo;
     @Mock
-    private VdxLendingRepository vdxLendingRepo;
+    private SpVdxLendingSummaryRepository vdxLendingRepo;
     @InjectMocks
     private CampusILLReportService service;
 
@@ -32,11 +32,10 @@ public class CampusILLReportServiceTest {
 
     @Test
     public void testGetCampusILLReportAggregatesCategoricalBorrowingByLibrary() {
-        Mockito.doReturn(Arrays.stream(
-                new VdxBorrowingSummary[]{
-                    new VdxBorrowingSummary(VdxCampus.Davis, LIBRARY_A, VdxCategory.UC, 1L),
-                    new VdxBorrowingSummary(VdxCampus.Davis, LIBRARY_A, VdxCategory.OCLC, 2L),
-                    new VdxBorrowingSummary(VdxCampus.Davis, LIBRARY_B, VdxCategory.UC, 4L)
+        Mockito.doReturn(Arrays.stream(new SpVdxBorrowingSummary[]{
+                    new SpVdxBorrowingSummary(VdxCampus.Davis, LIBRARY_A, VdxILLCategory.UC, 1L),
+                    new SpVdxBorrowingSummary(VdxCampus.Davis, LIBRARY_A, VdxILLCategory.OCLC, 2L),
+                    new SpVdxBorrowingSummary(VdxCampus.Davis, LIBRARY_B, VdxILLCategory.UC, 4L)
                 }))
                 .when(vdxBorrowingRepo)
                 .getBorrowingSummary(Mockito.any(), Mockito.any(), Mockito.any());
