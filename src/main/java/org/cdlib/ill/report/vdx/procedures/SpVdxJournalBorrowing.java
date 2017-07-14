@@ -27,16 +27,16 @@ public class SpVdxJournalBorrowing {
     private VdxCampus reqCampus;
     @JsonProperty("borrowing library")
     private String reqName;
-    @JsonProperty("requested title")
+    @JsonProperty("journal title")
     private String reqTitle;
     @JsonProperty("publication year")
     @JsonSerialize(using = YearSerializer.class)
     private Year pubYear;
-    @JsonProperty("requested issue")
+    @JsonProperty("volume/issue")
     private String reqIssueTitle;
-    @JsonProperty("pagination")
+    @JsonProperty("pages")
     private String pagination;
-    @JsonProperty("borrower category")
+    @JsonProperty("patron category")
     private VdxBorrowerCategory borcat;
     @JsonProperty("total")
     private Long count;
