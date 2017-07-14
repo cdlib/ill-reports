@@ -31,7 +31,7 @@ public class SpVdxLendingPatron {
     @JsonProperty("loan service")
     @JsonSerialize(using = VdxServiceTypeSerializer.class)
     private VdxServiceType serviceTp;
-    @JsonProperty("borrower category")
+    @JsonProperty("patron category")
     @JsonSerialize(using = VdxBorrowerCategorySerializer.class)
     private VdxBorrowerCategory borcat;
     @JsonProperty("total")
