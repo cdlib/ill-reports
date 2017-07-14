@@ -11,11 +11,15 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingByCategory;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLCRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUCRepository;
 import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatron;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatronRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxCopyright;
 import org.cdlib.ill.report.vdx.procedures.SpVdxCopyrightRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxJournalBorrowing;
 import org.cdlib.ill.report.vdx.procedures.SpVdxJournalBorrowingRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatron;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatronRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -50,6 +54,10 @@ public class CampusILLStatisticsRestController {
     private SpVdxCopyrightRepository spVdxCopyrightRepo;
     @Autowired
     private SpVdxJournalBorrowingRepository spVdxJournalBorrowingRepo;
+    @Autowired
+    private SpVdxBorrowingPatronRepository spVdxBorrowingPatronRepo;
+    @Autowired
+    private SpVdxLendingPatronRepository spVdxLendingPatronRepo;
 
     @RequestMapping(value = "{campusCode}/borrowing_uc.csv", produces = {"text/csv"})
     public void getVdxBorrowingUCCsv(Writer output,
@@ -103,6 +111,28 @@ public class CampusILLStatisticsRestController {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxJournalBorrowing.class).withHeader();
         List<SpVdxJournalBorrowing> data = spVdxJournalBorrowingRepo.getJournalBorrowing(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        mapper.writer(schema).writeValue(output, data);
+    }
+    
+    @RequestMapping(value = "{campusCode}/borrowing_patron.csv", produces = {"text/csv"})
+    public void getVdxBorrowingPatron(Writer output,
+            @PathVariable("campusCode") String campusCode,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(SpVdxBorrowingPatron.class).withHeader();
+        List<SpVdxBorrowingPatron> data = spVdxBorrowingPatronRepo.getBorrowingPatron(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        mapper.writer(schema).writeValue(output, data);
+    }
+    
+    @RequestMapping(value = "{campusCode}/lending_patron.csv", produces = {"text/csv"})
+    public void getVdxLendingPatron(Writer output,
+            @PathVariable("campusCode") String campusCode,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(SpVdxLendingPatron.class).withHeader();
+        List<SpVdxLendingPatron> data = spVdxLendingPatronRepo.getLendingPatron(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 }
