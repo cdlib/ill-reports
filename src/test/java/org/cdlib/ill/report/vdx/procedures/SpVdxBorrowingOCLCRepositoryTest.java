@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxServiceType;
-import org.cdlib.ill.report.vdx.VdxShipDeliveryMethod;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
