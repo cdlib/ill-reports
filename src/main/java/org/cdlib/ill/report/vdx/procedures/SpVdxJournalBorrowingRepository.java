@@ -1,7 +1,6 @@
 package org.cdlib.ill.report.vdx.procedures;
 
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.List;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
@@ -33,7 +32,7 @@ public class SpVdxJournalBorrowingRepository {
                     VdxCampus.fromCode(String.valueOf(values[0])).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER),
                     String.valueOf(values[1]),
                     String.valueOf(values[2]),
-                    Year.parse(String.valueOf(values[3])),
+                    String.valueOf(values[3]),
                     String.valueOf(values[4]),
                     String.valueOf(values[5]),
                     VdxBorrowerCategory.fromCode(String.valueOf(values[6])).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER),

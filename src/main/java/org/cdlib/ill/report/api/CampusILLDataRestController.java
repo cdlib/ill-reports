@@ -6,11 +6,14 @@ import java.io.IOException;
 import java.io.Writer;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.cdlib.ill.report.vdx.VdxBorrowing;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxLending;
 import org.cdlib.ill.report.vdx.VdxBorrowingRepository;
 import org.cdlib.ill.report.vdx.VdxLendingRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingUnfilledDetail;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingUnfilledDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
@@ -37,6 +40,8 @@ public class CampusILLDataRestController {
     private VdxBorrowingRepository vdxBorrowingRepo;
     @Autowired
     private VdxLendingRepository vdxLendingRepo;
+    @Autowired
+    private SpVdxLendingUnfilledDetailRepository vdxLendingUnfilledRepo;
 
     @RequestMapping(value = "{campusCode}/borrowing.xml", produces = {"application/xml"})
     public HttpEntity<List<VdxBorrowing>> getCampusBorrowingXml(@PathVariable("campusCode") String campusCode,
@@ -85,6 +90,20 @@ public class CampusILLDataRestController {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(VdxLending.class).withHeader();
         List<VdxLending> data = vdxLendingRepo.getVdxLending(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate);
+        mapper.writer(schema).writeValue(output, data);
+    }
+    
+    @RequestMapping(value = "{campusCode}/lending_unfilled.csv", produces = {"text/csv"})
+    public void getLendingUnfilledCsv(Writer output,
+            @PathVariable("campusCode") String campusCode,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(SpVdxLendingUnfilledDetail.class).withHeader();
+        List<SpVdxLendingUnfilledDetail> data = vdxLendingUnfilledRepo
+                .getLendingUnfilledDetail(VdxCampus.fromCode(campusCode)
+                .map(VdxCampus::getCode).orElse(""), startDate, endDate)
+                .collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 

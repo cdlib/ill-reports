@@ -3,8 +3,6 @@ package org.cdlib.ill.report.vdx.procedures;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.YearSerializer;
-import java.time.Year;
 import java.util.Objects;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxCampusSerializer;
@@ -23,15 +21,14 @@ public class SpVdxCopyright {
     @JsonProperty("requested title")
     private String reqTitle;
     @JsonProperty("publication year")
-    @JsonSerialize(using = YearSerializer.class)
-    private Year pubYear;
+    private String pubYear;
     @JsonProperty("total")
     private Long count;
 
     public SpVdxCopyright() {
     }
 
-    public SpVdxCopyright(VdxCampus reqCampus, String reqTitle, Year pubYear, Long count) {
+    public SpVdxCopyright(VdxCampus reqCampus, String reqTitle, String pubYear, Long count) {
         this.reqCampus = reqCampus;
         this.reqTitle = reqTitle;
         this.pubYear = pubYear;
@@ -54,11 +51,11 @@ public class SpVdxCopyright {
         this.reqTitle = reqTitle;
     }
 
-    public Year getPubYear() {
+    public String getPubYear() {
         return pubYear;
     }
 
-    public void setPubYear(Year pubYear) {
+    public void setPubYear(String pubYear) {
         this.pubYear = pubYear;
     }
 
