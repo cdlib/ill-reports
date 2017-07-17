@@ -40,11 +40,11 @@ public class SpVdxBorrowingOCLCRepositoryTest {
                 new Object[]{"UCI", "Library D", "Library E", "Loan", "4"},
                 new Object[]{"UCI", "Library E", "Library A", "Loan", "5"}
         ));
-        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library A", "Library B", VdxServiceType.CopyNonReturnable, null, 1L),
-                new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library B", "Library C", VdxServiceType.CopyNonReturnable, null, 2L),
-                new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library C", "Library D", VdxServiceType.CopyNonReturnable, null, 3L),
-                new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library D", "Library E", VdxServiceType.Loan, null, 4L),
-                new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library E", "Library A", VdxServiceType.Loan, null, 5L)),
+        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingOCLC(VdxCampus.Irvine, "Library A", "Library B", VdxServiceType.CopyNonReturnable, 1L),
+                new SpVdxBorrowingOCLC(VdxCampus.Irvine, "Library B", "Library C", VdxServiceType.CopyNonReturnable, 2L),
+                new SpVdxBorrowingOCLC(VdxCampus.Irvine, "Library C", "Library D", VdxServiceType.CopyNonReturnable, 3L),
+                new SpVdxBorrowingOCLC(VdxCampus.Irvine, "Library D", "Library E", VdxServiceType.Loan, 4L),
+                new SpVdxBorrowingOCLC(VdxCampus.Irvine, "Library E", "Library A", VdxServiceType.Loan, 5L)),
                 repo.getBorrowingOCLC(null, null, null).collect(Collectors.toSet())
         );
     }
@@ -100,8 +100,8 @@ public class SpVdxBorrowingOCLCRepositoryTest {
                 new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
                 new Object[]{"", "Library B", "Library A", "Copy non returnable", "2"}
         ));
-        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingByCategory(VdxCampus.Irvine, "Library A", "Library B", VdxServiceType.CopyNonReturnable, null, 1L),
-                new SpVdxBorrowingByCategory(VdxCampus.None, "Library B", "Library A", VdxServiceType.CopyNonReturnable, null, 2L)
+        Assert.assertEquals(Sets.newSet(new SpVdxBorrowingOCLC(VdxCampus.Irvine, "Library A", "Library B", VdxServiceType.CopyNonReturnable, 1L),
+                new SpVdxBorrowingOCLC(VdxCampus.None, "Library B", "Library A", VdxServiceType.CopyNonReturnable, 2L)
         ),
                 repo.getBorrowingOCLC(null, null, null).collect(Collectors.toSet())
         );

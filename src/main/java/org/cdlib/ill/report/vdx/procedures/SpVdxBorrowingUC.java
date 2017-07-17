@@ -11,12 +11,6 @@ import org.cdlib.ill.report.vdx.VdxServiceTypeSerializer;
 import org.cdlib.ill.report.vdx.VdxShipDeliveryMethod;
 import org.cdlib.ill.report.vdx.VdxShipDeliveryMethodSerializer;
 
-/**
- * Both sp_vdx_borrowing_uc and sp_vdx_borrowing_oclc can be mapped to this
- * POJO.
- *
- * @author mmorrisp
- */
 @JsonPropertyOrder({
     "reqCampus",
     "reqName",
@@ -25,7 +19,7 @@ import org.cdlib.ill.report.vdx.VdxShipDeliveryMethodSerializer;
     "shipDeliveryMethod",
     "count"
 })
-public class SpVdxBorrowingByCategory {
+public class SpVdxBorrowingUC {
 
     @JsonProperty("borrowing campus")
     @JsonSerialize(using = VdxCampusSerializer.class)
@@ -43,10 +37,10 @@ public class SpVdxBorrowingByCategory {
     @JsonProperty("total")
     private Long count;
 
-    public SpVdxBorrowingByCategory() {
+    public SpVdxBorrowingUC() {
     }
 
-    public SpVdxBorrowingByCategory(VdxCampus reqCampus, String reqName, String respName, VdxServiceType serviceTp, VdxShipDeliveryMethod shipDeliveryMethod, Long count) {
+    public SpVdxBorrowingUC(VdxCampus reqCampus, String reqName, String respName, VdxServiceType serviceTp, VdxShipDeliveryMethod shipDeliveryMethod, Long count) {
         this.reqCampus = reqCampus;
         this.reqName = reqName;
         this.respName = respName;
@@ -126,7 +120,7 @@ public class SpVdxBorrowingByCategory {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SpVdxBorrowingByCategory other = (SpVdxBorrowingByCategory) obj;
+        final SpVdxBorrowingUC other = (SpVdxBorrowingUC) obj;
         if (!Objects.equals(this.reqName, other.reqName)) {
             return false;
         }

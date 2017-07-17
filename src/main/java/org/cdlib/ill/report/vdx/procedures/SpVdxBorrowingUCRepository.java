@@ -29,12 +29,12 @@ public class SpVdxBorrowingUCRepository {
      * @throws IllegalArgumentException When the database contains null values
      * or unexpected campuses or categories. The DDL should forbid null values.
      */
-    public Stream<SpVdxBorrowingByCategory> getBorrowingUC(String campus, LocalDate beginDate, LocalDate endDate) {
+    public Stream<SpVdxBorrowingUC> getBorrowingUC(String campus, LocalDate beginDate, LocalDate endDate) {
         List<Object[]> results = em.createNativeQuery("call sp_vdx_borrowing_uc(?1, ?2, ?3)").setParameter(1, campus).setParameter(2, beginDate).setParameter(3, endDate).getResultList();
         return results.stream().map((Object[] values) -> {
             Assert.isTrue(values.length == 6, Constants.BAD_PROCEDURE_MSG);
             Assert.noNullElements(values, Constants.NULL_DATA_MSG);
-            return new SpVdxBorrowingByCategory(VdxCampus.fromCode(String.valueOf(values[0])).orElseThrow(() -> {
+            return new SpVdxBorrowingUC(VdxCampus.fromCode(String.valueOf(values[0])).orElseThrow(() -> {
                 return Constants.BAD_DATA_EX;
             }), String.valueOf(values[1]), String.valueOf(values[2]), VdxServiceType.fromCode(String.valueOf(values[3])).orElseThrow(() -> {
                 return Constants.BAD_DATA_EX;

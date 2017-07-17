@@ -28,7 +28,7 @@ public class SpVdxBorrowingOCLCRepository {
      * @throws IllegalArgumentException When the database contains null values
      * or unexpected campuses or categories. The DDL should forbid null values.
      */
-    public Stream<SpVdxBorrowingByCategory> getBorrowingOCLC(String campus, LocalDate beginDate, LocalDate endDate) {
+    public Stream<SpVdxBorrowingOCLC> getBorrowingOCLC(String campus, LocalDate beginDate, LocalDate endDate) {
         List<Object[]> results = em.createNativeQuery("call sp_vdx_borrowing_oclc(?1, ?2, ?3)")
                 .setParameter(1, campus)
                 .setParameter(2, beginDate)
@@ -37,7 +37,7 @@ public class SpVdxBorrowingOCLCRepository {
         return results.stream().map((Object[] values) -> {
             Assert.isTrue(values.length == 5, Constants.BAD_PROCEDURE_MSG);
             Assert.noNullElements(values, Constants.NULL_DATA_MSG);
-            return new SpVdxBorrowingByCategory(
+            return new SpVdxBorrowingOCLC(
                     VdxCampus.fromCode(String.valueOf(values[0])).orElseThrow(() -> {
                         return Constants.BAD_DATA_EX;
                     }),
@@ -46,7 +46,6 @@ public class SpVdxBorrowingOCLCRepository {
                     VdxServiceType.fromCode(String.valueOf(values[3])).orElseThrow(() -> {
                         return Constants.BAD_DATA_EX;
                     }),
-                    null,
                     Long.valueOf(String.valueOf(values[4])));
         });
     }
