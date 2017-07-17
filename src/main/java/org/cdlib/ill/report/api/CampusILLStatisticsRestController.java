@@ -7,10 +7,11 @@ import java.io.Writer;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingByCategory;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLCRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUCRepository;
 import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatron;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatronRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxCopyright;
@@ -65,8 +66,8 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
-        CsvSchema schema = mapper.schemaFor(SpVdxBorrowingByCategory.class).withHeader();
-        List<SpVdxBorrowingByCategory> data = spVdxBorrowingUCRepo.getBorrowingUC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        CsvSchema schema = mapper.schemaFor(SpVdxBorrowingUC.class).withHeader();
+        List<SpVdxBorrowingUC> data = spVdxBorrowingUCRepo.getBorrowingUC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 
@@ -76,8 +77,8 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
-        CsvSchema schema = mapper.schemaFor(SpVdxBorrowingByCategory.class).withHeader();
-        List<SpVdxBorrowingByCategory> data = spVdxBorrowingOCLCRepo.getBorrowingOCLC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        CsvSchema schema = mapper.schemaFor(SpVdxBorrowingOCLC.class).withHeader();
+        List<SpVdxBorrowingOCLC> data = spVdxBorrowingOCLCRepo.getBorrowingOCLC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 
