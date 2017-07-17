@@ -3,8 +3,6 @@ package org.cdlib.ill.report.vdx.procedures;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.YearSerializer;
-import java.time.Year;
 import java.util.Objects;
 import org.cdlib.ill.report.vdx.VdxBorrowerCategory;
 import org.cdlib.ill.report.vdx.VdxCampus;
@@ -30,8 +28,7 @@ public class SpVdxJournalBorrowing {
     @JsonProperty("journal title")
     private String reqTitle;
     @JsonProperty("publication year")
-    @JsonSerialize(using = YearSerializer.class)
-    private Year pubYear;
+    private String pubYear;
     @JsonProperty("volume/issue")
     private String reqIssueTitle;
     @JsonProperty("pages")
@@ -48,7 +45,7 @@ public class SpVdxJournalBorrowing {
             VdxCampus reqCampus,
             String reqName,
             String reqTitle,
-            Year pubYear,
+            String pubYear,
             String reqIssueTitle,
             String pagination,
             VdxBorrowerCategory borcat,
@@ -87,11 +84,11 @@ public class SpVdxJournalBorrowing {
         this.reqTitle = reqTitle;
     }
 
-    public Year getPubYear() {
+    public String getPubYear() {
         return pubYear;
     }
 
-    public void setPubYear(Year pubYear) {
+    public void setPubYear(String pubYear) {
         this.pubYear = pubYear;
     }
 

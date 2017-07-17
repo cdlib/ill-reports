@@ -1,7 +1,6 @@
 package org.cdlib.ill.report.vdx.procedures;
 
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.List;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
@@ -31,7 +30,7 @@ public class SpVdxCopyrightRepository {
             return new SpVdxCopyright(
                     VdxCampus.fromCode(String.valueOf(values[0])).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER),
                     String.valueOf(values[1]),
-                    Year.parse(String.valueOf(values[2])),
+                    String.valueOf(values[2]),
                     Long.valueOf(String.valueOf(values[3])));
         });
     }
