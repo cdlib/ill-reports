@@ -53,27 +53,31 @@
                 </p>
                 <dl th:if="${not #lists.isEmpty(report.institutionReports)}">
                     <dt>Borrowing Statistics</dt>
-                    <dd>Download UC Borrowing Report:
+                    <dd>Download UC Borrowing Statistics:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_uc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
-                    <dd>Download OCLC Borrowing Report:
+                    <dd>Download OCLC Borrowing Statistics:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_oclc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
-                    <dd>Download Borrowing Patron Report:
+                    <dd>Download Borrowing Patron Statistics:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_patron.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
                     <dt>Lending Statistics</dt>
-                    <dd>Download Lending Report:
+                    <dd>Download Lending Statistics:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
-                    <dd>Download Lending Patron Report:
+                    <dd>Download Lending Patron Statistics:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_patron.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
-                    <dt>Other Statistics</dt>
-                    <dd>Download Copyright Report:
+                    <dt>Lending Data</dt>
+                    <dd>Download Unfilled Lending Data:
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_unfilled.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                    </dd>
+                    <dt>Miscellaneous Reports</dt>
+                    <dd>Download Copyright Statistics:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/copyright.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
-                    <dd>Download Journal Borrowing Report:
+                    <dd>Download Journal Borrowing Statistics:
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/journal_borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </dd>
                 </dl>
