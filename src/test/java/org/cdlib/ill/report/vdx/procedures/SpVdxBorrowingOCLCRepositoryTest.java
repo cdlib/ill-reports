@@ -1,10 +1,8 @@
 package org.cdlib.ill.report.vdx.procedures;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxServiceType;
 import org.junit.Assert;
@@ -12,9 +10,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.internal.util.collections.Sets;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import static org.cdlib.ill.report.vdx.procedures.EntityManagerMockHelper.stubNativeQueryResultList;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SpVdxBorrowingOCLCRepositoryTest {
@@ -24,16 +23,9 @@ public class SpVdxBorrowingOCLCRepositoryTest {
     @InjectMocks
     private SpVdxBorrowingOCLCRepository repo;
 
-    private void setupSqlResult(List<Object[]> result) {
-        Query query = Mockito.mock(Query.class);
-        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
-        Mockito.doReturn(result).when(query).getResultList();
-        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
-    }
-
     @Test
     public void testGetBorrowingOCLC() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
                 new Object[]{"UCI", "Library B", "Library C", "Copy non returnable", "2"},
                 new Object[]{"UCI", "Library C", "Library D", "Copy non returnable", "3"},
@@ -51,7 +43,7 @@ public class SpVdxBorrowingOCLCRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingOCLCWhenProcedureGivesWrongOutputs() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1", "extra"},
                 new Object[]{"UCI", "Library B", "Library C", "Copy non returnable", "2", "extra"}
         ));
@@ -60,7 +52,7 @@ public class SpVdxBorrowingOCLCRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingOCLCWhenBorrowingLibraryNameIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
                 new Object[]{"UCI", null, "Library A", "Copy non returnable", "2"}
         ));
@@ -69,7 +61,7 @@ public class SpVdxBorrowingOCLCRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingOCLCWhenLendingLibraryNameIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
                 new Object[]{"UCI", "Library B", null, "Copy non returnable", "2"}
         ));
@@ -78,7 +70,7 @@ public class SpVdxBorrowingOCLCRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingOCLCWhenCampusIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
                 new Object[]{null, "Library B", "Library A", "Copy non returnable", "2"}
         ));
@@ -87,7 +79,7 @@ public class SpVdxBorrowingOCLCRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingOCLCWhenServiceTypeIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
                 new Object[]{"UCI", "Library B", "Library A", null, "2"}
         ));
@@ -96,7 +88,7 @@ public class SpVdxBorrowingOCLCRepositoryTest {
 
     @Test
     public void testGetBorrowingOCLCWhenCampusIsBlank() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
                 new Object[]{"", "Library B", "Library A", "Copy non returnable", "2"}
         ));
@@ -109,7 +101,7 @@ public class SpVdxBorrowingOCLCRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingOCLCWhenCampusIsNew() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
                 new Object[]{"UCZ", "Library B", "Library A", "Copy non returnable", "2"}
         ));
@@ -118,7 +110,7 @@ public class SpVdxBorrowingOCLCRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingOCLCWhenServiceTypeIsBlank() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCI", "Library A", "Library B", "", "1"},
                 new Object[]{"UCI", "Library B", "Library A", "", "2"}
         ));
@@ -127,7 +119,7 @@ public class SpVdxBorrowingOCLCRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetBorrowingOCLCWhenServiceTypeIsNew() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCI", "Library A", "Library B", "Replication", "1"},
                 new Object[]{"UCI", "Library B", "Library A", "Replication", "2"}
         ));
