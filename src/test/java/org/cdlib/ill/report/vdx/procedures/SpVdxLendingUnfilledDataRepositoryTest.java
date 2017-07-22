@@ -127,7 +127,7 @@ public class SpVdxLendingUnfilledDataRepositoryTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingUnfilledDetailWhenPublicationDateIsNull() {
+    public void testGetLendingUnfilledDetailWhenPublicationYearIsNull() {
         stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCI", "Library A", "UC Library", "Library B", "1", "The Title", "1999", "MIT Press", "on the shelf", "laziness", "Serial", "Loan"},
                 new Object[]{"UCI", "Library B", "UC Library", "Library A", "2", "The Title", null, "MIT Press", "on the shelf", "laziness", "Serial", "Loan"}
