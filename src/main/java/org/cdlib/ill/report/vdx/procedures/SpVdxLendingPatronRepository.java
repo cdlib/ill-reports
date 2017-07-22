@@ -1,7 +1,6 @@
 package org.cdlib.ill.report.vdx.procedures;
 
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.List;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
