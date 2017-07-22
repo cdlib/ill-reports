@@ -57,6 +57,15 @@ public class SpVdxLendingSummaryRepositoryTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void testGetLendingSummaryWhenProcedureGivesWrongOutputs() {
+        setupSqlResult(Arrays.asList(
+                new Object[]{"UCB", "Some Library", "", "1"},
+                new Object[]{"UCB", "Some Library", "", "1", "extra"}
+        ));
+        repo.getLendingSummary(null, null, null).collect(Collectors.toList());
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
     public void testGetLendingSummaryWhenLibraryNameIsNull() {
         setupSqlResult(Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
