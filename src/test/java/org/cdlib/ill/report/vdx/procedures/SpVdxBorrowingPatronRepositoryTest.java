@@ -38,6 +38,15 @@ public class SpVdxBorrowingPatronRepositoryTest {
         );
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetBorrowingPatronWhenProcedureGivesWrongOutput() {
+        stubNativeQueryResultList(em, Arrays.asList(
+                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
+                new Object[]{"UCD", "Library B", "Library A", "Loan", "Grad", "2", "extra"}
+        ));
+        repo.getBorrowingPatron(null, null, null).collect(Collectors.toSet());
+    }
+    
     @Test
     public void testGetBorrowingPatronWhenCampusIsBlank() {
         stubNativeQueryResultList(em, Arrays.asList(
