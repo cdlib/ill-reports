@@ -1,18 +1,16 @@
 package org.cdlib.ill.report.vdx.procedures;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxILLCategory;
+import static org.cdlib.ill.report.vdx.procedures.EntityManagerMockHelper.stubNativeQueryResultList;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.internal.util.collections.Sets;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -34,16 +32,9 @@ public class SpVdxLendingSummaryRepositoryTest {
     @InjectMocks
     private SpVdxLendingSummaryRepository repo;
 
-    private void setupSqlResult(List<Object[]> result) {
-        Query query = Mockito.mock(Query.class);
-        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
-        Mockito.doReturn(result).when(query).getResultList();
-        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
-    }
-
     @Test
     public void testGetLendingSummary() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "", "1"},
                 new Object[]{"UCD", "Library B", "I", "2"},
                 new Object[]{"UCLA", "Library C", "U", "3"}
@@ -58,16 +49,16 @@ public class SpVdxLendingSummaryRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingSummaryWhenProcedureGivesWrongOutputs() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"UCB", "Some Library", "", "1", "extra"}
         ));
         repo.getLendingSummary(null, null, null).collect(Collectors.toList());
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingSummaryWhenLibraryNameIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"UCB", null, "", "1"}
         ));
@@ -76,7 +67,7 @@ public class SpVdxLendingSummaryRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingSummaryWhenCampusIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{null, "Some Library", "", "1"}
         ));
@@ -85,7 +76,7 @@ public class SpVdxLendingSummaryRepositoryTest {
 
     @Test
     public void testGetLendingSummaryWhenCampusIsBlank() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"", "Some Library", "", "1"}
         ));
@@ -98,7 +89,7 @@ public class SpVdxLendingSummaryRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingSummaryWhenCampusIsNew() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"UCZ", "Some Library", "", "1"}
         ));
@@ -107,7 +98,7 @@ public class SpVdxLendingSummaryRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingSummaryWhenCategoryIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"UCB", "Some Library", null, "1"}
         ));
@@ -116,7 +107,7 @@ public class SpVdxLendingSummaryRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingSummaryWhenCategoryIsNew() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Some Library", "", "1"},
                 new Object[]{"UCB", "Some Library", "Z", "1"}
         ));

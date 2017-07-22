@@ -1,10 +1,8 @@
 package org.cdlib.ill.report.vdx.procedures;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxServiceType;
 import org.cdlib.ill.report.vdx.VdxShipDeliveryMethod;
@@ -13,9 +11,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.internal.util.collections.Sets;
 import org.mockito.junit.MockitoJUnitRunner;
+import static org.cdlib.ill.report.vdx.procedures.EntityManagerMockHelper.stubNativeQueryResultList;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SpVdxLendingRepositoryTest {
@@ -25,16 +23,9 @@ public class SpVdxLendingRepositoryTest {
     @InjectMocks
     private SpVdxLendingRepository repo;
 
-    private void setupSqlResult(List<Object[]> result) {
-        Query query = Mockito.mock(Query.class);
-        Mockito.doReturn(query).when(query).setParameter(Mockito.anyInt(), Mockito.any());
-        Mockito.doReturn(result).when(query).getResultList();
-        Mockito.doReturn(query).when(em).createNativeQuery(Mockito.any());
-    }
-
     @Test
     public void testGetLending() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{"UCB", "Library B", "UC Library", "Library C", "Loan", "Courier", "2"}
         ));
@@ -48,7 +39,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingWhenProcedureGivesWrongOutputs() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1", "extra"},
                 new Object[]{"UCB", "Library B", "UC Library", "Library C", "Loan", "Courier", "2", "extra"}
         ));
@@ -57,7 +48,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingWhenBorrowingLibraryNameIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{"UCB", null, "UC Library", "Library C", "Loan", "Courier", "2"}
         ));
@@ -66,7 +57,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingWhenLendingLibraryNameIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{"UCB", "Library B", "UC Library", null, "Loan", "Courier", "2"}
         ));
@@ -75,7 +66,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingWhenCampusIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{null, "Library B", "UC Library", "Library C", "Loan", "Courier", "2"}
         ));
@@ -84,7 +75,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingWhenServiceTypeIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{"UCB", "Library B", "UC Library", "Library C", null, "Courier", "2"}
         ));
@@ -93,7 +84,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingWhenDeliveryMethodIsNull() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{"UCB", "Library B", "UC Library", "Library C", "Loan", null, "2"}
         ));
@@ -102,7 +93,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test
     public void testGetLendingWhenCampusIsBlank() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{"", "Library B", "UC Library", "Library C", "Loan", "Courier", "2"}
         ));
@@ -116,7 +107,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingWhenCampusIsNew() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{"UCZ", "Library B", "UC Library", "Library C", "Loan", "Courier", "2"}
         ));
@@ -125,7 +116,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingWhenServiceTypeIsBlank() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{"UCB", "Library B", "UC Library", "Library C", "", "Courier", "2"}
         ));
@@ -134,7 +125,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingWhenServiceTypeIsNew() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{"UCB", "Library B", "UC Library", "Library C", "Replication", "Courier", "2"}
         ));
@@ -143,7 +134,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test
     public void testGetLendingWhenDeliveryMethodIsBlank() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{"UCB", "Library B", "UC Library", "Library C", "Loan", "", "2"}
         ));
@@ -157,7 +148,7 @@ public class SpVdxLendingRepositoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetLendingWhenDeliveryMethodIsNew() {
-        setupSqlResult(Arrays.asList(
+        stubNativeQueryResultList(em, Arrays.asList(
                 new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
                 new Object[]{"UCB", "Library B", "UC Library", "Library C", "Loan", "Drone", "2"}
         ));

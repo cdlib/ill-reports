@@ -1,14 +1,11 @@
 package org.cdlib.ill.report.vdx.procedures;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import org.cdlib.ill.report.vdx.VdxCampus;
-import org.cdlib.ill.report.vdx.VdxServiceType;
 import static org.cdlib.ill.report.vdx.procedures.EntityManagerMockHelper.stubNativeQueryResultList;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
