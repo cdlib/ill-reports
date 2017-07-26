@@ -14,6 +14,8 @@ import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatron;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatronRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUnfilledSummary;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUnfilledSummaryRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxCopyright;
 import org.cdlib.ill.report.vdx.procedures.SpVdxCopyrightRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxJournalBorrowing;
@@ -35,10 +37,8 @@ import org.springframework.web.bind.annotation.RestController;
  * TODO: Throw an exception => 400 when the campus is not an enumerated value &
  * unit test.
  *
- * TODO: Unit test the marshalling for expected column names & column order.
- *
  * TODO: Refactor redundant CSV marshalling.
- * 
+ *
  * @author mmorrisp
  */
 @RestController
@@ -59,9 +59,11 @@ public class CampusILLStatisticsRestController {
     private SpVdxBorrowingPatronRepository spVdxBorrowingPatronRepo;
     @Autowired
     private SpVdxLendingPatronRepository spVdxLendingPatronRepo;
+    @Autowired
+    private SpVdxBorrowingUnfilledSummaryRepository spVdxBorrowingUnfilledSummaryRepo;
 
     @RequestMapping(value = "{campusCode}/borrowing_uc.csv", produces = {"text/csv"})
-    public void getVdxBorrowingUCCsv(Writer output,
+    public void getVdxBorrowingUC(Writer output,
             @PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
@@ -72,7 +74,7 @@ public class CampusILLStatisticsRestController {
     }
 
     @RequestMapping(value = "{campusCode}/borrowing_oclc.csv", produces = {"text/csv"})
-    public void getVdxBorrowingOCLCCsv(Writer output,
+    public void getVdxBorrowingOCLC(Writer output,
             @PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
@@ -83,7 +85,7 @@ public class CampusILLStatisticsRestController {
     }
 
     @RequestMapping(value = "{campusCode}/lending.csv", produces = {"text/csv"})
-    public void getVdxLendingCsv(Writer output,
+    public void getVdxLending(Writer output,
             @PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
@@ -94,7 +96,7 @@ public class CampusILLStatisticsRestController {
     }
 
     @RequestMapping(value = "{campusCode}/copyright.csv", produces = {"text/csv"})
-    public void getVdxCopyrightCsv(Writer output,
+    public void getVdxCopyright(Writer output,
             @PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
@@ -105,7 +107,7 @@ public class CampusILLStatisticsRestController {
     }
 
     @RequestMapping(value = "{campusCode}/journal_borrowing.csv", produces = {"text/csv"})
-    public void getVdxJournalBorrowingCsv(Writer output,
+    public void getVdxJournalBorrowing(Writer output,
             @PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
@@ -114,7 +116,7 @@ public class CampusILLStatisticsRestController {
         List<SpVdxJournalBorrowing> data = spVdxJournalBorrowingRepo.getJournalBorrowing(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
-    
+
     @RequestMapping(value = "{campusCode}/borrowing_patron.csv", produces = {"text/csv"})
     public void getVdxBorrowingPatron(Writer output,
             @PathVariable("campusCode") String campusCode,
@@ -125,7 +127,7 @@ public class CampusILLStatisticsRestController {
         List<SpVdxBorrowingPatron> data = spVdxBorrowingPatronRepo.getBorrowingPatron(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
-    
+
     @RequestMapping(value = "{campusCode}/lending_patron.csv", produces = {"text/csv"})
     public void getVdxLendingPatron(Writer output,
             @PathVariable("campusCode") String campusCode,
@@ -134,6 +136,17 @@ public class CampusILLStatisticsRestController {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxLendingPatron.class).withHeader();
         List<SpVdxLendingPatron> data = spVdxLendingPatronRepo.getLendingPatron(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        mapper.writer(schema).writeValue(output, data);
+    }
+
+    @RequestMapping(value = "{campusCode}/borrowing_unfilled.csv", produces = {"text/csv"})
+    public void getVdxBorrowingUnfilled(Writer output,
+            @PathVariable("campusCode") String campusCode,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(SpVdxBorrowingUnfilledSummary.class).withHeader();
+        List<SpVdxBorrowingUnfilledSummary> data = spVdxBorrowingUnfilledSummaryRepo.getBorrowingUnfilledSummary(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 }
