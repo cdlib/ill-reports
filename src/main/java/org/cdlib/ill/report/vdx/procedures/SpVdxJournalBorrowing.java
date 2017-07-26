@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Objects;
 import org.cdlib.ill.report.vdx.VdxBorrowerCategory;
+import org.cdlib.ill.report.vdx.VdxBorrowerCategorySerializer;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxCampusSerializer;
 
@@ -34,6 +35,7 @@ public class SpVdxJournalBorrowing {
     @JsonProperty("pages")
     private String pagination;
     @JsonProperty("patron category")
+    @JsonSerialize(using = VdxBorrowerCategorySerializer.class)
     private VdxBorrowerCategory borcat;
     @JsonProperty("total")
     private Long count;
