@@ -14,6 +14,8 @@ import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatron;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatronRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTat;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTatRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUnfilledSummary;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUnfilledSummaryRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxCopyright;
@@ -61,6 +63,8 @@ public class CampusILLStatisticsRestController {
     private SpVdxLendingPatronRepository spVdxLendingPatronRepo;
     @Autowired
     private SpVdxBorrowingUnfilledSummaryRepository spVdxBorrowingUnfilledSummaryRepo;
+    @Autowired
+    private SpVdxBorrowingTatRepository spVdxBorrowingTatRepo;
 
     @RequestMapping(value = "{campusCode}/borrowing_uc.csv", produces = {"text/csv"})
     public void getVdxBorrowingUC(Writer output,
@@ -147,6 +151,17 @@ public class CampusILLStatisticsRestController {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxBorrowingUnfilledSummary.class).withHeader();
         List<SpVdxBorrowingUnfilledSummary> data = spVdxBorrowingUnfilledSummaryRepo.getBorrowingUnfilledSummary(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        mapper.writer(schema).writeValue(output, data);
+    }
+
+    @RequestMapping(value = "{campusCode}/borrowing_tat.csv", produces = {"text/csv"})
+    public void getVdxBorrowingTat(Writer output,
+            @PathVariable("campusCode") String campusCode,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(SpVdxBorrowingTat.class).withHeader();
+        List<SpVdxBorrowingTat> data = spVdxBorrowingTatRepo.getBorrowingTat(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 }

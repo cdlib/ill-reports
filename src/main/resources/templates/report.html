@@ -198,7 +198,9 @@
                     <div class="col-sm-6">
                         <div class="row">
                             <div class="col-xs-6"><h4>Borrowing Turnaround Time Statistics</h4></div>
-                            <div class="col-xs-6 h4">[link]</div>
+                            <div class="col-xs-6 h4">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_tat.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            </div>
                             <div class="col-xs-12">
                                 Turn-around time for borrowing by campus, library, service type, ship delivery method.
                             </div>
