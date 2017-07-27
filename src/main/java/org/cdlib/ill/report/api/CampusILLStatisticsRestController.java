@@ -26,6 +26,8 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatron;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatronRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingTat;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingTatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,6 +67,8 @@ public class CampusILLStatisticsRestController {
     private SpVdxBorrowingUnfilledSummaryRepository spVdxBorrowingUnfilledSummaryRepo;
     @Autowired
     private SpVdxBorrowingTatRepository spVdxBorrowingTatRepo;
+    @Autowired
+    private SpVdxLendingTatRepository spVdxLendingTatRepo;
 
     @RequestMapping(value = "{campusCode}/borrowing_uc.csv", produces = {"text/csv"})
     public void getVdxBorrowingUC(Writer output,
@@ -162,6 +166,17 @@ public class CampusILLStatisticsRestController {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxBorrowingTat.class).withHeader();
         List<SpVdxBorrowingTat> data = spVdxBorrowingTatRepo.getBorrowingTat(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        mapper.writer(schema).writeValue(output, data);
+    }
+
+    @RequestMapping(value = "{campusCode}/lending_tat.csv", produces = {"text/csv"})
+    public void getVdxLendingTat(Writer output,
+            @PathVariable("campusCode") String campusCode,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(SpVdxLendingTat.class).withHeader();
+        List<SpVdxLendingTat> data = spVdxLendingTatRepo.getLendingTat(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 }
