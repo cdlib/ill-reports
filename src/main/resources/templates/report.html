@@ -13,29 +13,32 @@
         <div class="container">
             <br/>
             <p class="text-center"><img src="CDL_Logo.png" class="banner" alt="University of California - California Digital Library" /></p>
-            <h1 class="page-header">ILL Reports (VDX)</h1>
-
+            <h1 class="page-header">ILL Reports</h1>
             <div class="hidden-print">
                 <h2>Search</h2>
                 <form action="/#results" method="post">
                     <div class="row">
                         <div class="col-sm-4">
-                            <label for="campus">Location</label><br/>
+                            <label for="campus">Campus</label><br/>
                             <select id="campus" name="campus" class="form-control">
-                                <option value="">All Campuses</option>
+                                <option value="">Please select your campus</option>
                                 <option th:each="campus : ${campuses}" th:value="${campus.code}" th:text="${campus.description}" th:selected="${campus.code eq campusDefault}"></option>
                             </select>
                         </div>
                         <div class="col-sm-3">
                             <label for="from">Begin Date</label><br/>
-                            <input id="from" name="from" class="form-control" type="text" placeholder="YYYY-MM-DD" th:value="${searchStartDate}" required="required" />
+                            <input id="from" name="from" class="form-control" type="text" placeholder="YYYY-MM-DD" th:value="${searchStartDate}" required="required" aria-describedby="beginDateDescr"/>
+                            <p id="beginDateDescr" class="text-muted">Please enter date as YYYY&#8209;MM&#8209;DD.</p>
                         </div>
                         <div class="col-sm-3">
                             <label for="to">End Date</label><br/>
-                            <input id="to" name="to" class="form-control" type="text" placeholder="YYYY-MM-DD" th:value="${searchEndDate}" required="required" />
+                            <input id="to" name="to" class="form-control" type="text" placeholder="YYYY-MM-DD" th:value="${searchEndDate}" required="required" aria-describedby="endDateDescr"/>
+                            <p id="endDateDescr" class="text-muted">Please enter date as YYYY&#8209;MM&#8209;DD.</p>
                         </div>
                     </div>
-                    <br/>
+                    <p>
+                        <strong>Note:</strong> Some loans take several days to fill. Reports covering the last few business days could change on a daily basis.
+                    </p>
                     <div class="row">
                         <div class="col-xs-12">
                             <input name="command" type="submit" value="Search" class="btn" />
@@ -48,42 +51,7 @@
 
             <section class="page-break" th:each="report : ${reports}">
                 <h2 th:text="|${report.campusCode} (${searchStartDate} &mdash; ${searchEndDate})|"></h2>
-                <p th:if="${#lists.isEmpty(report.institutionReports)}">
-                    <em>No borrowing or lending to show.</em>
-                </p>
-                <dl th:if="${not #lists.isEmpty(report.institutionReports)}">
-                    <dt>Borrowing Statistics</dt>
-                    <dd>Download UC Borrowing Statistics:
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_uc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                    </dd>
-                    <dd>Download OCLC Borrowing Statistics:
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_oclc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                    </dd>
-                    <dd>Download Borrowing Patron Statistics:
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_patron.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                    </dd>
-                    <dd>Download Unfilled Borrowing Statistics:
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_unfilled.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                    </dd>
-                    <dt>Lending Statistics</dt>
-                    <dd>Download Lending Statistics:
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                    </dd>
-                    <dd>Download Lending Patron Statistics:
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_patron.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                    </dd>
-                    <dt>Lending Data</dt>
-                    <dd>Download Unfilled Lending Data:
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_unfilled.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                    </dd>
-                    <dt>Miscellaneous Statistics</dt>
-                    <dd>Download Copyright Statistics:
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/copyright.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                    </dd>
-                    <dd>Download Journal Borrowing Statistics:
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/journal_borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                    </dd>
-                </dl>
+
                 <table class="table">
                     <caption>Summary Statistics
                     </caption>
@@ -132,6 +100,165 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <h3>Data Extract</h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Borrowing Data Extract</h4></div>
+                            <div class="col-xs-6 h4">[link]</div>
+                            <div class="col-xs-12">
+                                Data extract with all fields for download or analysis.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Lending Data Extract</h4></div>
+                            <div class="col-xs-6 h4">[link]</div>
+                            <div class="col-xs-12">
+                                Data extract with all fields for download or analysis.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Service &amp; Delivery Statistics</h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>UC Borrowing Statistics</h4></div>
+                            <div class="col-xs-6 h4">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_uc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            </div>
+                            <div class="col-xs-12">
+                                Borrowing from UC by campus, library, responder, service type, ship delivery method.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6"><h4>OCLC Borrowing Statistics</h4></div>
+                            <div class="col-xs-6 h4">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_oclc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            </div>
+                            <div class="col-xs-12">
+                                Borrowing from OCLC by campus, library, responder, service type.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Lending Statistics</h4></div>
+                            <div class="col-xs-6 h4">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            </div>
+                            <div class="col-xs-12">
+                                Summary of lending by campus, library, requester library type, requester location, service type, ship delivery method.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <h3>Patron Category Statistics</h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Borrowing Patron Statistics</h4></div>
+                            <div class="col-xs-6 h4">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_patron.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            </div>
+                            <div class="col-xs-12">
+                                Summary of borrowing by campus, library, responder, service type, patron category.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Lending Patron Statistics</h4></div>
+                            <div class="col-xs-6 h4">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_patron.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            </div>
+                            <div class="col-xs-12">
+                                Summary of lending by campus, library, requester, service type, patron category.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <h3>Turnaround Time Statistics</h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Borrowing Turnaround Time Statistics</h4></div>
+                            <div class="col-xs-6 h4">[link]</div>
+                            <div class="col-xs-12">[description]</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Lending Turnaround Time Statistics</h4></div>
+                            <div class="col-xs-6 h4">[link]</div>
+                            <div class="col-xs-12">[description]</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Lending Turnaround Time Borrower Statistics</h4></div>
+                            <div class="col-xs-6 h4">[link]</div>
+                            <div class="col-xs-12">[description]</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Unfilled Loans</h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Unfilled Borrowing Summary Statistics</h4></div>
+                            <div class="col-xs-6 h4">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_unfilled.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            </div>
+                            <div class="col-xs-12">
+                                Summary of unfilled borrowing requests by campus, library, service type.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Unfilled Lending Detail</h4></div>
+                            <div class="col-xs-6 h4">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_unfilled.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            </div>
+                            <div class="col-xs-12">
+                                Unfilled lending requests sorted by campus, library, requester library type, requester location, illno.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Other Reports</h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Copyright Clearance Report</h4></div>
+                            <div class="col-xs-6 h4">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/copyright.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            </div>
+                            <div class="col-xs-12">
+                                Copy non returnable requests by title and year of publication.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Interlibrary Journal Borrowing Report</h4></div>
+                            <div class="col-xs-6 h4">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/journal_borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>    
+                            </div>
+                            <div class="col-xs-12">
+                                Copy non returnable requests by title, year, issue title, pagination, and patron category.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <hr class="hidden-print" />
             </section>
         </div>
