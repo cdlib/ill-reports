@@ -15,6 +15,9 @@
             <p class="text-center"><img src="CDL_Logo.png" class="banner" alt="University of California - California Digital Library" /></p>
             <h1 class="page-header">ILL Reports</h1>
             <p>Reports are generated from a snapshot of the VDX production database, current to within 24-48 hours. The database includes active and archived ILL records, 2003 to present.</p>
+            <p>
+                <strong>Note:</strong> Some loans take several days to fill. Reports covering the last few business days could change on a daily basis.
+            </p>
             <div class="hidden-print">
                 <h2>Search</h2>
                 <form action="/#results" method="post">
@@ -37,9 +40,6 @@
                             <p id="endDateDescr" class="text-muted">Please enter date as YYYY&#8209;MM&#8209;DD.</p>
                         </div>
                     </div>
-                    <p>
-                        <strong>Note:</strong> Some loans take several days to fill. Reports covering the last few business days could change on a daily basis.
-                    </p>
                     <div class="row">
                         <div class="col-xs-12">
                             <input name="command" type="submit" value="Search" class="btn" />
@@ -54,8 +54,7 @@
                 <h2 th:text="|${report.campusCode} (${searchStartDate} &mdash; ${searchEndDate})|"></h2>
 
                 <table class="table">
-                    <caption>Summary Statistics
-                    </caption>
+                    <caption>Summary of Borrowing and Lending</caption>
                     <thead>
                         <tr>
                             <th scope="col">Library</th>
@@ -274,7 +273,7 @@
                                 [link]    
                             </div>
                             <div class="col-xs-12">
-                                
+                                [description]
                             </div>
                         </div>
                     </div>
