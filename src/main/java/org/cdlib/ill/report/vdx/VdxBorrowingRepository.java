@@ -14,11 +14,11 @@ public class VdxBorrowingRepository {
     @Autowired
     private EntityManager em;
 
-    public List<VdxBorrowing> getVdxBorrowing(String campus, LocalDate beginDate, LocalDate endDate) {
-        return em.createNativeQuery("call sp_vdx_borrowing_data_extract(?1, ?2, ?3)", VdxBorrowing.class)
-                .setParameter(1, campus)
-                .setParameter(2, beginDate)
-                .setParameter(3, endDate)
+    public List<VdxBorrowing> getVdxBorrowing(VdxCampus campus, LocalDate beginDate, LocalDate endDate) {
+        return em.createQuery("select b from VdxBorrowing b where b.borrower.campus = :campus and b.entryDate >= :beginDate and b.entryDate < :endDate", VdxBorrowing.class)
+                .setParameter("campus", campus)
+                .setParameter("beginDate", beginDate.atStartOfDay())
+                .setParameter("endDate", endDate.atStartOfDay())
                 .getResultList();
     }
 

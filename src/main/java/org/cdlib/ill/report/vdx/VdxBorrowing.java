@@ -1,7 +1,8 @@
 package org.cdlib.ill.report.vdx;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,13 +14,9 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.cdlib.ill.report.api.PreferredLocalDateFormatSerializer;
+import org.cdlib.ill.report.api.PreferredLocalDateTimeFormatSerializer;
 
-/**
- * A reduced mapping of the vdx_borrowing table in MySQL. Many columns are
- * omitted.
- *
- * @author mmorrisp
- */
 @Entity
 @Table(name = "vdx_borrowing")
 public class VdxBorrowing implements Serializable {
@@ -27,16 +24,18 @@ public class VdxBorrowing implements Serializable {
     @Id
     @Column(nullable = false)
     private Long illno;
-
-    @JsonIgnore
+    
+    @JsonProperty("rec_date")
     @Column(name = "rec_date", nullable = true)
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate recDate;
 
-    @JsonIgnore
+    @JsonProperty("entry_date")
     @Column(name = "entry_date", nullable = false)
+    @JsonSerialize(using = PreferredLocalDateTimeFormatSerializer.class)
     private LocalDateTime entryDate;
 
-    @JsonUnwrapped(prefix = "borrower_")
+    @JsonUnwrapped(prefix = "req_")
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "name", column = @Column(name = "req_name", nullable = false))
@@ -47,7 +46,7 @@ public class VdxBorrowing implements Serializable {
     })
     private VdxHolder borrower;
 
-    @JsonUnwrapped(prefix = "lender_")
+    @JsonUnwrapped(prefix = "resp_")
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "name", column = @Column(name = "resp_name", nullable = false))

@@ -14,7 +14,7 @@ public class VdxLendingRepository {
     @Autowired
     private EntityManager em;
 
-    public List<VdxLending> getVdxLending(String campus, LocalDate beginDate, LocalDate endDate) {
+    public List<VdxLending> getVdxLending(VdxCampus campus, LocalDate beginDate, LocalDate endDate) {
         return em.createNativeQuery("call sp_vdx_lending_data_extract(?1, ?2, ?3)", VdxLending.class)
                 .setParameter(1, campus)
                 .setParameter(2, beginDate)
