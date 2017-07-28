@@ -19,7 +19,7 @@ import org.cdlib.ill.report.api.PreferredLocalDateTimeFormatSerializer;
 public abstract class VdxData {
 
     @Id
-    @Column(nullable = false)
+    @Column(name = "illno", nullable = false)
     protected Long illno;
 
     @JsonProperty("rec_date")
@@ -79,6 +79,16 @@ public abstract class VdxData {
 
     @Column(name = "role", nullable = false)
     private String role;
+
+    @JsonProperty("servicetp")
+    @Column(name = "servicetp", nullable = false)
+    @JsonSerialize(using = VdxServiceTypeSerializer.class)
+    private VdxServiceType servicetp;
+
+    @JsonProperty("req_servicetp")
+    @Column(name = "req_servicetp", nullable = false)
+    @JsonSerialize(using = VdxServiceTypeSerializer.class)
+    private VdxServiceType reqServicetp;
 
     @JsonUnwrapped(prefix = "req_")
     @Embedded
@@ -208,6 +218,22 @@ public abstract class VdxData {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public VdxServiceType getServicetp() {
+        return servicetp;
+    }
+
+    public void setServicetp(VdxServiceType servicetp) {
+        this.servicetp = servicetp;
+    }
+
+    public VdxServiceType getReqServicetp() {
+        return reqServicetp;
+    }
+
+    public void setReqServicetp(VdxServiceType reqServicetp) {
+        this.reqServicetp = reqServicetp;
     }
 
     public VdxHolder getBorrower() {
