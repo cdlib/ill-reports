@@ -15,10 +15,10 @@ public class VdxLendingRepository {
     private EntityManager em;
 
     public List<VdxLending> getVdxLending(VdxCampus campus, LocalDate beginDate, LocalDate endDate) {
-        return em.createNativeQuery("call sp_vdx_lending_data_extract(?1, ?2, ?3)", VdxLending.class)
-                .setParameter(1, campus)
-                .setParameter(2, beginDate)
-                .setParameter(3, endDate)
+        return em.createQuery("select l from VdxLending l where l.lender.campus = :campus and l.entryDate >= :beginDate and l.entryDate < :endDate", VdxLending.class)
+                .setParameter("campus", campus)
+                .setParameter("beginDate", beginDate.atStartOfDay())
+                .setParameter("endDate", endDate.atStartOfDay())
                 .getResultList();
     }
 }
