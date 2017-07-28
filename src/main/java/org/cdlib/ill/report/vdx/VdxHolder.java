@@ -18,6 +18,10 @@ public class VdxHolder implements Serializable {
     @Column(nullable = false)
     private String name;
 
+    @JsonProperty("symbol")
+    @Column(nullable = false)
+    private String symbol;
+
     @JsonProperty("campus")
     @Column(nullable = false)
     private VdxCampus campus;
@@ -32,6 +36,14 @@ public class VdxHolder implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public VdxCampus getCampus() {

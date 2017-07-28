@@ -32,10 +32,15 @@ public abstract class VdxData {
     @JsonSerialize(using = PreferredLocalDateTimeFormatSerializer.class)
     private LocalDateTime entryDate;
 
+    @Column(name = "role", nullable = false)
+    private String role;
+
     @JsonUnwrapped(prefix = "req_")
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "name", column = @Column(name = "req_name", nullable = false))
+        ,
+        @AttributeOverride(name = "symbol", column = @Column(name = "req_symbol", nullable = false))
         ,
         @AttributeOverride(name = "campus", column = @Column(name = "req_campus", nullable = false))
         ,
@@ -47,6 +52,8 @@ public abstract class VdxData {
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "name", column = @Column(name = "resp_name", nullable = false))
+        ,
+        @AttributeOverride(name = "symbol", column = @Column(name = "resp_symbol", nullable = false))
         ,
         @AttributeOverride(name = "campus", column = @Column(name = "resp_campus", nullable = false))
         ,
@@ -76,6 +83,14 @@ public abstract class VdxData {
 
     public void setEntryDate(LocalDateTime entryDate) {
         this.entryDate = entryDate;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public VdxHolder getBorrower() {
