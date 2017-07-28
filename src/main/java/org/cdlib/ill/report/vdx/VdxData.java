@@ -47,6 +47,36 @@ public abstract class VdxData {
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate dateShipped;
 
+    @JsonProperty("due_date")
+    @Column(name = "due_date", nullable = true)
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
+    private LocalDate dueDate;
+
+    @JsonProperty("local_due_date")
+    @Column(name = "local_due_date", nullable = true)
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
+    private LocalDate localDueDate;
+
+    @JsonProperty("answer_date")
+    @Column(name = "answer_date", nullable = true)
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
+    private LocalDate answerDate;
+
+    @JsonProperty("return_date")
+    @Column(name = "return_date", nullable = true)
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
+    private LocalDate returnDate;
+
+    @JsonProperty("checkin_date")
+    @Column(name = "checkin_date", nullable = true)
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
+    private LocalDate checkinDate;
+
+    @JsonProperty("termination_date")
+    @Column(name = "termination_date", nullable = true)
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
+    private LocalDate terminationDate;
+
     @Column(name = "role", nullable = false)
     private String role;
 
@@ -122,6 +152,54 @@ public abstract class VdxData {
 
     public void setDateShipped(LocalDate dateShipped) {
         this.dateShipped = dateShipped;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public LocalDate getLocalDueDate() {
+        return localDueDate;
+    }
+
+    public void setLocalDueDate(LocalDate localDueDate) {
+        this.localDueDate = localDueDate;
+    }
+
+    public LocalDate getAnswerDate() {
+        return answerDate;
+    }
+
+    public void setAnswerDate(LocalDate answerDate) {
+        this.answerDate = answerDate;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public LocalDate getCheckinDate() {
+        return checkinDate;
+    }
+
+    public void setCheckinDate(LocalDate checkinDate) {
+        this.checkinDate = checkinDate;
+    }
+
+    public LocalDate getTerminationDate() {
+        return terminationDate;
+    }
+
+    public void setTerminationDate(LocalDate terminationDate) {
+        this.terminationDate = terminationDate;
     }
 
     public String getRole() {
