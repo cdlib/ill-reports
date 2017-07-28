@@ -105,7 +105,22 @@
 
                 <div class="row">
                     <div class="col-sm-4"><strong>Borrowing Data Extract</strong></div>
-                    <div class="col-sm-2">[link]</div>
+                    <div class="col-sm-2">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
+                        {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                    </div>
+                    <div class="col-sm-6">
+                        Data extract with all fields for download or analysis.
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4"><strong>Lending Data Extract</strong></div>
+                    <div class="col-sm-2">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
+                        {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                    </div>
                     <div class="col-sm-6">
                         Data extract with all fields for download or analysis.
                     </div>
@@ -115,13 +130,6 @@
                     <div class="col-sm-2">[link]</div>
                     <div class="col-sm-6">
                         [description]
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4"><strong>Lending Data Extract</strong></div>
-                    <div class="col-sm-2">[link]</div>
-                    <div class="col-sm-6">
-                        Data extract with all fields for download or analysis.
                     </div>
                 </div>
 
