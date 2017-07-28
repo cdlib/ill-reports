@@ -32,6 +32,21 @@ public abstract class VdxData {
     @JsonSerialize(using = PreferredLocalDateTimeFormatSerializer.class)
     private LocalDateTime entryDate;
 
+    @JsonProperty("need_date")
+    @Column(name = "need_date", nullable = true)
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
+    private LocalDate needDate;
+
+    @JsonProperty("expiry_date")
+    @Column(name = "expiry_date", nullable = true)
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
+    private LocalDate expiryDate;
+
+    @JsonProperty("date_shipped")
+    @Column(name = "date_shipped", nullable = true)
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
+    private LocalDate dateShipped;
+
     @Column(name = "role", nullable = false)
     private String role;
 
@@ -83,6 +98,30 @@ public abstract class VdxData {
 
     public void setEntryDate(LocalDateTime entryDate) {
         this.entryDate = entryDate;
+    }
+
+    public LocalDate getNeedDate() {
+        return needDate;
+    }
+
+    public void setNeedDate(LocalDate needDate) {
+        this.needDate = needDate;
+    }
+
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    public LocalDate getDateShipped() {
+        return dateShipped;
+    }
+
+    public void setDateShipped(LocalDate dateShipped) {
+        this.dateShipped = dateShipped;
     }
 
     public String getRole() {
