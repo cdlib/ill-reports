@@ -90,6 +90,24 @@ public abstract class VdxData {
     @JsonSerialize(using = VdxServiceTypeSerializer.class)
     private VdxServiceType reqServicetp;
 
+    @JsonProperty("ship_delivery_method")
+    @Column(name = "ship_delivery_method", nullable = false)
+    @JsonSerialize(using = VdxShipDeliveryMethodSerializer.class)
+    private VdxShipDeliveryMethod shipDeliveryMethod;
+
+    @JsonProperty("ship_delivery_method_text")
+    @Column(name = "ship_delivery_method_text", nullable = false)
+    private String shipDeliveryMethodText;
+
+    @JsonProperty("req_delivery_method")
+    @Column(name = "req_delivery_method", nullable = false)
+    @JsonSerialize(using = VdxShipDeliveryMethodSerializer.class)
+    private VdxShipDeliveryMethod reqDeliveryMethod;
+
+    @JsonProperty("req_delivery_method_text")
+    @Column(name = "req_delivery_method_text", nullable = false)
+    private String reqDeliveryMethodText;
+
     @JsonUnwrapped(prefix = "req_")
     @Embedded
     @AttributeOverrides({
@@ -234,6 +252,38 @@ public abstract class VdxData {
 
     public void setReqServicetp(VdxServiceType reqServicetp) {
         this.reqServicetp = reqServicetp;
+    }
+
+    public VdxShipDeliveryMethod getShipDeliveryMethod() {
+        return shipDeliveryMethod;
+    }
+
+    public void setShipDeliveryMethod(VdxShipDeliveryMethod shipDeliveryMethod) {
+        this.shipDeliveryMethod = shipDeliveryMethod;
+    }
+
+    public String getShipDeliveryMethodText() {
+        return shipDeliveryMethodText;
+    }
+
+    public void setShipDeliveryMethodText(String shipDeliveryMethodText) {
+        this.shipDeliveryMethodText = shipDeliveryMethodText;
+    }
+
+    public VdxShipDeliveryMethod getReqDeliveryMethod() {
+        return reqDeliveryMethod;
+    }
+
+    public void setReqDeliveryMethod(VdxShipDeliveryMethod reqDeliveryMethod) {
+        this.reqDeliveryMethod = reqDeliveryMethod;
+    }
+
+    public String getReqDeliveryMethodText() {
+        return reqDeliveryMethodText;
+    }
+
+    public void setReqDeliveryMethodText(String reqDeliveryMethodText) {
+        this.reqDeliveryMethodText = reqDeliveryMethodText;
     }
 
     public VdxHolder getBorrower() {
