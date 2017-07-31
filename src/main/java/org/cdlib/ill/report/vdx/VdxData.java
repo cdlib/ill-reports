@@ -197,18 +197,53 @@ public abstract class VdxData {
     @JsonProperty("resp_id_string")
     private String respIdString;
 
-    @Column(name="oclc_control_number", nullable = false)
+    @Column(name = "oclc_control_number", nullable = false)
     @JsonProperty("oclc_control_number")
     private String oclcControlNumber;
-    
-    @Column(name="borrower_state", nullable = false)
+
+    @Column(name = "borrower_state", nullable = false)
     @JsonProperty("borrower_state")
     private String borrowerState;
-    
-    @Column(name="delivery_address", nullable = true)
+
+    @Column(name = "delivery_address", nullable = true)
     @JsonProperty("delivery_address")
     private Long deliveryAddress;
-    
+
+    @Column(name = "not_supplied_date", nullable = true)
+    @JsonProperty("not_supplied_date")
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
+    private LocalDate notSuppliedDate;
+
+    @Column(name = "pub_year", nullable = false)
+    @JsonProperty("pub_year")
+    private String pubYear;
+
+    @Column(name = "brokered", nullable = false)
+    @JsonProperty("brokered")
+    private String brokered;
+
+    @Column(name = "parent_illno", nullable = true)
+    @JsonProperty("parent_illno")
+    private Long parent_illno;
+
+    @Column(name = "parent_tgq", nullable = false)
+    @JsonProperty("parent_tgq")
+    private String parentTgq;
+
+    @Column(name = "client_name", nullable = false)
+    @JsonIgnore
+    private String clientName;
+
+    @Column(name = "date_completed", nullable = true)
+    @JsonProperty("date_completed")
+    @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
+    private LocalDate dateCompleted;
+
+    @Column(name = "ts", nullable = false)
+    @JsonProperty("ts")
+    @JsonSerialize(using = PreferredLocalDateTimeFormatSerializer.class)
+    private LocalDateTime ts;
+
     @Embedded
     @JsonUnwrapped
     private VdxMoney money;
@@ -589,6 +624,70 @@ public abstract class VdxData {
 
     public void setDeliveryAddress(Long deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
+    }
+
+    public LocalDate getNotSuppliedDate() {
+        return notSuppliedDate;
+    }
+
+    public void setNotSuppliedDate(LocalDate notSuppliedDate) {
+        this.notSuppliedDate = notSuppliedDate;
+    }
+
+    public String getPubYear() {
+        return pubYear;
+    }
+
+    public void setPubYear(String pubYear) {
+        this.pubYear = pubYear;
+    }
+
+    public String getBrokered() {
+        return brokered;
+    }
+
+    public void setBrokered(String brokered) {
+        this.brokered = brokered;
+    }
+
+    public Long getParent_illno() {
+        return parent_illno;
+    }
+
+    public void setParent_illno(Long parent_illno) {
+        this.parent_illno = parent_illno;
+    }
+
+    public String getParentTgq() {
+        return parentTgq;
+    }
+
+    public void setParentTgq(String parentTgq) {
+        this.parentTgq = parentTgq;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public LocalDate getDateCompleted() {
+        return dateCompleted;
+    }
+
+    public void setDateCompleted(LocalDate dateCompleted) {
+        this.dateCompleted = dateCompleted;
+    }
+
+    public LocalDateTime getTs() {
+        return ts;
+    }
+
+    public void setTs(LocalDateTime ts) {
+        this.ts = ts;
     }
 
     public VdxMoney getMoney() {
