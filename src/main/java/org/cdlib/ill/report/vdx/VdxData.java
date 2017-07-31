@@ -122,6 +122,19 @@ public abstract class VdxData {
     @Column(name = "req_delivery_method_text", nullable = false)
     private String reqDeliveryMethodText;
 
+    @JsonProperty("borcat")
+    @Column(name = "borcat", nullable = false)
+    @JsonSerialize(using = VdxBorrowerCategorySerializer.class)
+    private VdxBorrowerCategory borcat;
+
+    @JsonProperty("uc_dept")
+    @Column(name = "uc_dept", nullable = false)
+    private String ucDept;
+
+    @JsonProperty("tgq")
+    @Column(name = "tgq", nullable = false)
+    private String tgq;
+
     @JsonUnwrapped
     @Embedded
     private VdxRequestData requestData;
@@ -326,6 +339,30 @@ public abstract class VdxData {
 
     public void setReqDeliveryMethodText(String reqDeliveryMethodText) {
         this.reqDeliveryMethodText = reqDeliveryMethodText;
+    }
+
+    public VdxBorrowerCategory getBorcat() {
+        return borcat;
+    }
+
+    public void setBorcat(VdxBorrowerCategory borcat) {
+        this.borcat = borcat;
+    }
+
+    public String getUcDept() {
+        return ucDept;
+    }
+
+    public void setUcDept(String ucDept) {
+        this.ucDept = ucDept;
+    }
+
+    public String getTgq() {
+        return tgq;
+    }
+
+    public void setTgq(String tgq) {
+        this.tgq = tgq;
     }
 
     public VdxRequestData getRequestData() {

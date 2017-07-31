@@ -1,6 +1,7 @@
 package org.cdlib.ill.report.vdx;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -24,10 +25,12 @@ public class VdxHolder implements Serializable {
 
     @JsonProperty("campus")
     @Column(nullable = false)
+    @JsonSerialize(using = VdxCampusSerializer.class)
     private VdxCampus campus;
 
     @JsonProperty("category")
     @Column(nullable = false)
+    @JsonSerialize(using = VdxILLCategorySerializer.class)
     private VdxILLCategory category;
 
     public String getName() {
