@@ -136,6 +136,38 @@ public abstract class VdxData {
     @JsonProperty("tgq")
     private String tgq;
 
+    @Column(name = "service_level", nullable = false)
+    @JsonProperty("service_level")
+    private String serviceLevel;
+
+    @Column(name = "req_copyright_subtype", nullable = false)
+    @JsonProperty("req_copyright_subtype")
+    private String reqCopyrightSubtype;
+
+    @Column(name = "renewable", nullable = false)
+    @JsonProperty("renewable")
+    private String renewable;
+
+    @Column(name = "pickup_location", nullable = false)
+    @JsonProperty("pickup_location")
+    private String pickupLocation;
+
+    @Column(name = "material_type", nullable = false)
+    @JsonProperty("material_type")
+    private String materialType;
+
+    @Column(name = "requester_payment_type", nullable = false)
+    @JsonProperty("requester_payment_type")
+    private String requesterPaymentType;
+
+    @Column(name = "supplier_reference", nullable = false)
+    @JsonProperty("supplier_reference")
+    private String supplierReference;
+
+    @Column(name = "supplier_reference_authority", nullable = false)
+    @JsonProperty("supplier_reference_authority")
+    private String supplierReferenceAuthority;
+
     @Embedded
     @JsonUnwrapped
     private VdxRequestData requestData;
@@ -364,6 +396,70 @@ public abstract class VdxData {
 
     public void setTgq(String tgq) {
         this.tgq = tgq;
+    }
+
+    public String getServiceLevel() {
+        return serviceLevel;
+    }
+
+    public void setServiceLevel(String serviceLevel) {
+        this.serviceLevel = serviceLevel;
+    }
+
+    public String getReqCopyrightSubtype() {
+        return reqCopyrightSubtype;
+    }
+
+    public void setReqCopyrightSubtype(String reqCopyrightSubtype) {
+        this.reqCopyrightSubtype = reqCopyrightSubtype;
+    }
+
+    public String getRenewable() {
+        return renewable;
+    }
+
+    public void setRenewable(String renewable) {
+        this.renewable = renewable;
+    }
+
+    public String getPickupLocation() {
+        return pickupLocation;
+    }
+
+    public void setPickupLocation(String pickupLocation) {
+        this.pickupLocation = pickupLocation;
+    }
+
+    public String getMaterialType() {
+        return materialType;
+    }
+
+    public void setMaterialType(String materialType) {
+        this.materialType = materialType;
+    }
+
+    public String getRequesterPaymentType() {
+        return requesterPaymentType;
+    }
+
+    public void setRequesterPaymentType(String requesterPaymentType) {
+        this.requesterPaymentType = requesterPaymentType;
+    }
+
+    public String getSupplierReference() {
+        return supplierReference;
+    }
+
+    public void setSupplierReference(String supplierReference) {
+        this.supplierReference = supplierReference;
+    }
+
+    public String getSupplierReferenceAuthority() {
+        return supplierReferenceAuthority;
+    }
+
+    public void setSupplierReferenceAuthority(String supplierReferenceAuthority) {
+        this.supplierReferenceAuthority = supplierReferenceAuthority;
     }
 
     public VdxRequestData getRequestData() {
