@@ -185,6 +185,8 @@ public abstract class VdxData {
         @AttributeOverride(name = "campus", column = @Column(name = "req_campus", nullable = false))
         ,
         @AttributeOverride(name = "category", column = @Column(name = "req_category", nullable = false))
+        ,
+        @AttributeOverride(name = "loctype", column = @Column(name = "req_loctype", nullable = false))
     })
     @JsonUnwrapped(prefix = "req_")
     private VdxHolder borrower;
@@ -198,6 +200,8 @@ public abstract class VdxData {
         @AttributeOverride(name = "campus", column = @Column(name = "resp_campus", nullable = false))
         ,
         @AttributeOverride(name = "category", column = @Column(name = "resp_category", nullable = false))
+        ,
+        @AttributeOverride(name = "loctype", column = @Column(name = "resp_loctype", nullable = false))
     })
     @JsonUnwrapped(prefix = "resp_")
     private VdxHolder lender;

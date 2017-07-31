@@ -33,6 +33,10 @@ public class VdxHolder implements Serializable {
     @JsonSerialize(using = VdxILLCategorySerializer.class)
     private VdxILLCategory category;
 
+    @Column(nullable = false)
+    @JsonProperty("loctype")
+    private String loctype;
+
     public String getName() {
         return name;
     }
@@ -63,6 +67,14 @@ public class VdxHolder implements Serializable {
 
     public void setCategory(VdxILLCategory category) {
         this.category = category;
+    }
+
+    public String getLoctype() {
+        return loctype;
+    }
+
+    public void setLoctype(String loctype) {
+        this.loctype = loctype;
     }
 
 }
