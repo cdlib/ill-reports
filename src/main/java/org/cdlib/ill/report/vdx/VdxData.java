@@ -1,5 +1,6 @@
 package org.cdlib.ill.report.vdx;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -77,6 +78,19 @@ public abstract class VdxData {
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate terminationDate;
 
+    @JsonProperty("status")
+    @Column(name = "status")
+    private String status;
+
+    @JsonProperty("auth_status")
+    @Column(name = "auth_status")
+    private String authStatus;
+
+    @JsonIgnore
+    @Column(name = "authorised_by_name")
+    private String authorisedByName;
+
+    @JsonProperty("role")
     @Column(name = "role", nullable = false)
     private String role;
 
@@ -107,6 +121,10 @@ public abstract class VdxData {
     @JsonProperty("req_delivery_method_text")
     @Column(name = "req_delivery_method_text", nullable = false)
     private String reqDeliveryMethodText;
+
+    @JsonUnwrapped
+    @Embedded
+    private VdxRequestData requestData;
 
     @JsonUnwrapped(prefix = "req_")
     @Embedded
@@ -230,6 +248,30 @@ public abstract class VdxData {
         this.terminationDate = terminationDate;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getAuthStatus() {
+        return authStatus;
+    }
+
+    public void setAuthStatus(String authStatus) {
+        this.authStatus = authStatus;
+    }
+
+    public String getAuthorisedByName() {
+        return authorisedByName;
+    }
+
+    public void setAuthorisedByName(String authorisedByName) {
+        this.authorisedByName = authorisedByName;
+    }
+
     public String getRole() {
         return role;
     }
@@ -284,6 +326,14 @@ public abstract class VdxData {
 
     public void setReqDeliveryMethodText(String reqDeliveryMethodText) {
         this.reqDeliveryMethodText = reqDeliveryMethodText;
+    }
+
+    public VdxRequestData getRequestData() {
+        return requestData;
+    }
+
+    public void setRequestData(VdxRequestData requestData) {
+        this.requestData = requestData;
     }
 
     public VdxHolder getBorrower() {
