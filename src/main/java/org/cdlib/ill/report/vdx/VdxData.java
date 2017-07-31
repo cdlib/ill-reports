@@ -170,6 +170,10 @@ public abstract class VdxData {
 
     @Embedded
     @JsonUnwrapped
+    private VdxMoney money;
+
+    @Embedded
+    @JsonUnwrapped
     private VdxRequestData requestData;
 
     @Embedded
@@ -460,6 +464,14 @@ public abstract class VdxData {
 
     public void setSupplierReferenceAuthority(String supplierReferenceAuthority) {
         this.supplierReferenceAuthority = supplierReferenceAuthority;
+    }
+
+    public VdxMoney getMoney() {
+        return money;
+    }
+
+    public void setMoney(VdxMoney money) {
+        this.money = money;
     }
 
     public VdxRequestData getRequestData() {
