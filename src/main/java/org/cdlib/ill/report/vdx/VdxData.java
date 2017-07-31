@@ -21,125 +21,125 @@ public abstract class VdxData {
 
     @Id
     @Column(name = "illno", nullable = false)
+    @JsonProperty("illno")
     protected Long illno;
 
-    @JsonProperty("rec_date")
     @Column(name = "rec_date", nullable = true)
+    @JsonProperty("rec_date")
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate recDate;
 
-    @JsonProperty("entry_date")
     @Column(name = "entry_date", nullable = false)
+    @JsonProperty("entry_date")
     @JsonSerialize(using = PreferredLocalDateTimeFormatSerializer.class)
     private LocalDateTime entryDate;
 
-    @JsonProperty("need_date")
     @Column(name = "need_date", nullable = true)
+    @JsonProperty("need_date")
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate needDate;
 
-    @JsonProperty("expiry_date")
     @Column(name = "expiry_date", nullable = true)
+    @JsonProperty("expiry_date")
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate expiryDate;
 
-    @JsonProperty("date_shipped")
     @Column(name = "date_shipped", nullable = true)
+    @JsonProperty("date_shipped")
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate dateShipped;
 
-    @JsonProperty("due_date")
     @Column(name = "due_date", nullable = true)
+    @JsonProperty("due_date")
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate dueDate;
 
-    @JsonProperty("local_due_date")
     @Column(name = "local_due_date", nullable = true)
+    @JsonProperty("local_due_date")
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate localDueDate;
 
-    @JsonProperty("answer_date")
     @Column(name = "answer_date", nullable = true)
+    @JsonProperty("answer_date")
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate answerDate;
 
-    @JsonProperty("return_date")
     @Column(name = "return_date", nullable = true)
+    @JsonProperty("return_date")
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate returnDate;
 
-    @JsonProperty("checkin_date")
     @Column(name = "checkin_date", nullable = true)
+    @JsonProperty("checkin_date")
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate checkinDate;
 
-    @JsonProperty("termination_date")
     @Column(name = "termination_date", nullable = true)
+    @JsonProperty("termination_date")
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate terminationDate;
 
-    @JsonProperty("status")
     @Column(name = "status")
+    @JsonProperty("status")
     private String status;
 
-    @JsonProperty("auth_status")
     @Column(name = "auth_status")
+    @JsonProperty("auth_status")
     private String authStatus;
 
-    @JsonIgnore
     @Column(name = "authorised_by_name")
+    @JsonIgnore
     private String authorisedByName;
 
-    @JsonProperty("role")
     @Column(name = "role", nullable = false)
+    @JsonProperty("role")
     private String role;
 
-    @JsonProperty("servicetp")
     @Column(name = "servicetp", nullable = false)
+    @JsonProperty("servicetp")
     @JsonSerialize(using = VdxServiceTypeSerializer.class)
     private VdxServiceType servicetp;
 
-    @JsonProperty("req_servicetp")
     @Column(name = "req_servicetp", nullable = false)
+    @JsonProperty("req_servicetp")
     @JsonSerialize(using = VdxServiceTypeSerializer.class)
     private VdxServiceType reqServicetp;
 
-    @JsonProperty("ship_delivery_method")
     @Column(name = "ship_delivery_method", nullable = false)
+    @JsonProperty("ship_delivery_method")
     @JsonSerialize(using = VdxShipDeliveryMethodSerializer.class)
     private VdxShipDeliveryMethod shipDeliveryMethod;
 
-    @JsonProperty("ship_delivery_method_text")
     @Column(name = "ship_delivery_method_text", nullable = false)
+    @JsonProperty("ship_delivery_method_text")
     private String shipDeliveryMethodText;
 
-    @JsonProperty("req_delivery_method")
     @Column(name = "req_delivery_method", nullable = false)
+    @JsonProperty("req_delivery_method")
     @JsonSerialize(using = VdxShipDeliveryMethodSerializer.class)
     private VdxShipDeliveryMethod reqDeliveryMethod;
 
-    @JsonProperty("req_delivery_method_text")
     @Column(name = "req_delivery_method_text", nullable = false)
+    @JsonProperty("req_delivery_method_text")
     private String reqDeliveryMethodText;
 
-    @JsonProperty("borcat")
     @Column(name = "borcat", nullable = false)
+    @JsonProperty("borcat")
     @JsonSerialize(using = VdxBorrowerCategorySerializer.class)
     private VdxBorrowerCategory borcat;
 
-    @JsonProperty("uc_dept")
     @Column(name = "uc_dept", nullable = false)
+    @JsonProperty("uc_dept")
     private String ucDept;
 
-    @JsonProperty("tgq")
     @Column(name = "tgq", nullable = false)
+    @JsonProperty("tgq")
     private String tgq;
 
-    @JsonUnwrapped
     @Embedded
+    @JsonUnwrapped
     private VdxRequestData requestData;
 
-    @JsonUnwrapped(prefix = "req_")
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "name", column = @Column(name = "req_name", nullable = false))
@@ -150,9 +150,9 @@ public abstract class VdxData {
         ,
         @AttributeOverride(name = "category", column = @Column(name = "req_category", nullable = false))
     })
+    @JsonUnwrapped(prefix = "req_")
     private VdxHolder borrower;
 
-    @JsonUnwrapped(prefix = "resp_")
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "name", column = @Column(name = "resp_name", nullable = false))
@@ -163,6 +163,7 @@ public abstract class VdxData {
         ,
         @AttributeOverride(name = "category", column = @Column(name = "resp_category", nullable = false))
     })
+    @JsonUnwrapped(prefix = "resp_")
     private VdxHolder lender;
 
     public Long getIllno() {

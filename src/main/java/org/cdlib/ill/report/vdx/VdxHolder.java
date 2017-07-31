@@ -15,21 +15,21 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class VdxHolder implements Serializable {
 
-    @JsonProperty("name")
     @Column(nullable = false)
+    @JsonProperty("name")
     private String name;
 
-    @JsonProperty("symbol")
     @Column(nullable = false)
+    @JsonProperty("symbol")
     private String symbol;
 
-    @JsonProperty("campus")
     @Column(nullable = false)
+    @JsonProperty("campus")
     @JsonSerialize(using = VdxCampusSerializer.class)
     private VdxCampus campus;
 
-    @JsonProperty("category")
     @Column(nullable = false)
+    @JsonProperty("category")
     @JsonSerialize(using = VdxILLCategorySerializer.class)
     private VdxILLCategory category;
 

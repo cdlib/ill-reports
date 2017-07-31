@@ -8,76 +8,76 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class VdxRequestData implements Serializable {
 
-    @JsonProperty("req_title")
     @Column(name = "req_title", nullable = false)
+    @JsonProperty("req_title")
     private String reqTitle;
 
-    @JsonProperty("req_subtitle")
     @Column(name = "req_subtitle", nullable = false)
+    @JsonProperty("req_subtitle")
     private String reqSubtitle;
 
-    @JsonProperty("req_body")
     @Column(name = "req_body", nullable = false)
+    @JsonProperty("req_body")
     private String reqBody;
 
-    @JsonProperty("req_pubdate")
     @Column(name = "req_pubdate", nullable = false)
+    @JsonProperty("req_pubdate")
     private String reqPubdate;
 
-    @JsonProperty("req_part_pubdate")
     @Column(name = "req_part_pubdate", nullable = false)
+    @JsonProperty("req_part_pubdate")
     private String reqPartPubdate;
 
-    @JsonProperty("req_article_title")
     @Column(name = "req_article_title", nullable = false)
+    @JsonProperty("req_article_title")
     private String reqArticleTitle;
 
-    @JsonProperty("req_article_author")
     @Column(name = "req_article_author", nullable = false)
+    @JsonProperty("req_article_author")
     private String reqArticleAuthor;
 
-    @JsonProperty("req_publisher")
     @Column(name = "req_publisher", nullable = false)
+    @JsonProperty("req_publisher")
     private String reqPublisher;
 
-    @JsonProperty("req_pubplace")
     @Column(name = "req_pubplace", nullable = false)
+    @JsonProperty("req_pubplace")
     private String reqPubplace;
 
-    @JsonProperty("req_issn")
     @Column(name = "req_issn", nullable = false)
+    @JsonProperty("req_issn")
     private String reqIssn;
 
-    @JsonProperty("req_isbn")
     @Column(name = "req_isbn", nullable = false)
+    @JsonProperty("req_isbn")
     private String reqIsbn;
 
-    @JsonProperty("req_pagination")
     @Column(name = "req_pagination", nullable = false)
+    @JsonProperty("req_pagination")
     private String reqPagination;
 
-    @JsonProperty("req_edition")
     @Column(name = "req_edition", nullable = false)
+    @JsonProperty("req_edition")
     private String reqEdition;
 
-    @JsonProperty("req_shelf")
     @Column(name = "req_shelf", nullable = false)
+    @JsonProperty("req_shelf")
     private String reqShelf;
 
-    @JsonProperty("req_author")
     @Column(name = "req_author", nullable = false)
+    @JsonProperty("req_author")
     private String reqAuthor;
 
-    @JsonProperty("req_issue_title")
     @Column(name = "req_issue_title", nullable = false)
+    @JsonProperty("req_issue_title")
     private String reqIssueTitle;
 
-    @JsonProperty("req_serial_title")
     @Column(name = "req_serial_title", nullable = false)
+    @JsonProperty("req_serial_title")
     private String reqSerialTitle;
 
-    @JsonProperty("req_verify_source")
     @Column(name = "req_verify_source", nullable = false)
+    @JsonProperty("req_verify_source")
     private String reqVerifySource;
 
     public String getReqTitle() {
