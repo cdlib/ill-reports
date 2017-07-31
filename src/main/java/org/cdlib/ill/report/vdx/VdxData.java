@@ -168,6 +168,47 @@ public abstract class VdxData {
     @JsonProperty("supplier_reference_authority")
     private String supplierReferenceAuthority;
 
+    @Column(name = "corresponding_illno", nullable = true)
+    @JsonProperty("corresponding_illno")
+    private Long correspondingIllno;
+
+    @Column(name = "statuschange_date", nullable = true)
+    @JsonProperty("statuschange_date")
+    @JsonSerialize(using = PreferredLocalDateTimeFormatSerializer.class)
+    private LocalDateTime statuschangeDate;
+
+    @Column(name = "shipped_medium_type", nullable = false)
+    @JsonProperty("shipped_medium_type")
+    private String shippedMediumType;
+
+    @Column(name = "req_item_format", nullable = false)
+    @JsonProperty("req_item_format")
+    private String reqItemFormat;
+
+    @Column(name = "answer_reason_unfi", nullable = false)
+    @JsonProperty("answer_reason_unfi")
+    private String answerReasonUnfi;
+
+    @Column(name = "req_id_string", nullable = false)
+    @JsonProperty("req_id_string")
+    private String reqIdString;
+
+    @Column(name = "resp_id_string", nullable = false)
+    @JsonProperty("resp_id_string")
+    private String respIdString;
+
+    @Column(name="oclc_control_number", nullable = false)
+    @JsonProperty("oclc_control_number")
+    private String oclcControlNumber;
+    
+    @Column(name="borrower_state", nullable = false)
+    @JsonProperty("borrower_state")
+    private String borrowerState;
+    
+    @Column(name="delivery_address", nullable = true)
+    @JsonProperty("delivery_address")
+    private Long deliveryAddress;
+    
     @Embedded
     @JsonUnwrapped
     private VdxMoney money;
@@ -468,6 +509,86 @@ public abstract class VdxData {
 
     public void setSupplierReferenceAuthority(String supplierReferenceAuthority) {
         this.supplierReferenceAuthority = supplierReferenceAuthority;
+    }
+
+    public Long getCorrespondingIllno() {
+        return correspondingIllno;
+    }
+
+    public void setCorrespondingIllno(Long correspondingIllno) {
+        this.correspondingIllno = correspondingIllno;
+    }
+
+    public LocalDateTime getStatuschangeDate() {
+        return statuschangeDate;
+    }
+
+    public void setStatuschangeDate(LocalDateTime statuschangeDate) {
+        this.statuschangeDate = statuschangeDate;
+    }
+
+    public String getShippedMediumType() {
+        return shippedMediumType;
+    }
+
+    public void setShippedMediumType(String shippedMediumType) {
+        this.shippedMediumType = shippedMediumType;
+    }
+
+    public String getReqItemFormat() {
+        return reqItemFormat;
+    }
+
+    public void setReqItemFormat(String reqItemFormat) {
+        this.reqItemFormat = reqItemFormat;
+    }
+
+    public String getAnswerReasonUnfi() {
+        return answerReasonUnfi;
+    }
+
+    public void setAnswerReasonUnfi(String answerReasonUnfi) {
+        this.answerReasonUnfi = answerReasonUnfi;
+    }
+
+    public String getReqIdString() {
+        return reqIdString;
+    }
+
+    public void setReqIdString(String reqIdString) {
+        this.reqIdString = reqIdString;
+    }
+
+    public String getRespIdString() {
+        return respIdString;
+    }
+
+    public void setRespIdString(String respIdString) {
+        this.respIdString = respIdString;
+    }
+
+    public String getOclcControlNumber() {
+        return oclcControlNumber;
+    }
+
+    public void setOclcControlNumber(String oclcControlNumber) {
+        this.oclcControlNumber = oclcControlNumber;
+    }
+
+    public String getBorrowerState() {
+        return borrowerState;
+    }
+
+    public void setBorrowerState(String borrowerState) {
+        this.borrowerState = borrowerState;
+    }
+
+    public Long getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(Long deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 
     public VdxMoney getMoney() {
