@@ -22,7 +22,7 @@ public abstract class VdxData {
     @Id
     @Column(name = "illno", nullable = false)
     @JsonProperty("illno")
-    protected Long illno;
+    private Long illno;
 
     @Column(name = "rec_date", nullable = true)
     @JsonProperty("rec_date")

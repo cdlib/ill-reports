@@ -13,6 +13,8 @@ import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxLending;
 import org.cdlib.ill.report.vdx.VdxBorrowingRepository;
 import org.cdlib.ill.report.vdx.VdxLendingRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingBilling;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingBillingRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingUnfilledDetail;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingUnfilledDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,8 @@ public class CampusILLDataRestController {
     private VdxLendingRepository vdxLendingRepo;
     @Autowired
     private SpVdxLendingUnfilledDetailRepository vdxLendingUnfilledRepo;
+    @Autowired
+    private SpVdxLendingBillingRepository vdxLendingBillingRepo;
 
     /**
      *
@@ -159,6 +163,20 @@ public class CampusILLDataRestController {
         CsvSchema schema = mapper.schemaFor(SpVdxLendingUnfilledDetail.class).withHeader();
         List<SpVdxLendingUnfilledDetail> data = vdxLendingUnfilledRepo
                 .getLendingUnfilledDetail(VdxCampus.fromCode(campusCode)
+                        .map(VdxCampus::getCode).orElse(""), startDate, endDate)
+                .collect(Collectors.toList());
+        mapper.writer(schema).writeValue(output, data);
+    }
+
+    @RequestMapping(value = "{campusCode}/lending_billing.csv", produces = {"text/csv"})
+    public void getLendingBillingCsv(Writer output,
+            @PathVariable("campusCode") String campusCode,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(SpVdxLendingBilling.class).withHeader();
+        List<SpVdxLendingBilling> data = vdxLendingBillingRepo
+                .getLendingBilling(VdxCampus.fromCode(campusCode)
                         .map(VdxCampus::getCode).orElse(""), startDate, endDate)
                 .collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
