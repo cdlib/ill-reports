@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * File downloads intended for Microsoft Excel.
+ * File downloads intended for Microsoft Excel XLSX format.
  *
  * @author mmorrisp
  */

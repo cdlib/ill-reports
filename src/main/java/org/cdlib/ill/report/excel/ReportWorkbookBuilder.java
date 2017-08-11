@@ -19,6 +19,7 @@ import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTItems;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTPivotField;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTPivotFields;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTPivotTableDefinition;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTPivotTableStyle;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.STAxis;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.STItemType;
 
@@ -78,6 +79,18 @@ public class ReportWorkbookBuilder<T> {
         return cell;
     }
 
+    private XSSFPivotTable setupPivotTable() {
+        if (pivotTable != null) {
+            return pivotTable;
+        }
+        pivotTable = pivotTableSheet.createPivotTable(source, new CellReference("A1"));
+        
+        CTPivotTableStyle style = pivotTable.getCTPivotTableDefinition().getPivotTableStyleInfo();
+        style.setShowRowStripes(true);
+        
+        return pivotTable;
+    }
+
     public ReportWorkbookBuilder<T> pivotRow(int sourceColumn) {
         pivotTableSheet = pivotTableSheet == null
                 ? workbook.createSheet("CDL_Analysis")
@@ -87,11 +100,7 @@ public class ReportWorkbookBuilder<T> {
                         + getLastDataColumnLetter()
                         + String.valueOf(1 + data.size()), SpreadsheetVersion.EXCEL2007)
                 : source;
-        pivotTable = pivotTable == null
-                ? pivotTableSheet.createPivotTable(
-                        source,
-                        new CellReference("A1"))
-                : pivotTable;
+        pivotTable = setupPivotTable();
         pivotTable.addRowLabel(sourceColumn);
         return this;
     }
