@@ -132,6 +132,7 @@
                     <div class="col-sm-4"><strong>UC Borrowing Statistics</strong></div>
                     <div class="col-sm-2">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_uc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_uc.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                     </div>
                     <div class="col-sm-6">
                         Borrowing from UC by campus, library, responder, service type, ship delivery method.
@@ -141,6 +142,7 @@
                     <div class="col-sm-4"><strong>OCLC Borrowing Statistics</strong></div>
                     <div class="col-sm-2">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_oclc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_oclc.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                     </div>
                     <div class="col-sm-6">
                         Borrowing from OCLC by campus, library, responder, service type.
@@ -150,6 +152,7 @@
                     <div class="col-sm-4"><strong>Lending Statistics</strong></div>
                     <div class="col-sm-2">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                     </div>
                     <div class="col-sm-6">
                         Summary of lending by campus, library, requester library type, requester location, service type, ship delivery method.

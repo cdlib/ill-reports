@@ -1,5 +1,6 @@
 package org.cdlib.ill.report.excel;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -65,12 +66,26 @@ public class ReportWorkbookBuilder<T> {
         return this;
     }
 
+    private static final char[] ALPHABET = {
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+
+    String getLastDataColumnLetter() {
+        String cell = "";
+        for (int i = 0; (i * 26) < fields.size(); i += 1) {
+            cell = ALPHABET[(int) (fields.size() / BigInteger.valueOf(26).pow(i).intValue()) % 26 - 1] + cell;
+        }
+        return cell;
+    }
+
     public ReportWorkbookBuilder<T> pivotRow(int sourceColumn) {
         pivotTableSheet = pivotTableSheet == null
                 ? workbook.createSheet("CDL_Analysis")
                 : pivotTableSheet;
         source = source == null
-                ? new AreaReference("CDL_Data!A1:F" + String.valueOf(1 + data.size()), SpreadsheetVersion.EXCEL2007)
+                ? new AreaReference("CDL_Data!A1:"
+                        + getLastDataColumnLetter()
+                        + String.valueOf(1 + data.size()), SpreadsheetVersion.EXCEL2007)
                 : source;
         pivotTable = pivotTable == null
                 ? pivotTableSheet.createPivotTable(
