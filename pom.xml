@@ -21,6 +21,7 @@
         <eclipselink.version>2.6.4</eclipselink.version>
         <mysql.version>6.0.6</mysql.version>
         <mockito.override.version>2.8.9</mockito.override.version>
+        <apache.poi.version>3.16</apache.poi.version>
     </properties>
     
     <parent>
@@ -62,6 +63,16 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-csv</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${apache.poi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${apache.poi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
