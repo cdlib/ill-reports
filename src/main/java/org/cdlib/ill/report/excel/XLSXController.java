@@ -14,6 +14,8 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTat;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTatRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUCRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxCopyright;
+import org.cdlib.ill.report.vdx.procedures.SpVdxCopyrightRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatron;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatronRepository;
@@ -50,6 +52,8 @@ public class XLSXController {
     private SpVdxBorrowingTatRepository spVdxBorrowingTatRepo;
     @Autowired
     private SpVdxLendingTatRepository spVdxLendingTatRepo;
+    @Autowired
+    private SpVdxCopyrightRepository spVdxCopyrightRepo;
 
     @RequestMapping(
             value = "{campusCode}/borrowing_uc.xlsx",
@@ -250,6 +254,31 @@ public class XLSXController {
                 .pivotColumn(3)
                 .pivotColumn(4)
                 .pivotValue(5, DataConsolidateFunction.SUM, "# of Responses per # of Days")
+                .build()
+                .write(output);
+    }
+    
+    @RequestMapping(
+            value = "{campusCode}/copyright.xlsx",
+            produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    public void getCopyright(
+            @PathVariable("campusCode") String campusCode,
+            OutputStream output,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        ReportWorkbookBuilder.newWorkbook(SpVdxCopyright.class)
+                .fieldText("Borrowing Campus", copy -> copy.getReqCampus().getCode())
+                .fieldText("Requested Title", copy -> copy.getReqTitle())
+                .fieldNum("Publication Year", copu -> copu.getPubYear())
+                .fieldNum("Total", copy -> copy.getCount())
+                .data(spVdxCopyrightRepo.getCopyright(
+                        VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
+                        startDate,
+                        endDate).collect(Collectors.toList()))
+                .pivotRow(0)
+                .pivotRow(1)
+                .pivotColumn(2)
+                .pivotValue(3, DataConsolidateFunction.SUM, "# of Requests")
                 .build()
                 .write(output);
     }

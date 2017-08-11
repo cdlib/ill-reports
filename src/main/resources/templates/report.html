@@ -232,6 +232,7 @@
                     <div class="col-sm-4"><strong>Copyright Clearance Report</strong></div>
                     <div class="col-sm-2">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/copyright.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/copyright.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                     </div>
                     <div class="col-sm-6">
                         Copy non returnable requests by title and year of publication.
