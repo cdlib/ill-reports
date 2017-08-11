@@ -16,6 +16,8 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUCRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxCopyright;
 import org.cdlib.ill.report.vdx.procedures.SpVdxCopyrightRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxJournalBorrowing;
+import org.cdlib.ill.report.vdx.procedures.SpVdxJournalBorrowingRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatron;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatronRepository;
@@ -54,6 +56,8 @@ public class XLSXController {
     private SpVdxLendingTatRepository spVdxLendingTatRepo;
     @Autowired
     private SpVdxCopyrightRepository spVdxCopyrightRepo;
+    @Autowired
+    private SpVdxJournalBorrowingRepository spVdxJournalBorrowingRepo;
 
     @RequestMapping(
             value = "{campusCode}/borrowing_uc.xlsx",
@@ -269,7 +273,7 @@ public class XLSXController {
         ReportWorkbookBuilder.newWorkbook(SpVdxCopyright.class)
                 .fieldText("Borrowing Campus", copy -> copy.getReqCampus().getCode())
                 .fieldText("Requested Title", copy -> copy.getReqTitle())
-                .fieldNum("Publication Year", copu -> copu.getPubYear())
+                .fieldText("Publication Year", copy -> copy.getPubYear())
                 .fieldNum("Total", copy -> copy.getCount())
                 .data(spVdxCopyrightRepo.getCopyright(
                         VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
@@ -279,6 +283,37 @@ public class XLSXController {
                 .pivotRow(1)
                 .pivotColumn(2)
                 .pivotValue(3, DataConsolidateFunction.SUM, "# of Requests")
+                .build()
+                .write(output);
+    }
+    
+    @RequestMapping(
+            value = "{campusCode}/journal_borrowing.xlsx",
+            produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    public void getJournalBorrowing(
+            @PathVariable("campusCode") String campusCode,
+            OutputStream output,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        ReportWorkbookBuilder.newWorkbook(SpVdxJournalBorrowing.class)
+                .fieldText("Borrowing Campus", borrowing -> borrowing.getReqCampus().getCode())
+                .fieldText("Borrowing Library", borrowing -> borrowing.getReqName())
+                .fieldText("Requested Title", borrowing -> borrowing.getReqTitle())
+                .fieldText("Publication Year", borrowing -> borrowing.getPubYear())
+                .fieldText("Volume / Issue", borrowing -> borrowing.getReqIssueTitle())
+                .fieldText("Pagination", borrowing -> borrowing.getPagination())
+                .fieldText("Patron Category", borrowing -> borrowing.getBorcat().getCode())
+                .fieldNum("Total", borrowing -> borrowing.getCount())
+                .data(spVdxJournalBorrowingRepo.getJournalBorrowing(
+                        VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
+                        startDate,
+                        endDate).collect(Collectors.toList()))
+                .pivotRow(0)
+                .pivotRow(1)
+                .pivotRow(3)
+                .pivotRow(2)
+                .pivotColumn(6)
+                .pivotValue(7, DataConsolidateFunction.SUM, "# of Requests per Publication Year")
                 .build()
                 .write(output);
     }
