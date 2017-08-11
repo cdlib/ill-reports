@@ -8,11 +8,15 @@ import org.apache.poi.ss.usermodel.DataConsolidateFunction;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLCRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatron;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatronRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTat;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTatRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUCRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatron;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatronRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingTat;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingTatRepository;
@@ -39,6 +43,10 @@ public class XLSXController {
     @Autowired
     private SpVdxLendingRepository spVdxLendingRepo;
     @Autowired
+    private SpVdxBorrowingPatronRepository spVdxBorrowingPatronRepo;
+    @Autowired
+    private SpVdxLendingPatronRepository spVdxLendingPatronRepo;
+    @Autowired
     private SpVdxBorrowingTatRepository spVdxBorrowingTatRepo;
     @Autowired
     private SpVdxLendingTatRepository spVdxLendingTatRepo;
@@ -52,12 +60,12 @@ public class XLSXController {
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingUC.class)
-                .fieldText("borrowing campus", borrowing -> borrowing.getReqCampus().getCode())
-                .fieldText("borrowing library", borrowing -> borrowing.getReqName())
-                .fieldText("lending library", borrowing -> borrowing.getRespName())
-                .fieldText("service type", borrowing -> borrowing.getServiceTp().getCode())
-                .fieldText("delivery method", borrowing -> borrowing.getShipDeliveryMethod().getCode())
-                .fieldNum("total", borrowing -> borrowing.getCount())
+                .fieldText("Borrowing Campus", borrowing -> borrowing.getReqCampus().getCode())
+                .fieldText("Borrowing Library", borrowing -> borrowing.getReqName())
+                .fieldText("Lending Library", borrowing -> borrowing.getRespName())
+                .fieldText("Service Type", borrowing -> borrowing.getServiceTp().getCode())
+                .fieldText("Delivery Method", borrowing -> borrowing.getShipDeliveryMethod().getCode())
+                .fieldNum("Total", borrowing -> borrowing.getCount())
                 .data(spVdxBorrowingUCRepo.getBorrowingUC(
                         VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
                         startDate,
@@ -81,11 +89,11 @@ public class XLSXController {
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingOCLC.class)
-                .fieldText("borrowing campus", borrowing -> borrowing.getReqCampus().getCode())
-                .fieldText("borrowing library", borrowing -> borrowing.getReqName())
-                .fieldText("lending library", borrowing -> borrowing.getRespName())
-                .fieldText("service type", borrowing -> borrowing.getServiceTp().getCode())
-                .fieldNum("total", borrowing -> borrowing.getCount())
+                .fieldText("Borrowing Campus", borrowing -> borrowing.getReqCampus().getCode())
+                .fieldText("Borrowing Library", borrowing -> borrowing.getReqName())
+                .fieldText("Lending Library", borrowing -> borrowing.getRespName())
+                .fieldText("Service Type", borrowing -> borrowing.getServiceTp().getCode())
+                .fieldNum("Total", borrowing -> borrowing.getCount())
                 .data(spVdxBorrowingOCLCRepo.getBorrowingOCLC(
                         VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
                         startDate,
@@ -108,13 +116,13 @@ public class XLSXController {
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         ReportWorkbookBuilder.newWorkbook(SpVdxLending.class)
-                .fieldText("lending campus", lending -> lending.getRespCampus().getCode())
-                .fieldText("lending library", lending -> lending.getRespName())
-                .fieldText("borrowing library", lending -> lending.getReqName())
-                .fieldText("borrower's location type", lending -> lending.getReqLocType())
-                .fieldText("service type", lending -> lending.getServiceTp().getCode())
-                .fieldText("delivery method", lending -> lending.getShipDeliveryMethod().getCode())
-                .fieldNum("total", lending -> lending.getCount())
+                .fieldText("Lending Campus", lending -> lending.getRespCampus().getCode())
+                .fieldText("Lending Library", lending -> lending.getRespName())
+                .fieldText("Borrowing Library", lending -> lending.getReqName())
+                .fieldText("Borrower's Location Type", lending -> lending.getReqLocType())
+                .fieldText("Service Type", lending -> lending.getServiceTp().getCode())
+                .fieldText("Delivery Method", lending -> lending.getShipDeliveryMethod().getCode())
+                .fieldNum("Total", lending -> lending.getCount())
                 .data(spVdxLendingRepo.getLending(
                         VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
                         startDate,
@@ -129,6 +137,64 @@ public class XLSXController {
                 .build()
                 .write(output);
     }
+    
+    @RequestMapping(
+            value = "{campusCode}/borrowing_patron.xlsx",
+            produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    public void getBorrowingPatron(
+            @PathVariable("campusCode") String campusCode,
+            OutputStream output,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingPatron.class)
+                .fieldText("Borrowing Campus", patron -> patron.getReqCampus().getCode())
+                .fieldText("Borrowing Library", patron -> patron.getReqName())
+                .fieldText("Lending Library", patron -> patron.getRespName())
+                .fieldText("Loan Service", patron -> patron.getServiceTp().getCode())
+                .fieldText("Patron Category", patron -> patron.getBorcat().getCode())
+                .fieldNum("Total", patron -> patron.getCount())
+                .data(spVdxBorrowingPatronRepo.getBorrowingPatron(
+                        VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
+                        startDate,
+                        endDate).collect(Collectors.toList()))
+                .pivotRow(0)
+                .pivotRow(1)
+                .pivotRow(2)
+                .pivotColumn(3)
+                .pivotColumn(4)
+                .pivotValue(5, DataConsolidateFunction.SUM, "# of Requests")
+                .build()
+                .write(output);
+    }
+    
+    @RequestMapping(
+            value = "{campusCode}/lending_patron.xlsx",
+            produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    public void getLendingPatron(
+            @PathVariable("campusCode") String campusCode,
+            OutputStream output,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        ReportWorkbookBuilder.newWorkbook(SpVdxLendingPatron.class)
+                .fieldText("Lending Campus", patron -> patron.getRespCampus().getCode())
+                .fieldText("Lending Library", patron -> patron.getRespName())
+                .fieldText("Borrowing Library", patron -> patron.getReqName())
+                .fieldText("Loan Service", patron -> patron.getServiceTp().getCode())
+                .fieldText("Patron Category", patron -> patron.getBorcat().getCode())
+                .fieldNum("Total", patron -> patron.getCount())
+                .data(spVdxLendingPatronRepo.getLendingPatron(
+                        VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
+                        startDate,
+                        endDate).collect(Collectors.toList()))
+                .pivotRow(0)
+                .pivotRow(1)
+                .pivotRow(2)
+                .pivotColumn(3)
+                .pivotColumn(4)
+                .pivotValue(5, DataConsolidateFunction.SUM, "# of Requests")
+                .build()
+                .write(output);
+    }
 
     @RequestMapping(
             value = "{campusCode}/borrowing_tat.xlsx",
@@ -139,12 +205,12 @@ public class XLSXController {
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingTat.class)
-                .fieldText("borrowing campus", tat -> tat.getReqCampus().getCode())
-                .fieldText("borrowing library", tat -> tat.getReqName())
-                .fieldNum("days", tat -> tat.getTat())
-                .fieldText("service type", tat -> tat.getServiceTp().getCode())
-                .fieldText("delivery method", tat -> tat.getShipDeliveryMethod().getCode())
-                .fieldNum("total", tat -> tat.getCount())
+                .fieldText("Borrowing Campus", tat -> tat.getReqCampus().getCode())
+                .fieldText("Borrowing Library", tat -> tat.getReqName())
+                .fieldNum("Days", tat -> tat.getTat())
+                .fieldText("Service Type", tat -> tat.getServiceTp().getCode())
+                .fieldText("Delivery Method", tat -> tat.getShipDeliveryMethod().getCode())
+                .fieldNum("Total", tat -> tat.getCount())
                 .data(spVdxBorrowingTatRepo.getBorrowingTat(
                         VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
                         startDate,
@@ -168,12 +234,12 @@ public class XLSXController {
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         ReportWorkbookBuilder.newWorkbook(SpVdxLendingTat.class)
-                .fieldText("lending campus", tat -> tat.getRespCampus().getCode())
-                .fieldText("lending library", tat -> tat.getRespName())
-                .fieldNum("days", tat -> tat.getTat())
-                .fieldText("service type", tat -> tat.getServiceTp().getCode())
-                .fieldText("delivery method", tat -> tat.getShipDeliveryMethod().getCode())
-                .fieldNum("total", tat -> tat.getCount())
+                .fieldText("Lending Campus", tat -> tat.getRespCampus().getCode())
+                .fieldText("Lending Library", tat -> tat.getRespName())
+                .fieldNum("Days", tat -> tat.getTat())
+                .fieldText("Service Type", tat -> tat.getServiceTp().getCode())
+                .fieldText("Delivery Method", tat -> tat.getShipDeliveryMethod().getCode())
+                .fieldNum("Total", tat -> tat.getCount())
                 .data(spVdxLendingTatRepo.getLendingTat(
                         VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
                         startDate,
