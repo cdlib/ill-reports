@@ -183,6 +183,7 @@
                     <div class="col-sm-4"><strong>Borrowing Turnaround Time Statistics</strong></div>
                     <div class="col-sm-2">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_tat.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_tat.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                     </div>
                     <div class="col-sm-6">
                         Turn-around time for borrowing by campus, library, service type, ship delivery method.
@@ -192,6 +193,7 @@
                     <div class="col-sm-4"><strong>Lending Turnaround Time Statistics</strong></div>
                     <div class="col-sm-2">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_tat.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_tat.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                     </div>
                     <div class="col-sm-6">
                         Turn-around time for lending by campus, library, service type, ship delivery method.
