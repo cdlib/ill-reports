@@ -8,6 +8,7 @@ import org.springframework.hateoas.ResourceSupport;
 
 public class CampusILLReport extends ResourceSupport {
 
+    private String title;
     private String campusCode;
     private List<InstitutionILLReport> institutionReports;
     private LocalDate reportBeginDate;
@@ -17,9 +18,18 @@ public class CampusILLReport extends ResourceSupport {
         this.institutionReports = new ArrayList<>();
     }
 
-    public CampusILLReport(String code) {
-        this.campusCode = code;
+    public CampusILLReport(String title, String campusCode) {
+        this.title = title;
+        this.campusCode = campusCode;
         this.institutionReports = new ArrayList<>();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getCampusCode() {

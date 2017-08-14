@@ -27,6 +27,7 @@
                             <select id="campus" name="campus" class="form-control">
                                 <option value="">Please select your campus</option>
                                 <option th:each="campus : ${campuses}" th:value="${campus.code}" th:text="${campus.description}" th:selected="${campus.code eq campusDefault}"></option>
+                                <option value="all" th:selected="${'all' eq campusDefault}">All Campuses</option>
                             </select>
                         </div>
                         <div class="col-sm-3">
@@ -51,7 +52,7 @@
             <hr id="results" th:if="${not #lists.isEmpty(reports)}" aria-label="Search Results" class="hidden-print"/>
 
             <section class="page-break" th:each="report : ${reports}">
-                <h2 th:text="|${report.campusCode} (${searchStartDate} &mdash; ${searchEndDate})|"></h2>
+                <h2 th:text="|${report.title} (${searchStartDate} &mdash; ${searchEndDate})|"></h2>
 
                 <table class="table">
                     <caption>Borrowing and Lending Summary Statistics</caption>
