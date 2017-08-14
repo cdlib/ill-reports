@@ -106,6 +106,7 @@
                     <div class="col-sm-4"><strong>Borrowing by Lender Category Statistics</strong></div>
                     <div class="col-sm-2">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_summary.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                     </div>
                     <div class="col-sm-6">
                         Summary of borrowing requests by campus, library, and responder category (UC, ISO partner, OCLC).
@@ -115,6 +116,7 @@
                     <div class="col-sm-4"><strong>Lending by Borrower Category Statistics</strong></div>
                     <div class="col-sm-2">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_summary.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                     </div>
                     <div class="col-sm-6">
                         Summary of lending responses by campus, library, and requester category (UC, ISO partner, OCLC).

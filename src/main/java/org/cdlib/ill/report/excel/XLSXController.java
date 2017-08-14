@@ -10,6 +10,8 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLCRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatron;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatronRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingSummary;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingSummaryRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTat;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTatRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUC;
@@ -22,6 +24,8 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatron;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatronRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingSummary;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingSummaryRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingTat;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingTatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +45,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class XLSXController {
 
     @Autowired
+    SpVdxBorrowingSummaryRepository spVdxBorrowingSummaryRepo;
+    @Autowired
+    SpVdxLendingSummaryRepository spVdxLendingSummaryRepo;
+    @Autowired
     private SpVdxBorrowingUCRepository spVdxBorrowingUCRepo;
     @Autowired
     private SpVdxBorrowingOCLCRepository spVdxBorrowingOCLCRepo;
@@ -59,6 +67,56 @@ public class XLSXController {
     @Autowired
     private SpVdxJournalBorrowingRepository spVdxJournalBorrowingRepo;
 
+    @RequestMapping(
+            value = "{campusCode}/borrowing_summary.xlsx",
+            produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    public void getBorrowingSummary(
+            @PathVariable("campusCode") String campusCode,
+            OutputStream output,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingSummary.class)
+                .fieldText("Borrowing Campus", summary -> summary.getReqCampus().getCode())
+                .fieldText("Borrowing Library", summary -> summary.getReqName())
+                .fieldText("Lender Category", summary -> summary.getRespCategory().getCode())
+                .fieldNum("Total", summary -> summary.getCount())
+                .data(spVdxBorrowingSummaryRepo.getBorrowingSummary(
+                        VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
+                        startDate,
+                        endDate).collect(Collectors.toList()))
+                .pivotRow(0)
+                .pivotRow(1)
+                .pivotColumn(2)
+                .pivotValue(3, DataConsolidateFunction.SUM, "# of Requests")
+                .build()
+                .write(output);
+    }
+    
+    @RequestMapping(
+            value = "{campusCode}/lending_summary.xlsx",
+            produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    public void getLendingSummary(
+            @PathVariable("campusCode") String campusCode,
+            OutputStream output,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        ReportWorkbookBuilder.newWorkbook(SpVdxLendingSummary.class)
+                .fieldText("Lending Campus", summary -> summary.getRespCampus().getCode())
+                .fieldText("Lending Library", summary -> summary.getRespName())
+                .fieldText("Borrower Category", summary -> summary.getReqCategory().getCode())
+                .fieldNum("Total", summary -> summary.getCount())
+                .data(spVdxLendingSummaryRepo.getLendingSummary(
+                        VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
+                        startDate,
+                        endDate).collect(Collectors.toList()))
+                .pivotRow(0)
+                .pivotRow(1)
+                .pivotColumn(2)
+                .pivotValue(3, DataConsolidateFunction.SUM, "# of Responses")
+                .build()
+                .write(output);
+    }
+    
     @RequestMapping(
             value = "{campusCode}/borrowing_uc.xlsx",
             produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
