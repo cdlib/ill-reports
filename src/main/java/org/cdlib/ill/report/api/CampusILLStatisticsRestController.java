@@ -14,6 +14,8 @@ import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatron;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatronRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingSummary;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingSummaryRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTat;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTatRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUnfilledSummary;
@@ -26,6 +28,8 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatron;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingPatronRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingSummary;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingSummaryRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingTat;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingTatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +54,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class CampusILLStatisticsRestController {
 
     @Autowired
+    SpVdxBorrowingSummaryRepository spVdxBorrowingSummaryRepo;
+    @Autowired
+    SpVdxLendingSummaryRepository spVdxLendingSummaryRepo;
+    @Autowired
     private SpVdxBorrowingUCRepository spVdxBorrowingUCRepo;
     @Autowired
     private SpVdxBorrowingOCLCRepository spVdxBorrowingOCLCRepo;
@@ -70,6 +78,28 @@ public class CampusILLStatisticsRestController {
     @Autowired
     private SpVdxLendingTatRepository spVdxLendingTatRepo;
 
+    @RequestMapping(value = "{campusCode}/borrowing_summary.csv", produces = {"text/csv"})
+    public void getVdxBorrowingSummary(Writer output,
+            @PathVariable("campusCode") String campusCode,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(SpVdxBorrowingSummary.class).withHeader();
+        List<SpVdxBorrowingSummary> data = spVdxBorrowingSummaryRepo.getBorrowingSummary(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        mapper.writer(schema).writeValue(output, data);
+    }
+    
+    @RequestMapping(value = "{campusCode}/lending_summary.csv", produces = {"text/csv"})
+    public void getVdxLendingSummary(Writer output,
+            @PathVariable("campusCode") String campusCode,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(SpVdxLendingSummary.class).withHeader();
+        List<SpVdxLendingSummary> data = spVdxLendingSummaryRepo.getLendingSummary(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        mapper.writer(schema).writeValue(output, data);
+    }
+    
     @RequestMapping(value = "{campusCode}/borrowing_uc.csv", produces = {"text/csv"})
     public void getVdxBorrowingUC(Writer output,
             @PathVariable("campusCode") String campusCode,

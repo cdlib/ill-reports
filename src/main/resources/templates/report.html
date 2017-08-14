@@ -101,40 +101,26 @@
                     </tbody>
                 </table>
 
-                <h3>Data Extract</h3>
-
+                <h3>Summary Statistics</h3>
                 <div class="row">
-                    <div class="col-sm-4"><strong>Borrowing Data Extract</strong></div>
+                    <div class="col-sm-4"><strong>Borrowing by Lender Category Statistics</strong></div>
                     <div class="col-sm-2">
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                        <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
-                        {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_summary.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </div>
                     <div class="col-sm-6">
-                        Data extract with all fields for download or analysis.
+                        Summary of borrowing requests by campus, library, and responder category (UC, ISO partner, OCLC).
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-4"><strong>Lending Data Extract</strong></div>
+                    <div class="col-sm-4"><strong>Lending by Borrower Category Statistics</strong></div>
                     <div class="col-sm-2">
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                        <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
-                        {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_summary.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                     </div>
                     <div class="col-sm-6">
-                        Data extract with all fields for download or analysis.
+                        Summary of lending responses by campus, library, and requester category (UC, ISO partner, OCLC).
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-4"><strong>Lending Billing Report Data Extract</strong></div>
-                    <div class="col-sm-2">
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_billing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>    
-                    </div>
-                    <div class="col-sm-6">
-                        Selected fields from the lending extract.
-                    </div>
-                </div>
-
+                
                 <h3>Service &amp; Delivery Statistics</h3>
 
                 <div class="row">
@@ -255,6 +241,40 @@
                     </div>
                     <div class="col-sm-6">
                         Copy non returnable requests by title, year, issue title, pagination, and patron category.
+                    </div>
+                </div>
+
+                <h3>Data Extract</h3>
+
+                <div class="row">
+                    <div class="col-sm-4"><strong>Borrowing Data Extract</strong></div>
+                    <div class="col-sm-2">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
+                        {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                    </div>
+                    <div class="col-sm-6">
+                        Data extract with all fields for download or analysis.
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4"><strong>Lending Data Extract</strong></div>
+                    <div class="col-sm-2">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
+                        {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                    </div>
+                    <div class="col-sm-6">
+                        Data extract with all fields for download or analysis.
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4"><strong>Lending Billing Report Data Extract</strong></div>
+                    <div class="col-sm-2">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_billing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>    
+                    </div>
+                    <div class="col-sm-6">
+                        Selected fields from the lending extract.
                     </div>
                 </div>
 
