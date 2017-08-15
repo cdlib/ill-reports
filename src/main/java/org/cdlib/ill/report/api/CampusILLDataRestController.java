@@ -5,14 +5,15 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import java.io.IOException;
 import java.io.Writer;
 import java.time.LocalDate;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.cdlib.ill.report.Constants;
 import org.cdlib.ill.report.vdx.VdxBorrowing;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxLending;
 import org.cdlib.ill.report.vdx.VdxBorrowingRepository;
 import org.cdlib.ill.report.vdx.VdxLendingRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingBilling;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingBillingRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingUnfilledDetail;
@@ -28,10 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * A web service for ILL data. UC ILL data are derived from VDX data.
- *
- * TODO: Throw an exception => 400 when the campus is not an enumerated value &
- * unit test.
+ * A web service for ILL data provided by VDX.
  *
  * @author mmorrisp
  */
@@ -48,109 +46,79 @@ public class CampusILLDataRestController {
     @Autowired
     private SpVdxLendingBillingRepository vdxLendingBillingRepo;
 
-    /**
-     *
-     * @param campusCode
-     * @param startDate
-     * @param endDate
-     * @return
-     * @throws IllegalArgumentException if {@code campusCode} is not valid.
-     */
     @RequestMapping(value = "{campusCode}/borrowing.xml", produces = {"application/xml"})
     public HttpEntity<List<VdxBorrowing>> getCampusBorrowingXml(@PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate)
-            throws IllegalArgumentException {
-        return new ResponseEntity<>(vdxBorrowingRepo.getVdxBorrowing(VdxCampus.fromCode(campusCode).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER), startDate, endDate), HttpStatus.OK);
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+        return new ResponseEntity<>(vdxBorrowingRepo.getVdxBorrowing(
+                VdxCampus.fromCode(campusCode)
+                        .map(EnumSet::of)
+                        .orElse(EnumSet.of(VdxCampus.None, VdxCampus.values())),
+                startDate, endDate), HttpStatus.OK);
     }
 
-    /**
-     *
-     * @param campusCode
-     * @param startDate
-     * @param endDate
-     * @return
-     * @throws IllegalArgumentException if {@code campusCode} is not valid.
-     */
     @RequestMapping(value = "{campusCode}/borrowing.json", produces = {"application/json"})
     public HttpEntity<List<VdxBorrowing>> getCampusBorrowingJson(@PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate)
-            throws IllegalArgumentException {
-        return new ResponseEntity<>(vdxBorrowingRepo.getVdxBorrowing(VdxCampus.fromCode(campusCode).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER), startDate, endDate), HttpStatus.OK);
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+        return new ResponseEntity<>(vdxBorrowingRepo.getVdxBorrowing(
+                VdxCampus.fromCode(campusCode)
+                        .map(EnumSet::of)
+                        .orElse(EnumSet.of(VdxCampus.None, VdxCampus.values())),
+                startDate, endDate), HttpStatus.OK);
     }
 
-    /**
-     *
-     * @param output
-     * @param campusCode
-     * @param startDate
-     * @param endDate
-     * @throws IllegalArgumentException if {@code campusCode} is not valid.
-     * @throws IOException
-     */
     @RequestMapping(value = "{campusCode}/borrowing.csv", produces = {"text/csv"})
     public void getCampusBorrowingCsv(Writer output,
             @PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate)
-            throws IllegalArgumentException, IOException {
+            throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(VdxBorrowing.class).withHeader();
-        List<VdxBorrowing> data = vdxBorrowingRepo.getVdxBorrowing(VdxCampus.fromCode(campusCode).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER), startDate, endDate);
+        List<VdxBorrowing> data = vdxBorrowingRepo.getVdxBorrowing(
+                VdxCampus.fromCode(campusCode)
+                        .map(EnumSet::of)
+                        .orElse(EnumSet.of(VdxCampus.None, VdxCampus.values())),
+                startDate, endDate);
         mapper.writer(schema).writeValue(output, data);
     }
 
-    /**
-     *
-     * @param campusCode
-     * @param startDate
-     * @param endDate
-     * @return
-     * @throws IllegalArgumentException if {@code campusCode} is not valid.
-     */
     @RequestMapping(value = "{campusCode}/lending.xml", produces = {"application/xml"})
     public HttpEntity<List<VdxLending>> getCampusLendingXml(@PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate)
-            throws IllegalArgumentException {
-        return new ResponseEntity<>(vdxLendingRepo.getVdxLending(VdxCampus.fromCode(campusCode).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER), startDate, endDate), HttpStatus.OK);
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+        return new ResponseEntity<>(vdxLendingRepo.getVdxLending(
+                VdxCampus.fromCode(campusCode)
+                        .map(EnumSet::of)
+                        .orElse(EnumSet.of(VdxCampus.None, VdxCampus.values())),
+                startDate, endDate), HttpStatus.OK);
     }
 
-    /**
-     *
-     * @param campusCode
-     * @param startDate
-     * @param endDate
-     * @return
-     * @throws IllegalArgumentException if {@code campusCode} is not valid.
-     */
     @RequestMapping(value = "{campusCode}/lending.json", produces = {"application/json"})
     public HttpEntity<List<VdxLending>> getCampusLendingJson(@PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate)
-            throws IllegalArgumentException {
-        return new ResponseEntity<>(vdxLendingRepo.getVdxLending(VdxCampus.fromCode(campusCode).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER), startDate, endDate), HttpStatus.OK);
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+        return new ResponseEntity<>(vdxLendingRepo.getVdxLending(
+                VdxCampus.fromCode(campusCode)
+                        .map(EnumSet::of)
+                        .orElse(EnumSet.of(VdxCampus.None, VdxCampus.values())),
+                startDate, endDate), HttpStatus.OK);
     }
 
-    /**
-     *
-     * @param output
-     * @param campusCode
-     * @param startDate
-     * @param endDate
-     * @throws IllegalArgumentException if {@code campusCode} is not valid.
-     * @throws IOException
-     */
     @RequestMapping(value = "{campusCode}/lending.csv", produces = {"text/csv"})
     public void getCampusLendingCsv(Writer output,
             @PathVariable("campusCode") String campusCode,
             @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate)
-            throws IllegalArgumentException, IOException {
+            throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(VdxLending.class).withHeader();
-        List<VdxLending> data = vdxLendingRepo.getVdxLending(VdxCampus.fromCode(campusCode).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER), startDate, endDate);
+        List<VdxLending> data = vdxLendingRepo.getVdxLending(
+                VdxCampus.fromCode(campusCode)
+                        .map(EnumSet::of)
+                        .orElse(EnumSet.of(VdxCampus.None, VdxCampus.values())),
+                startDate, endDate);
         mapper.writer(schema).writeValue(output, data);
     }
 
@@ -163,7 +131,7 @@ public class CampusILLDataRestController {
         CsvSchema schema = mapper.schemaFor(SpVdxLendingUnfilledDetail.class).withHeader();
         List<SpVdxLendingUnfilledDetail> data = vdxLendingUnfilledRepo
                 .getLendingUnfilledDetail(VdxCampus.fromCode(campusCode)
-                        .map(VdxCampus::getCode).orElse(""), startDate, endDate)
+                        .map(VdxCampus::getCode).orElse("%"), startDate, endDate)
                 .collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
@@ -176,9 +144,11 @@ public class CampusILLDataRestController {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxLendingBilling.class).withHeader();
         List<SpVdxLendingBilling> data = vdxLendingBillingRepo
-                .getLendingBilling(VdxCampus.fromCode(campusCode)
-                        .map(VdxCampus::getCode).orElse(""), startDate, endDate)
-                .collect(Collectors.toList());
+                .getLendingBilling(
+                        VdxCampus.fromCode(campusCode)
+                                .map(VdxCampus::getCode)
+                                .orElse("%"),
+                         startDate, endDate);
         mapper.writer(schema).writeValue(output, data);
     }
 

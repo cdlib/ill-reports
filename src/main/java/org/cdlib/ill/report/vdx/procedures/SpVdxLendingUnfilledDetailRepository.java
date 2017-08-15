@@ -29,7 +29,11 @@ public class SpVdxLendingUnfilledDetailRepository {
      * or unexpected campuses or categories. The DDL should forbid null values.
      */
     public Stream<SpVdxLendingUnfilledDetail> getLendingUnfilledDetail(String campus, LocalDate beginDate, LocalDate endDate) {
-        List<Object[]> results = em.createNativeQuery("call sp_vdx_lending_unfilled_detail(?1, ?2, ?3)").setParameter(1, campus).setParameter(2, beginDate).setParameter(3, endDate).getResultList();
+        List<Object[]> results = em.createNativeQuery("call sp_vdx_lending_unfilled_detail(?1, ?2, ?3)")
+                .setParameter(1, campus)
+                .setParameter(2, beginDate)
+                .setParameter(3, endDate)
+                .getResultList();
         return results.stream().map((Object[] values) -> {
             Assert.isTrue(values.length == 12, Constants.BAD_PROCEDURE_MSG);
             Assert.noNullElements(values, Constants.NULL_DATA_MSG);

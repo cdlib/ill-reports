@@ -85,7 +85,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxBorrowingSummary.class).withHeader();
-        List<SpVdxBorrowingSummary> data = spVdxBorrowingSummaryRepo.getBorrowingSummary(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxBorrowingSummary> data = spVdxBorrowingSummaryRepo.getBorrowingSummary(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
     
@@ -96,7 +96,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxLendingSummary.class).withHeader();
-        List<SpVdxLendingSummary> data = spVdxLendingSummaryRepo.getLendingSummary(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxLendingSummary> data = spVdxLendingSummaryRepo.getLendingSummary(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
     
@@ -107,7 +107,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxBorrowingUC.class).withHeader();
-        List<SpVdxBorrowingUC> data = spVdxBorrowingUCRepo.getBorrowingUC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxBorrowingUC> data = spVdxBorrowingUCRepo.getBorrowingUC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 
@@ -118,7 +118,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxBorrowingOCLC.class).withHeader();
-        List<SpVdxBorrowingOCLC> data = spVdxBorrowingOCLCRepo.getBorrowingOCLC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxBorrowingOCLC> data = spVdxBorrowingOCLCRepo.getBorrowingOCLC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 
@@ -129,7 +129,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxLending.class).withHeader();
-        List<SpVdxLending> data = spVdxLendingRepo.getLending(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxLending> data = spVdxLendingRepo.getLending(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 
@@ -140,7 +140,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxCopyright.class).withHeader();
-        List<SpVdxCopyright> data = spVdxCopyrightRepo.getCopyright(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxCopyright> data = spVdxCopyrightRepo.getCopyright(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 
@@ -151,7 +151,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxJournalBorrowing.class).withHeader();
-        List<SpVdxJournalBorrowing> data = spVdxJournalBorrowingRepo.getJournalBorrowing(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxJournalBorrowing> data = spVdxJournalBorrowingRepo.getJournalBorrowing(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 
@@ -162,7 +162,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxBorrowingPatron.class).withHeader();
-        List<SpVdxBorrowingPatron> data = spVdxBorrowingPatronRepo.getBorrowingPatron(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxBorrowingPatron> data = spVdxBorrowingPatronRepo.getBorrowingPatron(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 
@@ -173,7 +173,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxLendingPatron.class).withHeader();
-        List<SpVdxLendingPatron> data = spVdxLendingPatronRepo.getLendingPatron(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxLendingPatron> data = spVdxLendingPatronRepo.getLendingPatron(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 
@@ -184,7 +184,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxBorrowingUnfilledSummary.class).withHeader();
-        List<SpVdxBorrowingUnfilledSummary> data = spVdxBorrowingUnfilledSummaryRepo.getBorrowingUnfilledSummary(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxBorrowingUnfilledSummary> data = spVdxBorrowingUnfilledSummaryRepo.getBorrowingUnfilledSummary(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 
@@ -195,7 +195,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxBorrowingTat.class).withHeader();
-        List<SpVdxBorrowingTat> data = spVdxBorrowingTatRepo.getBorrowingTat(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxBorrowingTat> data = spVdxBorrowingTatRepo.getBorrowingTat(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 
@@ -206,7 +206,7 @@ public class CampusILLStatisticsRestController {
             @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(SpVdxLendingTat.class).withHeader();
-        List<SpVdxLendingTat> data = spVdxLendingTatRepo.getLendingTat(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse(""), startDate, endDate).collect(Collectors.toList());
+        List<SpVdxLendingTat> data = spVdxLendingTatRepo.getLendingTat(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
 }

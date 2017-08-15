@@ -3,9 +3,13 @@ package org.cdlib.ill.report.vdx.procedures;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
+import javax.persistence.SqlResultSetMapping;
 import org.cdlib.ill.report.api.PreferredLocalDateFormatSerializer;
 import org.cdlib.ill.report.vdx.VdxServiceType;
 import org.cdlib.ill.report.vdx.VdxServiceTypeSerializer;
@@ -36,7 +40,44 @@ import org.cdlib.ill.report.vdx.VdxServiceTypeSerializer;
     "tgq",
     "vatCost"
 })
-public class SpVdxLendingBilling {
+@SqlResultSetMapping(
+        name = SpVdxLendingBilling.RESULT_SET_MAPPING,
+        classes = {
+            @ConstructorResult(
+                    targetClass=SpVdxLendingBilling.class,
+                    columns = {
+                        @ColumnResult(name = "illno"),
+                        @ColumnResult(name = "authorised_by_name"),
+                        @ColumnResult(name = "auth_status"),
+                        @ColumnResult(name = "base_cost"),
+                        @ColumnResult(name = "cost"),
+                        @ColumnResult(name = "cost_ex_tax"),
+                        @ColumnResult(name = "date_shipped"),
+                        @ColumnResult(name = "parent_illno"),
+                        @ColumnResult(name = "parent_tgq"),
+                        @ColumnResult(name = "req_article_author"),
+                        @ColumnResult(name = "req_article_title"),
+                        @ColumnResult(name = "req_author"),
+                        @ColumnResult(name = "req_id_string"),
+                        @ColumnResult(name = "req_name"),
+                        @ColumnResult(name = "req_loctype"),
+                        @ColumnResult(name = "req_symbol"),
+                        @ColumnResult(name = "req_title"),
+                        @ColumnResult(name = "requester_payment_type"),
+                        @ColumnResult(name = "resp_symbol"),
+                        @ColumnResult(name = "resp_name"),
+                        @ColumnResult(name = "servicetp"),
+                        @ColumnResult(name = "status"),
+                        @ColumnResult(name = "supplier_reference"),
+                        @ColumnResult(name = "tgq"),
+                        @ColumnResult(name = "vat_cost"),
+                        @ColumnResult(name = "client_name")
+                    }
+            )
+        })
+public class SpVdxLendingBilling implements Serializable {
+
+    public static final String RESULT_SET_MAPPING = "SpVdxLendingBilling.RESULT_SET_MAPPING";
 
     @JsonProperty("illno")
     private Long illno;
@@ -75,6 +116,8 @@ public class SpVdxLendingBilling {
     private String requesterPaymentType;
     @JsonProperty("resp_symbol")
     private String respSymbol;
+    @JsonProperty("resp_campus")
+    private String respCampus;
     @JsonProperty("respName")
     private String respName;
     @JsonProperty("req_servicetp")
@@ -92,7 +135,7 @@ public class SpVdxLendingBilling {
     public SpVdxLendingBilling() {
     }
 
-    public SpVdxLendingBilling(Long illno, String authStatus, BigDecimal baseCost, BigDecimal cost, BigDecimal costExTax, LocalDate dateShipped, Long parent_illno, String parentTgq, String reqArticleAuthor, String reqArticleTitle, String reqAuthor, String reqIdString, String reqName, String reqLoctype, String reqSymbol, String reqTitle, String requesterPaymentType, String respSymbol, String respName, VdxServiceType reqServicetp, String status, String supplierReference, String tgq, BigDecimal vatCost) {
+    public SpVdxLendingBilling(Long illno, String authName, String authStatus, BigDecimal baseCost, BigDecimal cost, BigDecimal costExTax, LocalDate dateShipped, Long parent_illno, String parentTgq, String reqArticleAuthor, String reqArticleTitle, String reqAuthor, String reqIdString, String reqName, String reqLoctype, String reqSymbol, String reqTitle, String requesterPaymentType, String respSymbol, String respName, VdxServiceType reqServicetp, String status, String supplierReference, String tgq, BigDecimal vatCost, String clientName) {
         this.illno = illno;
         this.authStatus = authStatus;
         this.baseCost = baseCost;
@@ -263,6 +306,14 @@ public class SpVdxLendingBilling {
         this.respSymbol = respSymbol;
     }
 
+    public String getRespCampus() {
+        return respCampus;
+    }
+
+    public void setRespCampus(String respCampus) {
+        this.respCampus = respCampus;
+    }
+
     public String getRespName() {
         return respName;
     }
@@ -313,31 +364,32 @@ public class SpVdxLendingBilling {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 41 * hash + Objects.hashCode(this.illno);
-        hash = 41 * hash + Objects.hashCode(this.authStatus);
-        hash = 41 * hash + Objects.hashCode(this.baseCost);
-        hash = 41 * hash + Objects.hashCode(this.cost);
-        hash = 41 * hash + Objects.hashCode(this.costExTax);
-        hash = 41 * hash + Objects.hashCode(this.dateShipped);
-        hash = 41 * hash + Objects.hashCode(this.parent_illno);
-        hash = 41 * hash + Objects.hashCode(this.parentTgq);
-        hash = 41 * hash + Objects.hashCode(this.reqArticleAuthor);
-        hash = 41 * hash + Objects.hashCode(this.reqArticleTitle);
-        hash = 41 * hash + Objects.hashCode(this.reqAuthor);
-        hash = 41 * hash + Objects.hashCode(this.reqIdString);
-        hash = 41 * hash + Objects.hashCode(this.reqName);
-        hash = 41 * hash + Objects.hashCode(this.reqLoctype);
-        hash = 41 * hash + Objects.hashCode(this.reqSymbol);
-        hash = 41 * hash + Objects.hashCode(this.reqTitle);
-        hash = 41 * hash + Objects.hashCode(this.requesterPaymentType);
-        hash = 41 * hash + Objects.hashCode(this.respSymbol);
-        hash = 41 * hash + Objects.hashCode(this.respName);
-        hash = 41 * hash + Objects.hashCode(this.reqServicetp);
-        hash = 41 * hash + Objects.hashCode(this.status);
-        hash = 41 * hash + Objects.hashCode(this.supplierReference);
-        hash = 41 * hash + Objects.hashCode(this.tgq);
-        hash = 41 * hash + Objects.hashCode(this.vatCost);
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.illno);
+        hash = 19 * hash + Objects.hashCode(this.authStatus);
+        hash = 19 * hash + Objects.hashCode(this.baseCost);
+        hash = 19 * hash + Objects.hashCode(this.cost);
+        hash = 19 * hash + Objects.hashCode(this.costExTax);
+        hash = 19 * hash + Objects.hashCode(this.dateShipped);
+        hash = 19 * hash + Objects.hashCode(this.parent_illno);
+        hash = 19 * hash + Objects.hashCode(this.parentTgq);
+        hash = 19 * hash + Objects.hashCode(this.reqArticleAuthor);
+        hash = 19 * hash + Objects.hashCode(this.reqArticleTitle);
+        hash = 19 * hash + Objects.hashCode(this.reqAuthor);
+        hash = 19 * hash + Objects.hashCode(this.reqIdString);
+        hash = 19 * hash + Objects.hashCode(this.reqName);
+        hash = 19 * hash + Objects.hashCode(this.reqLoctype);
+        hash = 19 * hash + Objects.hashCode(this.reqSymbol);
+        hash = 19 * hash + Objects.hashCode(this.reqTitle);
+        hash = 19 * hash + Objects.hashCode(this.requesterPaymentType);
+        hash = 19 * hash + Objects.hashCode(this.respSymbol);
+        hash = 19 * hash + Objects.hashCode(this.respCampus);
+        hash = 19 * hash + Objects.hashCode(this.respName);
+        hash = 19 * hash + Objects.hashCode(this.reqServicetp);
+        hash = 19 * hash + Objects.hashCode(this.status);
+        hash = 19 * hash + Objects.hashCode(this.supplierReference);
+        hash = 19 * hash + Objects.hashCode(this.tgq);
+        hash = 19 * hash + Objects.hashCode(this.vatCost);
         return hash;
     }
 
@@ -387,6 +439,9 @@ public class SpVdxLendingBilling {
             return false;
         }
         if (!Objects.equals(this.respSymbol, other.respSymbol)) {
+            return false;
+        }
+        if (!Objects.equals(this.respCampus, other.respCampus)) {
             return false;
         }
         if (!Objects.equals(this.respName, other.respName)) {
