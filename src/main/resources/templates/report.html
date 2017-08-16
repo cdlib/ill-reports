@@ -20,11 +20,15 @@
             </p>
             <div class="hidden-print">
                 <h2>Search</h2>
-                <form action="/#results" method="post">
+                <form action="/#results" method="post" th:object="${queryForm}">
                     <div class="row">
                         <div class="col-sm-4">
                             <label for="campus">Campus</label><br/>
-                            <select id="campus" name="campus" class="form-control">
+                            <select id="campus"
+                                    name="campus"
+                                    class="form-control"
+                                    required="required"
+                                    th:field="*{campus}">
                                 <option value="">Please select your campus</option>
                                 <option th:each="campus : ${campuses}" th:value="${campus.code}" th:text="${campus.description}" th:selected="${campus.code eq campusDefault}"></option>
                                 <option value="all" th:selected="${'all' eq campusDefault}">All Campuses</option>
@@ -32,13 +36,37 @@
                         </div>
                         <div class="col-sm-3">
                             <label for="from">Begin Date</label><br/>
-                            <input id="from" name="from" class="form-control" type="text" placeholder="YYYY-MM-DD" th:value="${searchStartDate}" required="required" aria-describedby="beginDateDescr"/>
-                            <p id="beginDateDescr" class="text-muted">Please enter date as YYYY&#8209;MM&#8209;DD.</p>
+                            <input id="from"
+                                   name="from"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="YYYY-MM-DD"
+                                   th:value="${searchStartDate}"
+                                   required="required"
+                                   aria-describedby="beginDateDescr"
+                                   th:field="*{from}"
+                                   />
+                            <p id="beginDateDescr" class="text-muted">
+                                Please enter date as YYYY&#8209;MM&#8209;DD.<br/>
+                                This date is inclusive.
+                            </p>
                         </div>
                         <div class="col-sm-3">
                             <label for="to">End Date</label><br/>
-                            <input id="to" name="to" class="form-control" type="text" placeholder="YYYY-MM-DD" th:value="${searchEndDate}" required="required" aria-describedby="endDateDescr"/>
-                            <p id="endDateDescr" class="text-muted">Please enter date as YYYY&#8209;MM&#8209;DD.</p>
+                            <input id="to"
+                                   name="to"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="YYYY-MM-DD"
+                                   th:value="${searchEndDate}"
+                                   required="required"
+                                   aria-describedby="endDateDescr"
+                                   th:field="*{to}"
+                                   />
+                            <p id="endDateDescr" class="text-muted">
+                                Please enter date as YYYY&#8209;MM&#8209;DD.<br/>
+                                This date is exclusive.
+                            </p>
                         </div>
                     </div>
                     <div class="row">
@@ -49,13 +77,27 @@
                 </form>
             </div>
 
+            <div th:if="${#fields.hasErrors('${queryForm.*}')}">
+                <hr/>
+                <p role="alert"
+                   class="text-center text-danger"
+                   th:if="${#fields.hasErrors('${queryForm.campus}')}">
+                    <i class="fa fa-warning" aria-hidden="true"></i> Please choose a campus from the dropdown list or choose <em>All Campuses</em>.
+                </p>
+                <p role="alert"
+                   class="text-center text-danger"
+                   th:if="${#fields.hasErrors('${queryForm.from}') or #fields.hasErrors('${queryForm.to}')}">
+                    <i class="fa fa-warning" aria-hidden="true"></i> Please enter date as YYYY-MM-DD. For example, enter <code>2000-01-31</code> for January 31, 2000.
+                </p>
+            </div>
+
             <hr id="results" th:if="${not #lists.isEmpty(reports)}" aria-label="Search Results" class="hidden-print"/>
 
             <section class="page-break" th:each="report : ${reports}">
                 <p class="text-center">
                     Your search found <strong th:text="|${report.totalBorrowing}|"></strong> requests and <strong th:text="|${report.totalLending}|"></strong> responses.
                 </p>
-                
+
                 <h2 th:text="|${report.title} (${searchStartDate} &mdash; ${searchEndDate})|"></h2>
 
                 <table class="table">
