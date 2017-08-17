@@ -95,7 +95,7 @@
 
             <section class="page-break" th:each="report : ${reports}">
                 <p class="text-center">
-                    Your search found <strong th:text="|${report.totalBorrowing}|"></strong> requests and <strong th:text="|${report.totalLending}|"></strong> responses.
+                    Your search found a total of <strong th:text="|${report.totalBorrowing}|"></strong> borrowing requests and <strong th:text="|${report.totalLending}|"></strong> lending responses.
                 </p>
 
                 <h2 th:text="|${report.title} (${searchStartDate} &mdash; ${searchEndDate})|"></h2>
