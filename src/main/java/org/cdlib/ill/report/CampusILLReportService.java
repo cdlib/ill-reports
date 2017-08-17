@@ -67,14 +67,14 @@ public class CampusILLReportService {
         campus.getInstitutionReports().add(institution);
     }
 
-    public CampusILLReport getILLCampusReport(String campusCode, LocalDate from, LocalDate to) {
-        CampusILLReport campus = new CampusILLReport(campusCode);
+    public CampusILLReport getILLCampusReport(String title, String campusCode, String campusQuery, LocalDate from, LocalDate to) {
+        CampusILLReport campus = new CampusILLReport(title, campusCode);
         campus.setReportBeginDate(from);
         campus.setReportEndDate(to);
 
-        Map<String, List<SpVdxBorrowingSummary>> borrowingSummaries = vdxBorrowingRepo.getBorrowingSummary(campusCode, from, to)
+        Map<String, List<SpVdxBorrowingSummary>> borrowingSummaries = vdxBorrowingRepo.getBorrowingSummary(campusQuery, from, to)
                 .collect(Collectors.groupingBy(SpVdxBorrowingSummary::getReqName));
-        Map<String, List<SpVdxLendingSummary>> lendingSummaries = vdxLendingRepo.getLendingSummary(campusCode, from, to)
+        Map<String, List<SpVdxLendingSummary>> lendingSummaries = vdxLendingRepo.getLendingSummary(campusQuery, from, to)
                 .collect(Collectors.groupingBy(SpVdxLendingSummary::getRespName));
 
         Set<String> libraries = Stream.concat(borrowingSummaries.keySet().stream(), lendingSummaries.keySet().stream()).collect(Collectors.toSet());
@@ -84,6 +84,10 @@ public class CampusILLReportService {
         });
 
         return campus;
+    }
+    
+    public CampusILLReport getILLCampusReport(String campusCode, LocalDate from, LocalDate to) {
+        return getILLCampusReport(campusCode, campusCode, campusCode, from, to);
     }
     
 }

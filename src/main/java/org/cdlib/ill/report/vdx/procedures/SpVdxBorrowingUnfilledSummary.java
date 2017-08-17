@@ -6,35 +6,39 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Objects;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxCampusSerializer;
-import org.cdlib.ill.report.vdx.VdxILLCategory;
-import org.cdlib.ill.report.vdx.VdxILLCategorySerializer;
+import org.cdlib.ill.report.vdx.VdxServiceType;
+import org.cdlib.ill.report.vdx.VdxServiceTypeSerializer;
 
 @JsonPropertyOrder({
     "reqCampus",
     "reqName",
-    "respCategory",
+    "respName",
+    "serviceTp",
     "count"
 })
-public class SpVdxBorrowingSummary {
+public class SpVdxBorrowingUnfilledSummary {
 
     @JsonProperty("borrowing campus")
     @JsonSerialize(using = VdxCampusSerializer.class)
     private VdxCampus reqCampus;
     @JsonProperty("borrowing library")
     private String reqName;
-    @JsonProperty("lender category")
-    @JsonSerialize(using = VdxILLCategorySerializer.class)
-    private VdxILLCategory respCategory;
+    @JsonProperty("lending library")
+    private String respName;
+    @JsonProperty("loan service")
+    @JsonSerialize(using = VdxServiceTypeSerializer.class)
+    private VdxServiceType serviceTp;
     @JsonProperty("total")
     private Long count;
 
-    public SpVdxBorrowingSummary() {
+    public SpVdxBorrowingUnfilledSummary() {
     }
 
-    public SpVdxBorrowingSummary(VdxCampus reqCampus, String reqName, VdxILLCategory respCategory, Long count) {
+    public SpVdxBorrowingUnfilledSummary(VdxCampus reqCampus, String reqName, String respName, VdxServiceType serviceTp, Long count) {
         this.reqCampus = reqCampus;
         this.reqName = reqName;
-        this.respCategory = respCategory;
+        this.respName = respName;
+        this.serviceTp = serviceTp;
         this.count = count;
     }
 
@@ -54,12 +58,20 @@ public class SpVdxBorrowingSummary {
         this.reqName = reqName;
     }
 
-    public VdxILLCategory getRespCategory() {
-        return respCategory;
+    public String getRespName() {
+        return respName;
     }
 
-    public void setRespCategory(VdxILLCategory respCategory) {
-        this.respCategory = respCategory;
+    public void setRespName(String respName) {
+        this.respName = respName;
+    }
+
+    public VdxServiceType getServiceTp() {
+        return serviceTp;
+    }
+
+    public void setServiceTp(VdxServiceType serviceTp) {
+        this.serviceTp = serviceTp;
     }
 
     public Long getCount() {
@@ -73,10 +85,11 @@ public class SpVdxBorrowingSummary {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.reqCampus);
-        hash = 29 * hash + Objects.hashCode(this.reqName);
-        hash = 29 * hash + Objects.hashCode(this.respCategory);
-        hash = 29 * hash + Objects.hashCode(this.count);
+        hash = 83 * hash + Objects.hashCode(this.reqCampus);
+        hash = 83 * hash + Objects.hashCode(this.reqName);
+        hash = 83 * hash + Objects.hashCode(this.respName);
+        hash = 83 * hash + Objects.hashCode(this.serviceTp);
+        hash = 83 * hash + Objects.hashCode(this.count);
         return hash;
     }
 
@@ -91,14 +104,17 @@ public class SpVdxBorrowingSummary {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SpVdxBorrowingSummary other = (SpVdxBorrowingSummary) obj;
+        final SpVdxBorrowingUnfilledSummary other = (SpVdxBorrowingUnfilledSummary) obj;
         if (!Objects.equals(this.reqName, other.reqName)) {
+            return false;
+        }
+        if (!Objects.equals(this.respName, other.respName)) {
             return false;
         }
         if (this.reqCampus != other.reqCampus) {
             return false;
         }
-        if (this.respCategory != other.respCategory) {
+        if (this.serviceTp != other.serviceTp) {
             return false;
         }
         if (!Objects.equals(this.count, other.count)) {

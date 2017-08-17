@@ -5,10 +5,10 @@ import javax.persistence.Converter;
 import org.cdlib.ill.report.Constants;
 
 @Converter(autoApply = true)
-public class VdxCampusConverter implements AttributeConverter<VdxCampus, String> {
+public class VdxServiceTypeConverter implements AttributeConverter<VdxServiceType, String> {
 
     @Override
-    public String convertToDatabaseColumn(VdxCampus x) {
+    public String convertToDatabaseColumn(VdxServiceType x) {
         if (x == null) {
             return null;
         }
@@ -16,8 +16,8 @@ public class VdxCampusConverter implements AttributeConverter<VdxCampus, String>
     }
 
     @Override
-    public VdxCampus convertToEntityAttribute(String y) {
-        return VdxCampus.fromCode(y).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER);
+    public VdxServiceType convertToEntityAttribute(String y) {
+        return VdxServiceType.fromCode(y).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER);
     }
 
 }

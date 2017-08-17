@@ -1,10 +1,19 @@
 package org.cdlib.ill.report;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class ReportHtmlForm {
 
+    @NotNull
+    @Pattern(regexp = "(Search)")
     private String command;
+    @NotNull
+    @Pattern(regexp = "all|OELA|NRLF|SRLF|UCB|UCD|UCI|UCLA|UCM|UCR|UCSB|UCSC|UCSD|UCSF")
     private String campus;
+    @NotNull
     private String from;
+    @NotNull
     private String to;
 
     public String getCommand() {

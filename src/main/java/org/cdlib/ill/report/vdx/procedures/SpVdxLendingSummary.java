@@ -1,14 +1,31 @@
 package org.cdlib.ill.report.vdx.procedures;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Objects;
 import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.VdxCampusSerializer;
 import org.cdlib.ill.report.vdx.VdxILLCategory;
+import org.cdlib.ill.report.vdx.VdxILLCategorySerializer;
 
+@JsonPropertyOrder({
+    "respCampus",
+    "respName",
+    "reqCategory",
+    "count"
+})
 public class SpVdxLendingSummary {
 
+    @JsonProperty("lending campus")
+    @JsonSerialize(using = VdxCampusSerializer.class)
     private VdxCampus respCampus;
+    @JsonProperty("lending library")
     private String respName;
+    @JsonProperty("borrower category")
+    @JsonSerialize(using = VdxILLCategorySerializer.class)
     private VdxILLCategory reqCategory;
+    @JsonProperty("total")
     private Long count;
 
     public SpVdxLendingSummary() {

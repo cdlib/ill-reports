@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>ILL Reports (VDX)</title>
+        <link rel="shortcut icon" href="http://intracdl.cdlib.org/favicon.ico" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+        <link rel="stylesheet" href="/report.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        <div class="container">
+            <br/>
+            <p class="text-center"><img src="/CDL_Logo.png" class="banner" alt="University of California - California Digital Library" /></p>
+            <h1 class="page-header">Error in ILL Reports</h1>
+
+            <p>We're sorry. An unexpected error has occurred in the program. Please <a href="mailto:vdxtrouble-l@ucop.edu">email CDL</a> if the problem continues.</p>
+
+            <dl>
+                <dt>More Information</dt>
+                <dd><code th:text="|${status} ${error}|"></code></dd>
+                <dt>Timestamp</dt>
+                <dd th:text="${timestamp}"></dd>
+            </dl>
+
+            <p class="text-center page-break">
+                <br/>
+                <br/>
+                Copyright &copy; 2017 The Regents of The University of California &nbsp; <img src="/uc_seal.gif" alt="University of California Seal" /> &nbsp; California Digital Library
+                <br/>
+                <a href="mailto:vdxtrouble-l@ucop.edu">Questions? Comments?</a>
+            </p>
+        </div>
+    </body>
+</html>
