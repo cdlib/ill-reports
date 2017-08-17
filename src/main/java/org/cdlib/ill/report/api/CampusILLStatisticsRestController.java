@@ -209,4 +209,5 @@ public class CampusILLStatisticsRestController {
         List<SpVdxLendingTat> data = spVdxLendingTatRepo.getLendingTat(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
         mapper.writer(schema).writeValue(output, data);
     }
+    
 }

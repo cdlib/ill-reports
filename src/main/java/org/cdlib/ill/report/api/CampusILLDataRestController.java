@@ -13,7 +13,6 @@ import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxLending;
 import org.cdlib.ill.report.vdx.VdxBorrowingRepository;
 import org.cdlib.ill.report.vdx.VdxLendingRepository;
-import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingBilling;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingBillingRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingUnfilledDetail;
