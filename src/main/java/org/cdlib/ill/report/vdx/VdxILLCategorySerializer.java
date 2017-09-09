@@ -17,7 +17,7 @@ public class VdxILLCategorySerializer extends StdSerializer<VdxILLCategory> {
 
     @Override
     public void serialize(VdxILLCategory category, JsonGenerator jg, SerializerProvider sp) throws IOException {
-        jg.writeString(category.getCode());
+        jg.writeString(category.getDescr());
     }
 
 }

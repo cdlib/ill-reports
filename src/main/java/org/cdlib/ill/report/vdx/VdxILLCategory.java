@@ -4,18 +4,24 @@ import java.util.Optional;
 
 public enum VdxILLCategory {
 
-    UC("U"),
-    ISOPartners("I"),
-    OCLC("");
+    UC("U", "UC"),
+    ISOPartners("I", "ISO"),
+    OCLC("", "OCLC");
 
     private final String code;
+    private final String descr;
 
-    private VdxILLCategory(String code) {
+    private VdxILLCategory(String code, String descr) {
         this.code = code;
+        this.descr = descr;
     }
 
     public String getCode() {
         return code;
+    }
+
+    public String getDescr() {
+        return descr;
     }
 
     public static Optional<VdxILLCategory> fromCode(String code) {

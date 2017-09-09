@@ -78,7 +78,7 @@ public class XLSXController {
         ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingSummary.class)
                 .fieldText("Borrowing Campus", summary -> summary.getReqCampus().getCode())
                 .fieldText("Borrowing Library", summary -> summary.getReqName())
-                .fieldText("Lender Category", summary -> summary.getRespCategory().getCode())
+                .fieldText("Lender Category", summary -> summary.getRespCategory().getDescr())
                 .fieldNum("Total", summary -> summary.getCount())
                 .data(spVdxBorrowingSummaryRepo.getBorrowingSummary(
                         VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
@@ -103,7 +103,7 @@ public class XLSXController {
         ReportWorkbookBuilder.newWorkbook(SpVdxLendingSummary.class)
                 .fieldText("Lending Campus", summary -> summary.getRespCampus().getCode())
                 .fieldText("Lending Library", summary -> summary.getRespName())
-                .fieldText("Borrower Category", summary -> summary.getReqCategory().getCode())
+                .fieldText("Borrower Category", summary -> summary.getReqCategory().getDescr())
                 .fieldNum("Total", summary -> summary.getCount())
                 .data(spVdxLendingSummaryRepo.getLendingSummary(
                         VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
