@@ -368,6 +368,20 @@
                     </tr>
                     <tr>
                         <th scope="row">
+                            Borrowing Detail Data Extract
+                        </th>
+                        <td>
+                            Selected fields from the borrowing extract.
+                        </td>
+                        <td>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing_detail.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>    
+                        </td>
+                        <td>
+                            <em>N/A</em>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
                             Lending Data Extract
                         </th>
                         <td>
