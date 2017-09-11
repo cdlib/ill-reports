@@ -7,13 +7,17 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
-import javax.persistence.ColumnResult;
-import javax.persistence.ConstructorResult;
-import javax.persistence.SqlResultSetMapping;
 import org.cdlib.ill.report.api.PreferredLocalDateFormatSerializer;
 import org.cdlib.ill.report.vdx.VdxServiceType;
 import org.cdlib.ill.report.vdx.VdxServiceTypeSerializer;
 
+/**
+ * This pojo omits the {@code authorised_by_name} and {@code client_name}
+ * columns returned by the stored procedure in the interest of protecting the
+ * patron's identity.
+ *
+ * @author mmorrisp
+ */
 @JsonPropertyOrder({
     "illno",
     "authStatus",
@@ -40,41 +44,6 @@ import org.cdlib.ill.report.vdx.VdxServiceTypeSerializer;
     "tgq",
     "vatCost"
 })
-@SqlResultSetMapping(
-        name = SpVdxLendingBilling.RESULT_SET_MAPPING,
-        classes = {
-            @ConstructorResult(
-                    targetClass=SpVdxLendingBilling.class,
-                    columns = {
-                        @ColumnResult(name = "illno"),
-                        @ColumnResult(name = "authorised_by_name"),
-                        @ColumnResult(name = "auth_status"),
-                        @ColumnResult(name = "base_cost"),
-                        @ColumnResult(name = "cost"),
-                        @ColumnResult(name = "cost_ex_tax"),
-                        @ColumnResult(name = "date_shipped"),
-                        @ColumnResult(name = "parent_illno"),
-                        @ColumnResult(name = "parent_tgq"),
-                        @ColumnResult(name = "req_article_author"),
-                        @ColumnResult(name = "req_article_title"),
-                        @ColumnResult(name = "req_author"),
-                        @ColumnResult(name = "req_id_string"),
-                        @ColumnResult(name = "req_name"),
-                        @ColumnResult(name = "req_loctype"),
-                        @ColumnResult(name = "req_symbol"),
-                        @ColumnResult(name = "req_title"),
-                        @ColumnResult(name = "requester_payment_type"),
-                        @ColumnResult(name = "resp_symbol"),
-                        @ColumnResult(name = "resp_name"),
-                        @ColumnResult(name = "servicetp"),
-                        @ColumnResult(name = "status"),
-                        @ColumnResult(name = "supplier_reference"),
-                        @ColumnResult(name = "tgq"),
-                        @ColumnResult(name = "vat_cost"),
-                        @ColumnResult(name = "client_name")
-                    }
-            )
-        })
 public class SpVdxLendingBilling implements Serializable {
 
     public static final String RESULT_SET_MAPPING = "SpVdxLendingBilling.RESULT_SET_MAPPING";
@@ -93,7 +62,7 @@ public class SpVdxLendingBilling implements Serializable {
     @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
     private LocalDate dateShipped;
     @JsonProperty("parent_illno")
-    private Long parent_illno;
+    private Long parentIllno;
     @JsonProperty("parent_tgq")
     private String parentTgq;
     @JsonProperty("req_article_author")
@@ -116,8 +85,6 @@ public class SpVdxLendingBilling implements Serializable {
     private String requesterPaymentType;
     @JsonProperty("resp_symbol")
     private String respSymbol;
-    @JsonProperty("resp_campus")
-    private String respCampus;
     @JsonProperty("respName")
     private String respName;
     @JsonProperty("req_servicetp")
@@ -135,14 +102,14 @@ public class SpVdxLendingBilling implements Serializable {
     public SpVdxLendingBilling() {
     }
 
-    public SpVdxLendingBilling(Long illno, String authName, String authStatus, BigDecimal baseCost, BigDecimal cost, BigDecimal costExTax, LocalDate dateShipped, Long parent_illno, String parentTgq, String reqArticleAuthor, String reqArticleTitle, String reqAuthor, String reqIdString, String reqName, String reqLoctype, String reqSymbol, String reqTitle, String requesterPaymentType, String respSymbol, String respName, VdxServiceType reqServicetp, String status, String supplierReference, String tgq, BigDecimal vatCost, String clientName) {
+    public SpVdxLendingBilling(Long illno, String authStatus, BigDecimal baseCost, BigDecimal cost, BigDecimal costExTax, LocalDate dateShipped, Long parentIllno, String parentTgq, String reqArticleAuthor, String reqArticleTitle, String reqAuthor, String reqIdString, String reqName, String reqLoctype, String reqSymbol, String reqTitle, String requesterPaymentType, String respSymbol, String respName, VdxServiceType reqServicetp, String status, String supplierReference, String tgq, BigDecimal vatCost) {
         this.illno = illno;
         this.authStatus = authStatus;
         this.baseCost = baseCost;
         this.cost = cost;
         this.costExTax = costExTax;
         this.dateShipped = dateShipped;
-        this.parent_illno = parent_illno;
+        this.parentIllno = parentIllno;
         this.parentTgq = parentTgq;
         this.reqArticleAuthor = reqArticleAuthor;
         this.reqArticleTitle = reqArticleTitle;
@@ -210,12 +177,12 @@ public class SpVdxLendingBilling implements Serializable {
         this.dateShipped = dateShipped;
     }
 
-    public Long getParent_illno() {
-        return parent_illno;
+    public Long getParentIllno() {
+        return parentIllno;
     }
 
-    public void setParent_illno(Long parent_illno) {
-        this.parent_illno = parent_illno;
+    public void setParentIllno(Long parentIllno) {
+        this.parentIllno = parentIllno;
     }
 
     public String getParentTgq() {
@@ -306,14 +273,6 @@ public class SpVdxLendingBilling implements Serializable {
         this.respSymbol = respSymbol;
     }
 
-    public String getRespCampus() {
-        return respCampus;
-    }
-
-    public void setRespCampus(String respCampus) {
-        this.respCampus = respCampus;
-    }
-
     public String getRespName() {
         return respName;
     }
@@ -371,7 +330,7 @@ public class SpVdxLendingBilling implements Serializable {
         hash = 19 * hash + Objects.hashCode(this.cost);
         hash = 19 * hash + Objects.hashCode(this.costExTax);
         hash = 19 * hash + Objects.hashCode(this.dateShipped);
-        hash = 19 * hash + Objects.hashCode(this.parent_illno);
+        hash = 19 * hash + Objects.hashCode(this.parentIllno);
         hash = 19 * hash + Objects.hashCode(this.parentTgq);
         hash = 19 * hash + Objects.hashCode(this.reqArticleAuthor);
         hash = 19 * hash + Objects.hashCode(this.reqArticleTitle);
@@ -383,7 +342,6 @@ public class SpVdxLendingBilling implements Serializable {
         hash = 19 * hash + Objects.hashCode(this.reqTitle);
         hash = 19 * hash + Objects.hashCode(this.requesterPaymentType);
         hash = 19 * hash + Objects.hashCode(this.respSymbol);
-        hash = 19 * hash + Objects.hashCode(this.respCampus);
         hash = 19 * hash + Objects.hashCode(this.respName);
         hash = 19 * hash + Objects.hashCode(this.reqServicetp);
         hash = 19 * hash + Objects.hashCode(this.status);
@@ -441,9 +399,6 @@ public class SpVdxLendingBilling implements Serializable {
         if (!Objects.equals(this.respSymbol, other.respSymbol)) {
             return false;
         }
-        if (!Objects.equals(this.respCampus, other.respCampus)) {
-            return false;
-        }
         if (!Objects.equals(this.respName, other.respName)) {
             return false;
         }
@@ -471,7 +426,7 @@ public class SpVdxLendingBilling implements Serializable {
         if (!Objects.equals(this.dateShipped, other.dateShipped)) {
             return false;
         }
-        if (!Objects.equals(this.parent_illno, other.parent_illno)) {
+        if (!Objects.equals(this.parentIllno, other.parentIllno)) {
             return false;
         }
         if (this.reqServicetp != other.reqServicetp) {
