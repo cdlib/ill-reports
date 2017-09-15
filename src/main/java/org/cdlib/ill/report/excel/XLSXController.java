@@ -82,6 +82,7 @@ public class XLSXController {
         ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingUnfilledSummary.class)
                 .fieldText("Borrowing Campus", summary -> summary.getReqCampus().getCode())
                 .fieldText("Borrowing Library", summary -> summary.getReqName())
+                .fieldText("Lending Library", summary -> summary.getRespName())
                 .fieldText("Service Type", summary -> summary.getServiceTp().getCode())
                 .fieldNum("Total", summary -> summary.getCount())
                 .data(spVdxBorrowingUnfilledSummaryRepo.getBorrowingUnfilledSummary(
@@ -90,8 +91,8 @@ public class XLSXController {
                         endDate).collect(Collectors.toList()))
                 .pivotRow(0)
                 .pivotRow(1)
-                .pivotColumn(2)
-                .pivotValue(3, DataConsolidateFunction.SUM, "# of Unfilled Requests")
+                .pivotColumn(3)
+                .pivotValue(4, DataConsolidateFunction.SUM, "# of Unfilled Requests")
                 .build()
                 .write(output);
     }
