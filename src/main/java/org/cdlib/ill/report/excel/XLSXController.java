@@ -30,6 +30,8 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxLendingSummary;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingSummaryRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingTat;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingTatRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingUnfilledSummary;
+import org.cdlib.ill.report.vdx.procedures.SpVdxLendingUnfilledSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -70,6 +72,8 @@ public class XLSXController {
     private SpVdxJournalBorrowingRepository spVdxJournalBorrowingRepo;
     @Autowired
     private SpVdxBorrowingUnfilledSummaryRepository spVdxBorrowingUnfilledSummaryRepo;
+    @Autowired
+    private SpVdxLendingUnfilledSummaryRepository spVdxLendingUnfilledSummaryRepo;
 
     @RequestMapping(
             value = "{campusCode}/borrowing_unfilled_summary.xlsx",
@@ -93,6 +97,35 @@ public class XLSXController {
                 .pivotRow(1)
                 .pivotColumn(3)
                 .pivotValue(4, DataConsolidateFunction.SUM, "# of Unfilled Requests")
+                .build()
+                .write(output);
+    }
+    
+    @RequestMapping(
+            value = "{campusCode}/lending_unfilled_summary.xlsx",
+            produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    public void getLendingUnfilledSummary(
+            @PathVariable("campusCode") String campusCode,
+            OutputStream output,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        ReportWorkbookBuilder.newWorkbook(SpVdxLendingUnfilledSummary.class)
+                .fieldText("Lending Campus", summary -> summary.getRespCampus().getCode())
+                .fieldText("Lending Library", SpVdxLendingUnfilledSummary::getRespName)
+                .fieldText("Borrowing Library Type", SpVdxLendingUnfilledSummary::getReqLoctype)
+                .fieldText("Borrowing Library", SpVdxLendingUnfilledSummary::getReqName)
+                .fieldText("Service Type", summary -> summary.getServiceTp().getCode())
+                .fieldNum("Total", summary -> summary.getCount())
+                .data(spVdxLendingUnfilledSummaryRepo.getLendingUnfilledSummary(
+                        VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
+                        startDate,
+                        endDate).collect(Collectors.toList()))
+                .pivotRow(0)
+                .pivotRow(1)
+                .pivotRow(2)
+                .pivotRow(3)
+                .pivotColumn(4)
+                .pivotValue(5, DataConsolidateFunction.SUM, "# of Unfilled Responses")
                 .build()
                 .write(output);
     }

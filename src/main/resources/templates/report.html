@@ -95,7 +95,7 @@
 
             <section class="page-break" th:each="report : ${reports}">
                 <p class="text-center">
-                    Your search found a total of <strong th:text="|${report.totalBorrowing}|"></strong> borrowing requests and <strong th:text="|${report.totalLending}|"></strong> lending responses.
+                    Your search found a total of <strong th:text="|${report.totalBorrowing}|"></strong> borrowing requests and <strong th:text="|${report.totalLending}|"></strong> lending requests.
                 </p>
 
                 <h2 th:text="|${report.title} (${searchStartDate} &mdash; ${searchEndDate})|"></h2>
@@ -127,7 +127,7 @@
                             Lending by Borrower Category Statistics
                         </th>
                         <td>
-                            Summary of lending responses by campus, library, and requester category (UC, ISO partner, OCLC).
+                            Summary of lending requests by campus, library, and requester category (UC, ISO partner, OCLC).
                         </td>
                         <td>
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_summary.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
@@ -286,6 +286,20 @@
                         </td>
                         <td>
                             <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_unfilled_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            Unfilled Lending Summary Statistics
+                        </th>
+                        <td>
+                            Summary of unfilled lending requests by campus, library, requester library type, requester location, service type.
+                        </td>
+                        <td>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_unfilled.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                        </td>
+                        <td>
+                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_unfilled_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
