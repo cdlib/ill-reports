@@ -16,6 +16,8 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTat;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingTatRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUCRepository;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUnfilledSummary;
+import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUnfilledSummaryRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxCopyright;
 import org.cdlib.ill.report.vdx.procedures.SpVdxCopyrightRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxJournalBorrowing;
@@ -66,7 +68,34 @@ public class XLSXController {
     private SpVdxCopyrightRepository spVdxCopyrightRepo;
     @Autowired
     private SpVdxJournalBorrowingRepository spVdxJournalBorrowingRepo;
+    @Autowired
+    private SpVdxBorrowingUnfilledSummaryRepository spVdxBorrowingUnfilledSummaryRepo;
 
+    @RequestMapping(
+            value = "{campusCode}/borrowing_unfilled_summary.xlsx",
+            produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    public void getBorrowingUnfilledSummary(
+            @PathVariable("campusCode") String campusCode,
+            OutputStream output,
+            @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+        ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingUnfilledSummary.class)
+                .fieldText("Borrowing Campus", summary -> summary.getReqCampus().getCode())
+                .fieldText("Borrowing Library", summary -> summary.getReqName())
+                .fieldText("Service Type", summary -> summary.getServiceTp().getCode())
+                .fieldNum("Total", summary -> summary.getCount())
+                .data(spVdxBorrowingUnfilledSummaryRepo.getBorrowingUnfilledSummary(
+                        VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
+                        startDate,
+                        endDate).collect(Collectors.toList()))
+                .pivotRow(0)
+                .pivotRow(1)
+                .pivotColumn(2)
+                .pivotValue(3, DataConsolidateFunction.SUM, "# of Unfilled Requests")
+                .build()
+                .write(output);
+    }
+    
     @RequestMapping(
             value = "{campusCode}/borrowing_summary.xlsx",
             produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
