@@ -11,6 +11,7 @@ import org.springframework.context.annotation.PropertySources;
 @ComponentScan("org.cdlib.ill.report")
 @PropertySources({
     @PropertySource("file:jreport-jdbc.properties")
+    , @PropertySource("file:ssl.properties")
     , @PropertySource("classpath:application.properties")})
 @SpringBootApplication
 public class Application {
