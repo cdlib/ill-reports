@@ -1,6 +1,7 @@
 /nbactions.xml
 /nb-configuration.xml
 /jreport-jdbc.properties
+/ssl.properties
 /nbproject/
 /target/
 .DS_Store
