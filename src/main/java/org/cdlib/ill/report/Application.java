@@ -24,8 +24,8 @@ import org.springframework.context.annotation.PropertySources;
 @SpringBootApplication
 public class Application {
 
-    @Value("${server.port}")
-    private Integer secureHttpsPort;
+    @Value("${server.insecure-redirect-port}")
+    private Integer insecureRedirectHttpsPort;
     @Value("${server.insecure-port}")
     private Integer insecureHttpPort;
 
@@ -55,7 +55,7 @@ public class Application {
         connector.setScheme("http");
         connector.setSecure(false);
         connector.setPort(insecureHttpPort);
-        connector.setRedirectPort(secureHttpsPort);
+        connector.setRedirectPort(insecureRedirectHttpsPort);
         return connector;
     }
 
