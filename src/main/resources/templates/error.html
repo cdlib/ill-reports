@@ -13,17 +13,18 @@
         <div class="container">
             <br/>
             <p class="text-center"><img src="/CDL_Logo.png" class="banner" alt="University of California - California Digital Library" /></p>
-            <h1 class="page-header">Error in ILL Reports</h1>
+            <h1 class="page-header">We're sorry.</h1>
 
-            <p>We're sorry. An unexpected error has occurred in the program. Please <a href="mailto:vdxtrouble-l@ucop.edu">email CDL</a> if the problem continues.</p>
+            <p>An unexpected error has occurred in the program. Please <a href="mailto:vdxtrouble-l@ucop.edu">email CDL</a> if the problem continues.</p>
 
             <dl>
                 <dt>More Information</dt>
                 <dd><code th:text="|${status} ${error}|"></code></dd>
+                <dd th:if="${status} eq '404'">This page does not exist. Return to <a href="/">ILL Reports</a>.</dd>
                 <dt>Timestamp</dt>
                 <dd th:text="${timestamp}"></dd>
             </dl>
-
+            
             <p class="text-center page-break">
                 <br/>
                 <br/>
