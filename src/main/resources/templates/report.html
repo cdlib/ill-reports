@@ -188,6 +188,20 @@
                             <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
+                    <tr>
+                        <th scope="row">
+                            Schedule C Workbook
+                        </th>
+                        <td>
+                            Compilation of UC Borrowing, OCLC Borrowing, and Lending.
+                        </td>
+                        <td>
+                            <em>N/A</em>
+                        </td>
+                        <td>
+                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/schedule_c.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                        </td>
+                    </tr>
                 </table>
 
                 <table class="table">

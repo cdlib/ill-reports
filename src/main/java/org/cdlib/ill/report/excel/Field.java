@@ -15,7 +15,7 @@ class Field<T> {
         this.mapper = mapper;
     }
 
-    public static <T> Field newField(String header, CellType cellType, Function<T, ? extends Object> mapper) {
+    public static <T> Field<T> newField(String header, CellType cellType, Function<T, ? extends Object> mapper) {
         return new Field<>(header, cellType, mapper);
     }
 

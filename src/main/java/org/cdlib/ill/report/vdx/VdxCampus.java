@@ -5,19 +5,19 @@ import java.util.Optional;
 public enum VdxCampus {
 
     None("", "None"),
-    NorthernRegionalLibraryFacility("NRLF", "Northern Regional Library Facility"),
-    SouthernRegionalLibraryFacility("SRLF", "Southern Regional Library Facility"),
-    Berkeley("UCB", "UC Berkeley"),
-    Davis("UCD", "UC Davis"),
-    Irvine("UCI", "UC Irvine"),
-    LosAngeles("UCLA", "UC Los Angeles"),
+    NorthernRegionalLibraryFacility("NRLF", "NRLF"),
+    SouthernRegionalLibraryFacility("SRLF", "SRLF"),
+    Berkeley("UCB", "Berkeley"),
+    Davis("UCD", "Davis"),
+    Irvine("UCI", "Irvine"),
+    LosAngeles("UCLA", "Los Angeles"),
     UCLADocumentDelivery("OELA", "UCLA Document Delivery"),
-    Merced("UCM", "UC Merced"),
-    Riverside("UCR", "UC Riverside"),
-    SantaBarbara("UCSB", "UC Santa Barbara"),
-    SantaCruz("UCSC", "UC Santa Cruz"),
-    SanDiego("UCSD", "UC San Diego"),
-    SanFrancisco("UCSF", "UC San Francisco");
+    Merced("UCM", "Merced"),
+    Riverside("UCR", "Riverside"),
+    SantaBarbara("UCSB", "Santa Barbara"),
+    SantaCruz("UCSC", "Santa Cruz"),
+    SanDiego("UCSD", "San Diego"),
+    SanFrancisco("UCSF", "San Francisco");
 
     private final String code;
     private final String description;

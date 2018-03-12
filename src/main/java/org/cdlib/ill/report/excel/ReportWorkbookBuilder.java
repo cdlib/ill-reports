@@ -71,7 +71,11 @@ public class ReportWorkbookBuilder<T> {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
         'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
-    String getLastDataColumnLetter() {
+    public String getLastDataColumnLetter() {
+        return getLastDataColumnLetter(fields);
+    }
+    
+    public static String getLastDataColumnLetter(List fields) {
         String cell = "";
         for (int i = 0; (i * 26) < fields.size(); i += 1) {
             cell = ALPHABET[(int) (fields.size() / BigInteger.valueOf(26).pow(i).intValue()) % 26 - 1] + cell;
@@ -97,7 +101,7 @@ public class ReportWorkbookBuilder<T> {
                 : pivotTableSheet;
         source = source == null
                 ? new AreaReference("CDL_Data!A1:"
-                        + getLastDataColumnLetter()
+                        + getLastDataColumnLetter(fields)
                         + String.valueOf(1 + data.size()), SpreadsheetVersion.EXCEL2007)
                 : source;
         pivotTable = setupPivotTable();
@@ -148,7 +152,7 @@ public class ReportWorkbookBuilder<T> {
      *
      * Strategy suggested by {@link https://stackoverflow.com/a/33701734}
      */
-    private void addColumnLabel(XSSFPivotTable pivotTable, AreaReference pivotArea, int columnIndex) {
+    public static void addColumnLabel(XSSFPivotTable pivotTable, AreaReference pivotArea, int columnIndex) {
         CTPivotTableDefinition definition = pivotTable.getCTPivotTableDefinition();
 
         final int lastRowIndex = pivotArea.getLastCell().getRow() - pivotArea.getFirstCell().getRow();
