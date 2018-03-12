@@ -18,10 +18,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLCRepository;
-import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUC;
-import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUCRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLending;
 import org.cdlib.ill.report.vdx.procedures.SpVdxLendingRepository;
+import org.cdlib.ill.report.vdx.schedule_c.LendingSubtotal;
 import org.cdlib.ill.report.vdx.schedule_c.ScheduleCRepository;
 import org.cdlib.ill.report.vdx.schedule_c.UCBorrowingSubtotal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +45,7 @@ public class ScheduleCController {
     @Autowired
     private ScheduleCRepository scheduleCRepo;
     @Autowired
-    private SpVdxBorrowingUCRepository spVdxBorrowingUCRepo;
-    @Autowired
     private SpVdxBorrowingOCLCRepository spVdxBorrowingOCLCRepo;
-    @Autowired
-    private SpVdxLendingRepository spVdxLendingRepo;
 
     private final VdxCampus[] CAMPUSES_ORDERED = {
         VdxCampus.Berkeley,
@@ -92,9 +87,9 @@ public class ScheduleCController {
             String theirCampusCode = theirCampus.getCode();
             scheduleCSheet.createRow(scheduleCCampusRow);
             scheduleCSheet.getRow(scheduleCCampusRow).createCell(0).setCellValue(theirCampus.getDescription());
-            scheduleCSheet.getRow(scheduleCCampusRow).createCell(1).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'Lending Rollup'!$A$1, \"Lending Campus\", \"" + theirCampusCode + "\", \"Loan Service\", \"Loan\"),0)");
+            scheduleCSheet.getRow(scheduleCCampusRow).createCell(1).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'Lending Rollup'!$A$1, \"Borrowing Campus\", \"" + theirCampusCode + "\", \"Loan Service\", \"Loan\"),0)");
             scheduleCSheet.getRow(scheduleCCampusRow).createCell(2).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'UC Borrowing Rollup'!$A$1, \"Lending Campus\", \"" + theirCampusCode + "\", \"Loan Service\", \"Loan\"),0)");
-            scheduleCSheet.getRow(scheduleCCampusRow).createCell(3).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'Lending Rollup'!$A$1, \"Lending Campus\", \"" + theirCampusCode + "\", \"Loan Service\", \"Copy non returnable\"),0)");
+            scheduleCSheet.getRow(scheduleCCampusRow).createCell(3).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'Lending Rollup'!$A$1, \"Borrowing Campus\", \"" + theirCampusCode + "\", \"Loan Service\", \"Copy non returnable\"),0)");
             scheduleCSheet.getRow(scheduleCCampusRow).createCell(4).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'UC Borrowing Rollup'!$A$1, \"Lending Campus\", \"" + theirCampusCode + "\", \"Loan Service\", \"Copy non returnable\"),0)");
             scheduleCCampusRow++;
         }
@@ -104,9 +99,9 @@ public class ScheduleCController {
         scheduleCSheet.getRow(19).createCell(3).setCellFormula("SUM(D8:D19)");
         scheduleCSheet.getRow(19).createCell(4).setCellFormula("SUM(E8:E19)");
         scheduleCSheet.createRow(20);
-        scheduleCSheet.getRow(20).createCell(1).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'Lending Rollup'!$A$1, \"Lending Campus\", \"\", \"Loan Service\", \"Loan\"),0)");
+        scheduleCSheet.getRow(20).createCell(1).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'Lending Rollup'!$A$1, \"Borrowing Campus\", \"\", \"Loan Service\", \"Loan\"),0)");
         scheduleCSheet.getRow(20).createCell(2).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'OCLC Borrowing Rollup'!$A$1, \"Loan Service\", \"Loan\"),0)");
-        scheduleCSheet.getRow(20).createCell(3).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'Lending Rollup'!$A$1, \"Lending Campus\", \"\", \"Loan Service\", \"Copy non returnable\"),0)");
+        scheduleCSheet.getRow(20).createCell(3).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'Lending Rollup'!$A$1, \"Borrowing Campus\", \"\", \"Loan Service\", \"Copy non returnable\"),0)");
         scheduleCSheet.getRow(20).createCell(4).setCellFormula("IFERROR(GETPIVOTDATA(\"Total\", 'OCLC Borrowing Rollup'!$A$1, \"Loan Service\", \"Copy non returnable\"),0)");
         scheduleCSheet.createRow(21);
         scheduleCSheet.getRow(21).createCell(1).setCellFormula("SUM(B20:B21)");
@@ -206,18 +201,17 @@ public class ScheduleCController {
                 + String.valueOf(oclcBorrowingRowCount), SpreadsheetVersion.EXCEL2007);
         XSSFPivotTable oclcBorrowingTable = oclcBorrowingPivotSheet.createPivotTable(oclcBorrowingSource, new CellReference("A1"));
 
-        oclcBorrowingTable.addRowLabel(0);
-        oclcBorrowingTable.addRowLabel(1);
         oclcBorrowingTable.addRowLabel(2);
         ReportWorkbookBuilder.addColumnLabel(oclcBorrowingTable, oclcBorrowingSource, 3);
         oclcBorrowingTable.addColumnLabel(DataConsolidateFunction.SUM, 4, "# Received");
 
         // Lending data sheet
         final XSSFSheet lendingDataSheet = wb.createSheet("Lending");
-        List<Field<SpVdxLending>> lendingFields = Arrays.asList(
+        List<Field<LendingSubtotal>> lendingFields = Arrays.asList(
                 Field.newField("Lending Campus", CellType.STRING, lending -> lending.getRespCampus().getCode()),
                 Field.newField("Lending Library", CellType.STRING, lending -> lending.getRespName()),
-                Field.newField("Borrower's Location Type", CellType.STRING, lending -> lending.getReqLocType()),
+                Field.newField("Borrowing Location Type", CellType.STRING, lending -> lending.getReqLocType()),
+                Field.newField("Borrowing Campus", CellType.STRING, lending -> lending.getReqCampus().getCode()),
                 Field.newField("Borrowing Library", CellType.STRING, lending -> lending.getReqName()),
                 Field.newField("Loan Service", CellType.STRING, lending -> lending.getServiceTp().getCode()),
                 Field.newField("Delivery Method", CellType.STRING, lending -> lending.getShipDeliveryMethod().getCode()),
@@ -226,13 +220,13 @@ public class ScheduleCController {
         int lendingRowCount = 0;
         int lendingCellCount = 0;
         Row lendingHeaderRow = lendingDataSheet.createRow(lendingRowCount++);
-        for (Field<SpVdxLending> field : lendingFields) {
+        for (Field<LendingSubtotal> field : lendingFields) {
             lendingHeaderRow.createCell(lendingCellCount++, field.getCellType()).setCellValue(field.getHeader());
         }
-        for (SpVdxLending record : spVdxLendingRepo.getLending(
+        for (LendingSubtotal record : scheduleCRepo.getLending(
                 VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
                 startDate,
-                endDate).collect(Collectors.toList())) {
+                endDate)) {
             Row dataRow = lendingDataSheet.createRow(lendingRowCount++);
             for (int cell = 0; cell < lendingFields.size(); cell++) {
                 switch (lendingFields.get(cell).getCellType()) {
@@ -255,13 +249,10 @@ public class ScheduleCController {
                 + String.valueOf(lendingRowCount), SpreadsheetVersion.EXCEL2007);
         XSSFPivotTable lendingTable = lendingPivotSheet.createPivotTable(lendingSource, new CellReference("A1"));
 
-        lendingTable.addRowLabel(0);
-        lendingTable.addRowLabel(1);
-        lendingTable.addRowLabel(2);
         lendingTable.addRowLabel(3);
-        ReportWorkbookBuilder.addColumnLabel(lendingTable, lendingSource, 4);
+        lendingTable.addRowLabel(4);
         ReportWorkbookBuilder.addColumnLabel(lendingTable, lendingSource, 5);
-        lendingTable.addColumnLabel(DataConsolidateFunction.SUM, 6, "# Shipped");
+        lendingTable.addColumnLabel(DataConsolidateFunction.SUM, 7, "# Shipped");
 
         wb.write(output);
     }
