@@ -2,21 +2,11 @@
 
 ## Overview
 
-The project includes reporting tools for UC inter-library loans.
+The project includes reporting tools for UC interlibrary loan activity.
 
-A Maven build (`mvn install`) produces an executable JAR using Spring Boot & Tomcat.
-You can run the web server from the command line.
-The server will listen on port 18880 by default.
+See the [Github wiki](https://github.com/cdlib/ill-reports/wiki) for documentation and troubleshooting.
 
-    java -Dserver.port=PORT_NUMBER -jar JAR_PATH
-
-## Configuration
-
-The server connects to a MySQL database containing VDX data associated with UC campuses.
-You must define a properties file `jreport-jdbc.properties`.
-- `jreport.jdbc.url` The JDBC URL of the database.
-- `jreport.jdbc.username` The database login.
-- `jreport.jdbc.password` The databaes password.
+## Web API
 
 ## `text/html`
 
