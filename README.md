@@ -8,21 +8,12 @@ See the [Github wiki](https://github.com/cdlib/ill-reports/wiki) for documentati
 
 ## Web API
 
-## `text/html`
+In a nutshell:
 
-The project includes an HTML form to access report data.
+    GET /ill/data/by-campus/{CAMPUS}/borrowing.{EXTENSION}?startDate={DATE}&endDate={DATE}
+    GET /ill/data/by-campus/{CAMPUS}/borrowing.{EXTENSION}?startDate={DATE}&endDate={DATE}
 
-    GET /
-
-## `application/json`, `application/xml`, `text/csv`
-
-The project includes a web service for report data.
-
-    GET /ill/report/by-campus/{CAMPUS}.{EXTENSION}?reportStartDate={DATE}&reportEndDate={DATE}
-    GET /ill/report/by-campus/{CAMPUS}/borrowing.{EXTENSION}?reportStartDate={DATE}&reportEndDate={DATE}
-    GET /ill/report/by-campus/{CAMPUS}/lending.{EXTENSION}?reportStartDate={DATE}&reportEndDate={DATE}
-
-The `CAMPUS` component of the URI may be any of the following values:
+Where campus can be one of:
 - `OELA` UCLA Document Delivery
 - `NRLF` Northern Regional Library Facility
 - `SRLF` Southern Regional Library Facility
@@ -36,7 +27,11 @@ The `CAMPUS` component of the URI may be any of the following values:
 - `UCSC` UC Santa Cruz
 - `UCSD` UC San Diego
 - `UCSF` UC San Francisco
+- `all` All of the above combined
 
-The `EXTENSION` may be `xml` for _application/xml_, `json` for _application/json_, or `csv` for _text/csv_.
+Where `EXTENSION` can be one of:
+- `csv` _text/csv_
+- `json` _application/json_
+- `xml` _application/xml_
 
-The format for `DATE` parameters is `yyyy-MM-dd`.
+Where `DATE` is formatted `yyyy-MM-dd`. For example, `2017-12-31`.
