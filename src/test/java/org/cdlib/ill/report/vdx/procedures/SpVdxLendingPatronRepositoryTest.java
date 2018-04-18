@@ -38,15 +38,6 @@ public class SpVdxLendingPatronRepositoryTest {
         );
     }
     
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingPatronWhenProcedureGivesWrongOutput() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
-                new Object[]{"UCD", "Library B", "Library A", "Loan", "Grad", "2", "extra"}
-        ));
-        repo.getLendingPatron(null, null, null).collect(Collectors.toSet());
-    }
-    
     @Test
     public void testGetLendingPatronWhenCampusIsBlank() {
         stubNativeQueryResultList(em, Arrays.asList(
@@ -60,94 +51,4 @@ public class SpVdxLendingPatronRepositoryTest {
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingPatronWhenCampusIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
-                new Object[]{null, "Library B", "Library A", "Loan", "Grad", "2"}
-        ));
-        repo.getLendingPatron(null, null, null).collect(Collectors.toSet());
-    }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingPatronWhenCampusIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
-                new Object[]{"UCZ", "Library B", "Library A", "Loan", "Grad", "2"}
-        ));
-        repo.getLendingPatron(null, null, null).collect(Collectors.toSet());
-    }
-    
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingPatronWhenLendingLibraryIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
-                new Object[]{"UCD", null, "Library A", "Loan", "Grad", "2"}
-        ));
-        repo.getLendingPatron(null, null, null).collect(Collectors.toSet());
-    }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingPatronWhenBorrowingLibraryIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
-                new Object[]{"UCD", "Library B", null, "Loan", "Grad", "2"}
-        ));
-        repo.getLendingPatron(null, null, null).collect(Collectors.toSet());
-    }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingPatronWhenServiceTypeIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
-                new Object[]{"UCD", "Library B", "Library A", null, "Grad", "2"}
-        ));
-        repo.getLendingPatron(null, null, null).collect(Collectors.toSet());
-    }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingPatronWhenServiceTypeIsBlank() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
-                new Object[]{"UCD", "Library B", "Library A", "", "Grad", "2"}
-        ));
-        repo.getLendingPatron(null, null, null).collect(Collectors.toSet());
-    }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingPatronWhenServiceTypeIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
-                new Object[]{"UCD", "Library B", "Library A", "Telepathy", "Grad", "2"}
-        ));
-        repo.getLendingPatron(null, null, null).collect(Collectors.toSet());
-    }
-    
-     @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingPatronWhenPatronCategoryIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
-                new Object[]{"UCD", "Library B", "Library A", "Loan", null, "2"}
-        ));
-        repo.getLendingPatron(null, null, null).collect(Collectors.toSet());
-    }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingPatronWhenPatronCategoryIsBlank() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
-                new Object[]{"UCD", "Library B", "Library A", "Loan", "", "2"}
-        ));
-        repo.getLendingPatron(null, null, null).collect(Collectors.toSet());
-    }
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingPatronWhenPatronCategoryIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCD", "Library A", "Library B", "Loan", "Grad", "1"},
-                new Object[]{"UCD", "Library B", "Library A", "Loan", "Maester", "2"}
-        ));
-        repo.getLendingPatron(null, null, null).collect(Collectors.toSet());
-    }
 }

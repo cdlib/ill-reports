@@ -9,11 +9,6 @@ import org.cdlib.ill.report.vdx.VdxCampusSerializer;
 import org.cdlib.ill.report.vdx.VdxServiceType;
 import org.cdlib.ill.report.vdx.VdxServiceTypeSerializer;
 
-/**
- * TODO: Discuss including the field {'status' = 'Not Supplied'}.
- *
- * @author mmorrisp
- */
 @JsonPropertyOrder({
     "respCampus",
     "respName",

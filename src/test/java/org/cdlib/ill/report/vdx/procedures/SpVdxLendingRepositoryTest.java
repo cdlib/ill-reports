@@ -37,60 +37,6 @@ public class SpVdxLendingRepositoryTest {
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingWhenProcedureGivesWrongOutputs() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1", "extra"},
-                new Object[]{"UCB", "Library B", "UC Library", "Library C", "Loan", "Courier", "2", "extra"}
-        ));
-        repo.getLending(null, null, null).collect(Collectors.toSet());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingWhenBorrowingLibraryNameIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
-                new Object[]{"UCB", null, "UC Library", "Library C", "Loan", "Courier", "2"}
-        ));
-        repo.getLending(null, null, null).collect(Collectors.toSet());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingWhenLendingLibraryNameIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
-                new Object[]{"UCB", "Library B", "UC Library", null, "Loan", "Courier", "2"}
-        ));
-        repo.getLending(null, null, null).collect(Collectors.toSet());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingWhenCampusIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
-                new Object[]{null, "Library B", "UC Library", "Library C", "Loan", "Courier", "2"}
-        ));
-        repo.getLending(null, null, null).collect(Collectors.toSet());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingWhenServiceTypeIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
-                new Object[]{"UCB", "Library B", "UC Library", "Library C", null, "Courier", "2"}
-        ));
-        repo.getLending(null, null, null).collect(Collectors.toSet());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingWhenDeliveryMethodIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
-                new Object[]{"UCB", "Library B", "UC Library", "Library C", "Loan", null, "2"}
-        ));
-        repo.getLending(null, null, null).collect(Collectors.toSet());
-    }
-
     @Test
     public void testGetLendingWhenCampusIsBlank() {
         stubNativeQueryResultList(em, Arrays.asList(
@@ -103,33 +49,6 @@ public class SpVdxLendingRepositoryTest {
         ),
                 repo.getLending(null, null, null).collect(Collectors.toSet())
         );
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingWhenCampusIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
-                new Object[]{"UCZ", "Library B", "UC Library", "Library C", "Loan", "Courier", "2"}
-        ));
-        repo.getLending(null, null, null).collect(Collectors.toSet());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingWhenServiceTypeIsBlank() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
-                new Object[]{"UCB", "Library B", "UC Library", "Library C", "", "Courier", "2"}
-        ));
-        repo.getLending(null, null, null).collect(Collectors.toSet());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingWhenServiceTypeIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
-                new Object[]{"UCB", "Library B", "UC Library", "Library C", "Replication", "Courier", "2"}
-        ));
-        repo.getLending(null, null, null).collect(Collectors.toSet());
     }
 
     @Test
@@ -146,12 +65,4 @@ public class SpVdxLendingRepositoryTest {
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetLendingWhenDeliveryMethodIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Library A", "UC Library", "Library B", "Loan", "Courier", "1"},
-                new Object[]{"UCB", "Library B", "UC Library", "Library C", "Loan", "Drone", "2"}
-        ));
-        repo.getLending(null, null, null).collect(Collectors.toSet());
-    }
 }

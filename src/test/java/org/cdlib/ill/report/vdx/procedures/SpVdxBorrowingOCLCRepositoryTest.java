@@ -41,51 +41,6 @@ public class SpVdxBorrowingOCLCRepositoryTest {
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingOCLCWhenProcedureGivesWrongOutputs() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1", "extra"},
-                new Object[]{"UCI", "Library B", "Library C", "Copy non returnable", "2", "extra"}
-        ));
-        repo.getBorrowingOCLC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingOCLCWhenBorrowingLibraryNameIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
-                new Object[]{"UCI", null, "Library A", "Copy non returnable", "2"}
-        ));
-        repo.getBorrowingOCLC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingOCLCWhenLendingLibraryNameIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
-                new Object[]{"UCI", "Library B", null, "Copy non returnable", "2"}
-        ));
-        repo.getBorrowingOCLC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingOCLCWhenCampusIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
-                new Object[]{null, "Library B", "Library A", "Copy non returnable", "2"}
-        ));
-        repo.getBorrowingOCLC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingOCLCWhenServiceTypeIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
-                new Object[]{"UCI", "Library B", "Library A", null, "2"}
-        ));
-        repo.getBorrowingOCLC(null, null, null).collect(Collectors.toList());
-    }
-
     @Test
     public void testGetBorrowingOCLCWhenCampusIsBlank() {
         stubNativeQueryResultList(em, Arrays.asList(
@@ -98,31 +53,5 @@ public class SpVdxBorrowingOCLCRepositoryTest {
                 repo.getBorrowingOCLC(null, null, null).collect(Collectors.toSet())
         );
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingOCLCWhenCampusIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "1"},
-                new Object[]{"UCZ", "Library B", "Library A", "Copy non returnable", "2"}
-        ));
-        repo.getBorrowingOCLC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingOCLCWhenServiceTypeIsBlank() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "", "1"},
-                new Object[]{"UCI", "Library B", "Library A", "", "2"}
-        ));
-        repo.getBorrowingOCLC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingOCLCWhenServiceTypeIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Replication", "1"},
-                new Object[]{"UCI", "Library B", "Library A", "Replication", "2"}
-        ));
-        repo.getBorrowingOCLC(null, null, null).collect(Collectors.toList());
-    }
+    
 }

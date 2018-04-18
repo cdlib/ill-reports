@@ -37,33 +37,6 @@ public class SpVdxBorrowingSummaryRepositoryTest {
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingSummaryWhenProcedureGivesWrongOutput() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Some Library", "", "1"},
-                new Object[]{"UCB", "Some Library", "", "1", "extra"}
-        ));
-        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingSummaryWhenLibraryNameIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Some Library", "", "1"},
-                new Object[]{"UCB", null, "", "1"}
-        ));
-        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingSummaryWhenCampusIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Some Library", "", "1"},
-                new Object[]{null, "Some Library", "", "1"}
-        ));
-        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
-    }
-
     @Test
     public void testGetBorrowingSummaryWhenCampusIsBlank() {
         stubNativeQueryResultList(em, Arrays.asList(
@@ -75,33 +48,6 @@ public class SpVdxBorrowingSummaryRepositoryTest {
         ),
                 repo.getBorrowingSummary(null, null, null).collect(Collectors.toSet())
         );
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingSummaryWhenCampusIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Some Library", "", "1"},
-                new Object[]{"UCZ", "Some Library", "", "1"}
-        ));
-        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingSummaryWhenCategoryIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Some Library", "", "1"},
-                new Object[]{"UCB", "Some Library", null, "1"}
-        ));
-        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingSummaryWhenCategoryIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCB", "Some Library", "", "1"},
-                new Object[]{"UCB", "Some Library", "Z", "1"}
-        ));
-        repo.getBorrowingSummary(null, null, null).collect(Collectors.toList());
     }
 
 }

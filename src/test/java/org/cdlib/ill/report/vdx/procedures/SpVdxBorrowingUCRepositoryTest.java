@@ -42,60 +42,6 @@ public class SpVdxBorrowingUCRepositoryTest {
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingUCWhenProcedureGivesWrongOutputs() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "", "1", "extra"},
-                new Object[]{"UCI", "Library B", "Library C", "Copy non returnable", "Courier", "2", "extra"}
-        ));
-        repo.getBorrowingUC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingUCWhenBorrowingLibraryNameIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "", "1"},
-                new Object[]{"UCI", null, "Library A", "Copy non returnable", "", "2"}
-        ));
-        repo.getBorrowingUC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingUCWhenLendingLibraryNameIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "", "1"},
-                new Object[]{"UCI", "Library B", null, "Copy non returnable", "", "2"}
-        ));
-        repo.getBorrowingUC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingUCWhenCampusIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "", "1"},
-                new Object[]{null, "Library B", "Library A", "Copy non returnable", "", "2"}
-        ));
-        repo.getBorrowingUC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingUCWhenServiceTypeIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "", "1"},
-                new Object[]{"UCI", "Library B", "Library A", null, "", "2"}
-        ));
-        repo.getBorrowingUC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingUCWhenDeliveryMethodIsNull() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "", "1"},
-                new Object[]{"UCI", "Library B", "Library A", "Copy non returnable", null, "2"}
-        ));
-        repo.getBorrowingUC(null, null, null).collect(Collectors.toList());
-    }
-
     @Test
     public void testGetBorrowingUCWhenCampusIsBlank() {
         stubNativeQueryResultList(em, Arrays.asList(
@@ -109,33 +55,6 @@ public class SpVdxBorrowingUCRepositoryTest {
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingUCWhenCampusIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Copy non returnable", "", "1"},
-                new Object[]{"UCZ", "Library B", "Library A", "Copy non returnable", "", "2"}
-        ));
-        repo.getBorrowingUC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingUCWhenServiceTypeIsBlank() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "", "", "1"},
-                new Object[]{"UCI", "Library B", "Library A", "", "", "2"}
-        ));
-        repo.getBorrowingUC(null, null, null).collect(Collectors.toList());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingUCWhenServiceTypeIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Replication", "", "1"},
-                new Object[]{"UCI", "Library B", "Library A", "Replication", "", "2"}
-        ));
-        repo.getBorrowingUC(null, null, null).collect(Collectors.toList());
-    }
-
     @Test
     public void testGetBorrowingUCWhenDeliveryMethodIsBlank() {
         stubNativeQueryResultList(em, Arrays.asList(
@@ -147,15 +66,6 @@ public class SpVdxBorrowingUCRepositoryTest {
         ),
                 repo.getBorrowingUC(null, null, null).collect(Collectors.toSet())
         );
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetBorrowingUCWhenDeliveryMethodIsNew() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Library A", "Library B", "Loan", "", "1"},
-                new Object[]{"UCI", "Library B", "Library A", "Loan", "Carrier pigeon", "2"}
-        ));
-        repo.getBorrowingUC(null, null, null).collect(Collectors.toList());
     }
 
 }
