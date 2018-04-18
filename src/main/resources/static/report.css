@@ -10,6 +10,10 @@ img.banner {
     height: 6em;
 }
 
+img[alt="Microsoft Excel"] {
+    height: 1em;
+}
+
 tr.borrowing-row {
     background-color: rgba(255, 229, 82,0.2);
 }
