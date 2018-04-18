@@ -17,35 +17,35 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class SpVdxJournalBorrowingRepositoryTest {
 
-    @Mock
-    private EntityManager em;
-    @InjectMocks
-    private SpVdxJournalBorrowingRepository repo;
+  @Mock
+  private EntityManager em;
+  @InjectMocks
+  private SpVdxJournalBorrowingRepository repo;
 
-    @Test
-    public void testGetJournalBorrowing() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCLA", "Library A", "Some Title", "1999", "Volume 1", "pp 100-199", "Grad", "1"},
-                new Object[]{"UCLA", "Library B", "Some Title", "1999", "Volume 1", "pp 100-199", "Grad", "2"}
-        ));
-        Assert.assertEquals(Sets.newSet(
-                new SpVdxJournalBorrowing(VdxCampus.LosAngeles, "Library A", "Some Title", "1999", "Volume 1", "pp 100-199", VdxBorrowerCategory.GraduateStudent, 1L),
-                new SpVdxJournalBorrowing(VdxCampus.LosAngeles, "Library B", "Some Title", "1999", "Volume 1", "pp 100-199", VdxBorrowerCategory.GraduateStudent, 2L)
-        ), repo.getJournalBorrowing(null, null, null).collect(Collectors.toSet())
-        );
-    }
+  @Test
+  public void testGetJournalBorrowing() {
+    stubNativeQueryResultList(em, Arrays.asList(
+        new Object[]{"UCLA", "Library A", "Some Title", "1999", "Volume 1", "pp 100-199", "Grad", "1"},
+        new Object[]{"UCLA", "Library B", "Some Title", "1999", "Volume 1", "pp 100-199", "Grad", "2"}
+    ));
+    Assert.assertEquals(Sets.newSet(
+        new SpVdxJournalBorrowing(VdxCampus.LosAngeles, "Library A", "Some Title", "1999", "Volume 1", "pp 100-199", VdxBorrowerCategory.GraduateStudent, 1L),
+        new SpVdxJournalBorrowing(VdxCampus.LosAngeles, "Library B", "Some Title", "1999", "Volume 1", "pp 100-199", VdxBorrowerCategory.GraduateStudent, 2L)
+    ), repo.getJournalBorrowing(null, null, null).collect(Collectors.toSet())
+    );
+  }
 
-    @Test
-    public void testGetJournalBorrowingWhenCampusIsBlank() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCLA", "Library A", "Some Title", "1999", "Volume 1", "pp 100-199", "Grad", "1"},
-                new Object[]{"", "Library B", "Some Title", "1999", "Volume 1", "pp 100-199", "Grad", "2"}
-        ));
-        Assert.assertEquals(Sets.newSet(
-                new SpVdxJournalBorrowing(VdxCampus.LosAngeles, "Library A", "Some Title", "1999", "Volume 1", "pp 100-199", VdxBorrowerCategory.GraduateStudent, 1L),
-                new SpVdxJournalBorrowing(VdxCampus.None, "Library B", "Some Title", "1999", "Volume 1", "pp 100-199", VdxBorrowerCategory.GraduateStudent, 2L)
-        ), repo.getJournalBorrowing(null, null, null).collect(Collectors.toSet())
-        );
-    }
-    
+  @Test
+  public void testGetJournalBorrowingWhenCampusIsBlank() {
+    stubNativeQueryResultList(em, Arrays.asList(
+        new Object[]{"UCLA", "Library A", "Some Title", "1999", "Volume 1", "pp 100-199", "Grad", "1"},
+        new Object[]{"", "Library B", "Some Title", "1999", "Volume 1", "pp 100-199", "Grad", "2"}
+    ));
+    Assert.assertEquals(Sets.newSet(
+        new SpVdxJournalBorrowing(VdxCampus.LosAngeles, "Library A", "Some Title", "1999", "Volume 1", "pp 100-199", VdxBorrowerCategory.GraduateStudent, 1L),
+        new SpVdxJournalBorrowing(VdxCampus.None, "Library B", "Some Title", "1999", "Volume 1", "pp 100-199", VdxBorrowerCategory.GraduateStudent, 2L)
+    ), repo.getJournalBorrowing(null, null, null).collect(Collectors.toSet())
+    );
+  }
+
 }

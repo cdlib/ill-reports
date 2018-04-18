@@ -16,35 +16,35 @@ import org.mockito.junit.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class SpVdxCopyrightRepositoryTest {
 
-    @Mock
-    private EntityManager em;
-    @InjectMocks
-    private SpVdxCopyrightRepository repo;
+  @Mock
+  private EntityManager em;
+  @InjectMocks
+  private SpVdxCopyrightRepository repo;
 
-    @Test
-    public void testGetCopyright() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Some Title", "1999", "1"},
-                new Object[]{"UCI", "Some Title", "1999", "2"}
-        ));
-        Assert.assertEquals(Sets.newSet(
-                new SpVdxCopyright(VdxCampus.Irvine, "Some Title", "1999", 1L),
-                new SpVdxCopyright(VdxCampus.Irvine, "Some Title", "1999", 2L)
-        ), repo.getCopyright(null, null, null).collect(Collectors.toSet())
-        );
-    }
+  @Test
+  public void testGetCopyright() {
+    stubNativeQueryResultList(em, Arrays.asList(
+        new Object[]{"UCI", "Some Title", "1999", "1"},
+        new Object[]{"UCI", "Some Title", "1999", "2"}
+    ));
+    Assert.assertEquals(Sets.newSet(
+        new SpVdxCopyright(VdxCampus.Irvine, "Some Title", "1999", 1L),
+        new SpVdxCopyright(VdxCampus.Irvine, "Some Title", "1999", 2L)
+    ), repo.getCopyright(null, null, null).collect(Collectors.toSet())
+    );
+  }
 
-    @Test
-    public void testGetCopyrightWhenCampusIsBlank() {
-        stubNativeQueryResultList(em, Arrays.asList(
-                new Object[]{"UCI", "Some Title", "1999", "1"},
-                new Object[]{"", "Some Title", "1999", "2"}
-        ));
-        Assert.assertEquals(Sets.newSet(
-                new SpVdxCopyright(VdxCampus.Irvine, "Some Title", "1999", 1L),
-                new SpVdxCopyright(VdxCampus.None, "Some Title", "1999", 2L)
-        ), repo.getCopyright(null, null, null).collect(Collectors.toSet())
-        );
-    }
+  @Test
+  public void testGetCopyrightWhenCampusIsBlank() {
+    stubNativeQueryResultList(em, Arrays.asList(
+        new Object[]{"UCI", "Some Title", "1999", "1"},
+        new Object[]{"", "Some Title", "1999", "2"}
+    ));
+    Assert.assertEquals(Sets.newSet(
+        new SpVdxCopyright(VdxCampus.Irvine, "Some Title", "1999", 1L),
+        new SpVdxCopyright(VdxCampus.None, "Some Title", "1999", 2L)
+    ), repo.getCopyright(null, null, null).collect(Collectors.toSet())
+    );
+  }
 
 }

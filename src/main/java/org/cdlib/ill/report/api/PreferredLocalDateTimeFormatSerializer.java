@@ -7,19 +7,19 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class PreferredLocalDateTimeFormatSerializer
-        extends StdSerializer<LocalDateTime> {
+    extends StdSerializer<LocalDateTime> {
 
-    public PreferredLocalDateTimeFormatSerializer() {
-        this(null);
-    }
+  public PreferredLocalDateTimeFormatSerializer() {
+    this(null);
+  }
 
-    public PreferredLocalDateTimeFormatSerializer(Class<LocalDateTime> t) {
-        super(t);
-    }
+  public PreferredLocalDateTimeFormatSerializer(Class<LocalDateTime> t) {
+    super(t);
+  }
 
-    @Override
-    public void serialize(LocalDateTime t, JsonGenerator jg, SerializerProvider sp) throws IOException {
-        jg.writeString(PreferredLocalDateTimeFormat.FORMATTER.format(t));
-    }
+  @Override
+  public void serialize(LocalDateTime t, JsonGenerator jg, SerializerProvider sp) throws IOException {
+    jg.writeString(PreferredLocalDateTimeFormat.FORMATTER.format(t));
+  }
 
 }

@@ -7,17 +7,17 @@ import java.io.IOException;
 
 public class VdxBorrowerCategorySerializer extends StdSerializer<VdxBorrowerCategory> {
 
-    public VdxBorrowerCategorySerializer() {
-        this(null);
-    }
+  public VdxBorrowerCategorySerializer() {
+    this(null);
+  }
 
-    public VdxBorrowerCategorySerializer(Class<VdxBorrowerCategory> t) {
-        super(t);
-    }
+  public VdxBorrowerCategorySerializer(Class<VdxBorrowerCategory> t) {
+    super(t);
+  }
 
-    @Override
-    public void serialize(VdxBorrowerCategory category, JsonGenerator jg, SerializerProvider sp) throws IOException {
-        jg.writeString(category.getCode());
-    }
+  @Override
+  public void serialize(VdxBorrowerCategory category, JsonGenerator jg, SerializerProvider sp) throws IOException {
+    jg.writeString(category.getCode());
+  }
 
 }
