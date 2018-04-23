@@ -1,6 +1,5 @@
 package org.cdlib.ill.report.excel;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDate;
@@ -62,7 +61,7 @@ public class ScheduleCController {
       final XSSFSheet scheduleCSheet = wb.getSheet("Schedule C");
       scheduleCSheet.createRow(0).createCell(0).setCellValue("UC Libraries Statistics (" + startDate.toString() + " to " + endDate.toString() + ")");
       scheduleCSheet.getRow(2).createCell(1).setCellValue(VdxCampus.fromCode(campusCode).map(VdxCampus::getDescription).orElse("all UC campuses"));
-
+      
       // UC Borrowing data sheet
       final XSSFSheet ucBorrowingDataSheet = wb.getSheet("UC Borrowing");
       List<Field<UCBorrowingSubtotal>> ucBorrowingFields = Arrays.asList(
@@ -106,6 +105,7 @@ public class ScheduleCController {
           + String.valueOf(ucBorrowingRowCount), SpreadsheetVersion.EXCEL2007);
       XSSFPivotTable ucBorrowingTable = ucBorrowingPivotSheet.createPivotTable(ucBorrowingSource, new CellReference("A1"));
 
+      ucBorrowingTable.addRowLabel(0);
       ucBorrowingTable.addRowLabel(2);
       ucBorrowingTable.addRowLabel(3);
       ReportWorkbookBuilder.addColumnLabel(ucBorrowingTable, ucBorrowingSource, 4);
@@ -200,6 +200,7 @@ public class ScheduleCController {
           + String.valueOf(lendingRowCount), SpreadsheetVersion.EXCEL2007);
       XSSFPivotTable lendingTable = lendingPivotSheet.createPivotTable(lendingSource, new CellReference("A1"));
 
+      lendingTable.addRowLabel(0);
       lendingTable.addRowLabel(3);
       lendingTable.addRowLabel(4);
       ReportWorkbookBuilder.addColumnLabel(lendingTable, lendingSource, 5);
