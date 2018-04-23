@@ -105,9 +105,9 @@ public class ScheduleCController {
           + String.valueOf(ucBorrowingRowCount), SpreadsheetVersion.EXCEL2007);
       XSSFPivotTable ucBorrowingTable = ucBorrowingPivotSheet.createPivotTable(ucBorrowingSource, new CellReference("A1"));
 
-      ucBorrowingTable.addRowLabel(0);
       ucBorrowingTable.addRowLabel(2);
       ucBorrowingTable.addRowLabel(3);
+      ucBorrowingTable.addRowLabel(0);
       ReportWorkbookBuilder.addColumnLabel(ucBorrowingTable, ucBorrowingSource, 4);
       ucBorrowingTable.addColumnLabel(DataConsolidateFunction.SUM, 6, "# Received");
 
@@ -200,9 +200,9 @@ public class ScheduleCController {
           + String.valueOf(lendingRowCount), SpreadsheetVersion.EXCEL2007);
       XSSFPivotTable lendingTable = lendingPivotSheet.createPivotTable(lendingSource, new CellReference("A1"));
 
-      lendingTable.addRowLabel(0);
       lendingTable.addRowLabel(3);
       lendingTable.addRowLabel(4);
+      lendingTable.addRowLabel(0);
       ReportWorkbookBuilder.addColumnLabel(lendingTable, lendingSource, 5);
       lendingTable.addColumnLabel(DataConsolidateFunction.SUM, 7, "# Shipped");
 
