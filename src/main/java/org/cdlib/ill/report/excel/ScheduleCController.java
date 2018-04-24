@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import org.apache.poi.ss.SpreadsheetVersion;
@@ -14,6 +16,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.AreaReference;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFPivotTable;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.cdlib.ill.report.vdx.VdxCampus;
@@ -74,10 +77,39 @@ public class ScheduleCController {
     }
   }
 
+  // The order that the campuses appear in the XLSX template file.
+  private static final List<VdxCampus> CAMPUS_ORDER = Arrays.asList(
+      VdxCampus.Berkeley,
+      VdxCampus.Davis,
+      VdxCampus.Irvine,
+      VdxCampus.LosAngeles,
+      VdxCampus.Merced,
+      VdxCampus.Riverside,
+      VdxCampus.SanDiego,
+      VdxCampus.SanFrancisco,
+      VdxCampus.SantaBarbara,
+      VdxCampus.SantaCruz,
+      VdxCampus.NorthernRegionalLibraryFacility,
+      VdxCampus.SouthernRegionalLibraryFacility
+  );
+
+  private static final Set<VdxCampus> RLFS = EnumSet.of(VdxCampus.NorthernRegionalLibraryFacility, VdxCampus.SouthernRegionalLibraryFacility);
+
   private void buildScheduleCSheet(XSSFWorkbook wb, VdxCampus campus, LocalDate startDate, LocalDate endDate) {
     final XSSFSheet scheduleCSheet = wb.getSheet("Schedule C");
     scheduleCSheet.createRow(0).createCell(0).setCellValue("UC Libraries Statistics (" + startDate.toString() + " to " + endDate.toString() + ")");
     scheduleCSheet.getRow(2).createCell(1).setCellValue(campus.getDescription());
+
+    // Clear the home campus values.
+    XSSFRow disabledRow = scheduleCSheet.getRow(7 + CAMPUS_ORDER.indexOf(campus));
+
+    for (short index = 1; index < disabledRow.getLastCellNum(); index++) {
+      if (!RLFS.contains(campus) || index % 2 == 0) {
+        disabledRow.getCell(index).setCellFormula(null);
+        disabledRow.getCell(index).setCellValue("");
+      }
+    }
+
   }
 
   private void buildUCBorrowingSheets(XSSFWorkbook wb, VdxCampus campus, LocalDate startDate, LocalDate endDate) {
