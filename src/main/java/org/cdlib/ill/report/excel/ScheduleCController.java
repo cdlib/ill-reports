@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.DataConsolidateFunction;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.AreaReference;
 import org.apache.poi.ss.util.CellReference;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFPivotTable;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -102,11 +103,13 @@ public class ScheduleCController {
 
     // Clear the home campus values.
     XSSFRow disabledRow = scheduleCSheet.getRow(7 + CAMPUS_ORDER.indexOf(campus));
-
     for (short index = 1; index < disabledRow.getLastCellNum(); index++) {
       if (!RLFS.contains(campus) || index % 2 == 0) {
-        disabledRow.getCell(index).setCellFormula(null);
-        disabledRow.getCell(index).setCellValue("");
+        XSSFCell cell = disabledRow.getCell(index);
+        if (cell.getCellFormula() != null) {
+          cell.setCellFormula(null);
+          cell.setCellValue("");
+        }
       }
     }
 
