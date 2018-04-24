@@ -21,6 +21,7 @@
                 <dt>More Information</dt>
                 <dd><code th:text="|${status} ${error}|"></code></dd>
                 <dd th:if="${status} eq '404'">This page does not exist. Return to <a href="/">ILL Reports</a>.</dd>
+                <dd th:if="${message}" th:text="|Note: ${message}|"></dd>
                 <dt>Timestamp</dt>
                 <dd th:text="${timestamp}"></dd>
             </dl>

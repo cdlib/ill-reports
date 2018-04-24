@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.usermodel.CellType;
@@ -48,6 +49,10 @@ public class ScheduleCController {
 
   private static final ClassPathResource TEMPLATE = new ClassPathResource("org/cdlib/ill/report/ScheduleC_Template.xlsx");
 
+  private static final Supplier<IllegalArgumentException> NO_SUCH_CAMPUS = () -> {
+    return new NoSuchCampusException("Schedule C is only available for individual campuses. Please choose a campus.");
+  };
+
   @RequestMapping(
       value = "{campusCode}/schedule_c.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
@@ -56,12 +61,15 @@ public class ScheduleCController {
       OutputStream clientDownload,
       @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
       @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+
+    VdxCampus campus = VdxCampus.fromCode(campusCode).orElseThrow(NO_SUCH_CAMPUS);
+
     try (XSSFWorkbook wb = new XSSFWorkbook(TEMPLATE.getInputStream())) {
       // Schedule C
       final XSSFSheet scheduleCSheet = wb.getSheet("Schedule C");
       scheduleCSheet.createRow(0).createCell(0).setCellValue("UC Libraries Statistics (" + startDate.toString() + " to " + endDate.toString() + ")");
-      scheduleCSheet.getRow(2).createCell(1).setCellValue(VdxCampus.fromCode(campusCode).map(VdxCampus::getDescription).orElse("all UC campuses"));
-      
+      scheduleCSheet.getRow(2).createCell(1).setCellValue(campus.getDescription());
+
       // UC Borrowing data sheet
       final XSSFSheet ucBorrowingDataSheet = wb.getSheet("UC Borrowing");
       List<Field<UCBorrowingSubtotal>> ucBorrowingFields = Arrays.asList(
@@ -80,7 +88,7 @@ public class ScheduleCController {
         ucBorrowingHeaderRow.createCell(ucBorrowingCellCount++, field.getCellType()).setCellValue(field.getHeader());
       }
       for (UCBorrowingSubtotal record : scheduleCRepo.getBorrowing(
-          VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
+          campus.getCode(),
           startDate,
           endDate)) {
         Row dataRow = ucBorrowingDataSheet.createRow(ucBorrowingRowCount++);
@@ -127,7 +135,7 @@ public class ScheduleCController {
         oclcBorrowingHeaderRow.createCell(oclcBorrowingCellCount++, field.getCellType()).setCellValue(field.getHeader());
       }
       for (SpVdxBorrowingOCLC record : spVdxBorrowingOCLCRepo.getBorrowingOCLC(
-          VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
+          campus.getCode(),
           startDate,
           endDate).collect(Collectors.toList())) {
         Row dataRow = oclcBorrowingDataSheet.createRow(oclcBorrowingRowCount++);
@@ -175,7 +183,7 @@ public class ScheduleCController {
         lendingHeaderRow.createCell(lendingCellCount++, field.getCellType()).setCellValue(field.getHeader());
       }
       for (LendingSubtotal record : scheduleCRepo.getLending(
-          VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"),
+          campus.getCode(),
           startDate,
           endDate)) {
         Row dataRow = lendingDataSheet.createRow(lendingRowCount++);
@@ -209,4 +217,5 @@ public class ScheduleCController {
       wb.write(clientDownload);
     }
   }
+
 }

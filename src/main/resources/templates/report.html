@@ -201,7 +201,12 @@
                             <em>N/A</em>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/schedule_c.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <span th:if="${report.campusCode} ne 'all'">
+                                <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/schedule_c.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            </span>
+                            <span th:if="${report.campusCode} eq 'all'">
+                                <em>Please <a href="#campus">choose a campus</a>.</em>
+                            </span>
                         </td>
                     </tr>
                 </table>
