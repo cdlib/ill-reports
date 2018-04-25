@@ -12,14 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class VdxLendingRepository {
 
-    @Autowired
-    private EntityManager em;
+  @Autowired
+  private EntityManager em;
 
-    public List<VdxLending> getVdxLending(Set<VdxCampus> campusFilter, LocalDate beginDate, LocalDate endDate) {
-        return em.createQuery("select l from VdxLending l where l.lender.campus in :campusFilter and l.entryDate >= :beginDate and l.entryDate < :endDate", VdxLending.class)
-                .setParameter("campusFilter", campusFilter)
-                .setParameter("beginDate", beginDate.atStartOfDay())
-                .setParameter("endDate", endDate.atStartOfDay())
-                .getResultList();
-    }
+  public List<VdxLending> getVdxLending(Set<VdxCampus> campusFilter, LocalDate beginDate, LocalDate endDate) {
+    return em.createQuery("select l from VdxLending l where l.lender.campus in :campusFilter and l.entryDate >= :beginDate and l.entryDate < :endDate", VdxLending.class)
+        .setParameter("campusFilter", campusFilter)
+        .setParameter("beginDate", beginDate.atStartOfDay())
+        .setParameter("endDate", endDate.atStartOfDay())
+        .getResultList();
+  }
 }

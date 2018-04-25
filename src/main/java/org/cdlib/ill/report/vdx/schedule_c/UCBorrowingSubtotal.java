@@ -1,52 +1,47 @@
-package org.cdlib.ill.report.vdx.procedures;
+package org.cdlib.ill.report.vdx.schedule_c;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Objects;
 import org.cdlib.ill.report.vdx.VdxCampus;
-import org.cdlib.ill.report.vdx.VdxCampusSerializer;
 import org.cdlib.ill.report.vdx.VdxServiceType;
-import org.cdlib.ill.report.vdx.VdxServiceTypeSerializer;
 import org.cdlib.ill.report.vdx.VdxShipDeliveryMethod;
-import org.cdlib.ill.report.vdx.VdxShipDeliveryMethodSerializer;
 
-@JsonPropertyOrder({
-  "respCampus",
-  "respName",
-  "tat",
-  "serviceTp",
-  "shipDeliveryMethod",
-  "count"
-})
-public class SpVdxLendingTat {
+public class UCBorrowingSubtotal {
 
-  @JsonProperty("lending campus")
-  @JsonSerialize(using = VdxCampusSerializer.class)
+  private VdxCampus reqCampus;
+  private String reqName;
   private VdxCampus respCampus;
-  @JsonProperty("lending library")
   private String respName;
-  @JsonProperty("days")
-  private Long tat;
-  @JsonProperty("loan service")
-  @JsonSerialize(using = VdxServiceTypeSerializer.class)
   private VdxServiceType serviceTp;
-  @JsonProperty("delivery method")
-  @JsonSerialize(using = VdxShipDeliveryMethodSerializer.class)
   private VdxShipDeliveryMethod shipDeliveryMethod;
-  @JsonProperty("total")
   private Long count;
 
-  public SpVdxLendingTat() {
+  public UCBorrowingSubtotal() {
   }
 
-  public SpVdxLendingTat(VdxCampus respCampus, String respName, Long tat, VdxServiceType serviceTp, VdxShipDeliveryMethod shipDeliveryMethod, Long count) {
+  public UCBorrowingSubtotal(VdxCampus reqCampus, String reqName, VdxCampus respCampus, String respName, VdxServiceType serviceTp, VdxShipDeliveryMethod shipDeliveryMethod, Long count) {
+    this.reqCampus = reqCampus;
+    this.reqName = reqName;
     this.respCampus = respCampus;
     this.respName = respName;
-    this.tat = tat;
     this.serviceTp = serviceTp;
     this.shipDeliveryMethod = shipDeliveryMethod;
     this.count = count;
+  }
+
+  public VdxCampus getReqCampus() {
+    return reqCampus;
+  }
+
+  public void setReqCampus(VdxCampus reqCampus) {
+    this.reqCampus = reqCampus;
+  }
+
+  public String getReqName() {
+    return reqName;
+  }
+
+  public void setReqName(String reqName) {
+    this.reqName = reqName;
   }
 
   public VdxCampus getRespCampus() {
@@ -63,14 +58,6 @@ public class SpVdxLendingTat {
 
   public void setRespName(String respName) {
     this.respName = respName;
-  }
-
-  public Long getTat() {
-    return tat;
-  }
-
-  public void setTat(Long tat) {
-    this.tat = tat;
   }
 
   public VdxServiceType getServiceTp() {
@@ -100,12 +87,13 @@ public class SpVdxLendingTat {
   @Override
   public int hashCode() {
     int hash = 3;
-    hash = 97 * hash + Objects.hashCode(this.respCampus);
-    hash = 97 * hash + Objects.hashCode(this.respName);
-    hash = 97 * hash + Objects.hashCode(this.tat);
-    hash = 97 * hash + Objects.hashCode(this.serviceTp);
-    hash = 97 * hash + Objects.hashCode(this.shipDeliveryMethod);
-    hash = 97 * hash + Objects.hashCode(this.count);
+    hash = 43 * hash + Objects.hashCode(this.reqCampus);
+    hash = 43 * hash + Objects.hashCode(this.reqName);
+    hash = 43 * hash + Objects.hashCode(this.respCampus);
+    hash = 43 * hash + Objects.hashCode(this.respName);
+    hash = 43 * hash + Objects.hashCode(this.serviceTp);
+    hash = 43 * hash + Objects.hashCode(this.shipDeliveryMethod);
+    hash = 43 * hash + Objects.hashCode(this.count);
     return hash;
   }
 
@@ -120,14 +108,17 @@ public class SpVdxLendingTat {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final SpVdxLendingTat other = (SpVdxLendingTat) obj;
+    final UCBorrowingSubtotal other = (UCBorrowingSubtotal) obj;
+    if (!Objects.equals(this.reqName, other.reqName)) {
+      return false;
+    }
     if (!Objects.equals(this.respName, other.respName)) {
       return false;
     }
-    if (this.respCampus != other.respCampus) {
+    if (this.reqCampus != other.reqCampus) {
       return false;
     }
-    if (!Objects.equals(this.tat, other.tat)) {
+    if (this.respCampus != other.respCampus) {
       return false;
     }
     if (this.serviceTp != other.serviceTp) {

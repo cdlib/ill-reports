@@ -7,17 +7,17 @@ import java.io.IOException;
 
 public class VdxShipDeliveryMethodSerializer extends StdSerializer<VdxShipDeliveryMethod> {
 
-    public VdxShipDeliveryMethodSerializer() {
-        this(null);
-    }
+  public VdxShipDeliveryMethodSerializer() {
+    this(null);
+  }
 
-    public VdxShipDeliveryMethodSerializer(Class<VdxShipDeliveryMethod> t) {
-        super(t);
-    }
+  public VdxShipDeliveryMethodSerializer(Class<VdxShipDeliveryMethod> t) {
+    super(t);
+  }
 
-    @Override
-    public void serialize(VdxShipDeliveryMethod method, JsonGenerator jg, SerializerProvider sp) throws IOException {
-        jg.writeString(method.getCode());
-    }
+  @Override
+  public void serialize(VdxShipDeliveryMethod method, JsonGenerator jg, SerializerProvider sp) throws IOException {
+    jg.writeString(method.getCode());
+  }
 
 }

@@ -15,66 +15,66 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class VdxHolder implements Serializable {
 
-    @Column(nullable = false)
-    @JsonProperty("name")
-    private String name;
+  @Column(nullable = false)
+  @JsonProperty("name")
+  private String name;
 
-    @Column(nullable = false)
-    @JsonProperty("symbol")
-    private String symbol;
+  @Column(nullable = false)
+  @JsonProperty("symbol")
+  private String symbol;
 
-    @Column(nullable = false)
-    @JsonProperty("campus")
-    @JsonSerialize(using = VdxCampusSerializer.class)
-    private VdxCampus campus;
+  @Column(nullable = false)
+  @JsonProperty("campus")
+  @JsonSerialize(using = VdxCampusSerializer.class)
+  private VdxCampus campus;
 
-    @Column(nullable = false)
-    @JsonProperty("category")
-    @JsonSerialize(using = VdxILLCategorySerializer.class)
-    private VdxILLCategory category;
+  @Column(nullable = false)
+  @JsonProperty("category")
+  @JsonSerialize(using = VdxILLCategorySerializer.class)
+  private VdxILLCategory category;
 
-    @Column(nullable = false)
-    @JsonProperty("loctype")
-    private String loctype;
+  @Column(nullable = false)
+  @JsonProperty("loctype")
+  private String loctype;
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getSymbol() {
-        return symbol;
-    }
+  public String getSymbol() {
+    return symbol;
+  }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
+  public void setSymbol(String symbol) {
+    this.symbol = symbol;
+  }
 
-    public VdxCampus getCampus() {
-        return campus;
-    }
+  public VdxCampus getCampus() {
+    return campus;
+  }
 
-    public void setCampus(VdxCampus campus) {
-        this.campus = campus;
-    }
+  public void setCampus(VdxCampus campus) {
+    this.campus = campus;
+  }
 
-    public VdxILLCategory getCategory() {
-        return category;
-    }
+  public VdxILLCategory getCategory() {
+    return category;
+  }
 
-    public void setCategory(VdxILLCategory category) {
-        this.category = category;
-    }
+  public void setCategory(VdxILLCategory category) {
+    this.category = category;
+  }
 
-    public String getLoctype() {
-        return loctype;
-    }
+  public String getLoctype() {
+    return loctype;
+  }
 
-    public void setLoctype(String loctype) {
-        this.loctype = loctype;
-    }
+  public void setLoctype(String loctype) {
+    this.loctype = loctype;
+  }
 
 }

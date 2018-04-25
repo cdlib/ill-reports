@@ -25,156 +25,160 @@ import org.openxmlformats.schemas.spreadsheetml.x2006.main.STItemType;
 
 public class ReportWorkbookBuilder<T> {
 
-    private final XSSFWorkbook workbook;
-    private XSSFSheet dataSheet;
-    private XSSFSheet pivotTableSheet;
-    private XSSFPivotTable pivotTable;
-    private AreaReference source;
-    private final List<Field<T>> fields = new ArrayList<>();
-    private Collection<T> data;
+  private final XSSFWorkbook workbook;
+  private XSSFSheet dataSheet;
+  private XSSFSheet pivotTableSheet;
+  private XSSFPivotTable pivotTable;
+  private AreaReference source;
+  private final List<Field<T>> fields = new ArrayList<>();
+  private Collection<T> data;
 
-    private ReportWorkbookBuilder() {
-        workbook = new XSSFWorkbook();
+  private ReportWorkbookBuilder() {
+    workbook = new XSSFWorkbook();
+  }
+
+  public static <T> ReportWorkbookBuilder<T> newWorkbook(Class<T> klass) {
+    return new ReportWorkbookBuilder<>();
+  }
+
+  public ReportWorkbookBuilder<T> fieldText(String header, Function<T, ? extends Object> mapper) {
+    return field(header, CellType.STRING, mapper);
+  }
+
+  public ReportWorkbookBuilder<T> fieldNum(String header, Function<T, ? extends Object> mapper) {
+    return field(header, CellType.NUMERIC, mapper);
+  }
+
+  private ReportWorkbookBuilder<T> field(String header, CellType cellType, Function<T, ? extends Object> mapper) {
+    fields.add(Field.newField(header, cellType, mapper));
+    return this;
+  }
+
+  public ReportWorkbookBuilder<T> data(Collection<T> data) {
+    this.data = data;
+    dataSheet = dataSheet == null
+        ? workbook.createSheet("CDL_Data")
+        : dataSheet;
+    int rowCount = 0;
+    addDataHeaderRow(dataSheet.createRow(rowCount++), fields);
+    for (T datum : data) {
+      addDataRow(dataSheet.createRow(rowCount++), datum);
+    }
+    return this;
+  }
+
+  private static final char[] ALPHABET = {
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+
+  public String getLastDataColumnLetter() {
+    return getLastDataColumnLetter(fields);
+  }
+
+  public static String getLastDataColumnLetter(List fields) {
+    String cell = "";
+    for (int i = 0; (i * 26) < fields.size(); i += 1) {
+      cell = ALPHABET[(int) (fields.size() / BigInteger.valueOf(26).pow(i).intValue()) % 26 - 1] + cell;
+    }
+    return cell;
+  }
+
+  private XSSFPivotTable setupPivotTable() {
+    if (pivotTable != null) {
+      return pivotTable;
+    }
+    pivotTable = pivotTableSheet.createPivotTable(source, new CellReference("A1"));
+
+    CTPivotTableStyle style = pivotTable.getCTPivotTableDefinition().getPivotTableStyleInfo();
+    style.setShowRowStripes(true);
+
+    return pivotTable;
+  }
+
+  public ReportWorkbookBuilder<T> pivotRow(int sourceColumn) {
+    pivotTableSheet = pivotTableSheet == null
+        ? workbook.createSheet("CDL_Analysis")
+        : pivotTableSheet;
+    source = source == null
+        ? new AreaReference("CDL_Data!A1:"
+            + getLastDataColumnLetter(fields)
+            + String.valueOf(1 + data.size()), SpreadsheetVersion.EXCEL2007)
+        : source;
+    pivotTable = setupPivotTable();
+    pivotTable.addRowLabel(sourceColumn);
+    return this;
+  }
+
+  public ReportWorkbookBuilder<T> pivotColumn(int sourceColumn) {
+    addColumnLabel(pivotTable, source, sourceColumn);
+    return this;
+  }
+
+  public ReportWorkbookBuilder<T> pivotValue(int sourceColumn, DataConsolidateFunction function, String title) {
+    pivotTable.addColumnLabel(function, sourceColumn, title);
+    return this;
+  }
+
+  public XSSFWorkbook build() {
+    return workbook;
+  }
+
+  private void addDataHeaderRow(Row row, List<Field<T>> fields) {
+    int cellCount = 0;
+    for (Field<T> field : fields) {
+      row.createCell(cellCount++, field.getCellType()).setCellValue(field.getHeader());
+    }
+  }
+
+  private void addDataRow(Row row, T datum) {
+    for (int cell = 0; cell < fields.size(); cell++) {
+      switch (fields.get(cell).getCellType()) {
+        case NUMERIC:
+          row.createCell(cell, fields.get(cell).getCellType())
+              .setCellValue(Double.parseDouble(String.valueOf(fields.get(cell).getMapper().apply(datum))));
+          break;
+        default:
+          row.createCell(cell, fields.get(cell).getCellType())
+              .setCellValue(String.valueOf(fields.get(cell).getMapper().apply(datum)));
+          break;
+      }
+
+    }
+  }
+
+  /**
+   * Adapted from the row label source
+   * {@link org.apache.poi.xssf.usermodel.XSSFPivotTable}.
+   *
+   * Strategy suggested by {@link https://stackoverflow.com/a/33701734}
+   */
+  public static void addColumnLabel(XSSFPivotTable pivotTable, AreaReference pivotArea, int columnIndex) {
+    CTPivotTableDefinition definition = pivotTable.getCTPivotTableDefinition();
+
+    final int lastRowIndex = pivotArea.getLastCell().getRow() - pivotArea.getFirstCell().getRow();
+
+    CTPivotFields pivotFields = definition.getPivotFields();
+
+    CTPivotField pivotField = CTPivotField.Factory.newInstance();
+    CTItems items = pivotField.addNewItems();
+
+    pivotField.setAxis(STAxis.AXIS_COL);
+    pivotField.setShowAll(false);
+    for (int i = 0; i <= lastRowIndex; i++) {
+      items.addNewItem().setT(STItemType.DEFAULT);
+    }
+    items.setCount(items.sizeOfItemArray());
+    pivotFields.setPivotFieldArray(columnIndex, pivotField);
+
+    CTColFields colFields;
+    if (definition.getColFields() != null) {
+      colFields = definition.getColFields();
+    } else {
+      colFields = definition.addNewColFields();
     }
 
-    public static <T> ReportWorkbookBuilder<T> newWorkbook(Class<T> klass) {
-        return new ReportWorkbookBuilder<>();
-    }
-
-    public ReportWorkbookBuilder<T> fieldText(String header, Function<T, ? extends Object> mapper) {
-        return field(header, CellType.STRING, mapper);
-    }
-
-    public ReportWorkbookBuilder<T> fieldNum(String header, Function<T, ? extends Object> mapper) {
-        return field(header, CellType.NUMERIC, mapper);
-    }
-
-    private ReportWorkbookBuilder<T> field(String header, CellType cellType, Function<T, ? extends Object> mapper) {
-        fields.add(Field.newField(header, cellType, mapper));
-        return this;
-    }
-
-    public ReportWorkbookBuilder<T> data(Collection<T> data) {
-        this.data = data;
-        dataSheet = dataSheet == null
-                ? workbook.createSheet("CDL_Data")
-                : dataSheet;
-        int rowCount = 0;
-        addDataHeaderRow(dataSheet.createRow(rowCount++), fields);
-        for (T datum : data) {
-            addDataRow(dataSheet.createRow(rowCount++), datum);
-        }
-        return this;
-    }
-
-    private static final char[] ALPHABET = {
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-
-    String getLastDataColumnLetter() {
-        String cell = "";
-        for (int i = 0; (i * 26) < fields.size(); i += 1) {
-            cell = ALPHABET[(int) (fields.size() / BigInteger.valueOf(26).pow(i).intValue()) % 26 - 1] + cell;
-        }
-        return cell;
-    }
-
-    private XSSFPivotTable setupPivotTable() {
-        if (pivotTable != null) {
-            return pivotTable;
-        }
-        pivotTable = pivotTableSheet.createPivotTable(source, new CellReference("A1"));
-        
-        CTPivotTableStyle style = pivotTable.getCTPivotTableDefinition().getPivotTableStyleInfo();
-        style.setShowRowStripes(true);
-        
-        return pivotTable;
-    }
-
-    public ReportWorkbookBuilder<T> pivotRow(int sourceColumn) {
-        pivotTableSheet = pivotTableSheet == null
-                ? workbook.createSheet("CDL_Analysis")
-                : pivotTableSheet;
-        source = source == null
-                ? new AreaReference("CDL_Data!A1:"
-                        + getLastDataColumnLetter()
-                        + String.valueOf(1 + data.size()), SpreadsheetVersion.EXCEL2007)
-                : source;
-        pivotTable = setupPivotTable();
-        pivotTable.addRowLabel(sourceColumn);
-        return this;
-    }
-
-    public ReportWorkbookBuilder<T> pivotColumn(int sourceColumn) {
-        addColumnLabel(pivotTable, source, sourceColumn);
-        return this;
-    }
-
-    public ReportWorkbookBuilder<T> pivotValue(int sourceColumn, DataConsolidateFunction function, String title) {
-        pivotTable.addColumnLabel(function, sourceColumn, title);
-        return this;
-    }
-
-    public XSSFWorkbook build() {
-        return workbook;
-    }
-
-    private void addDataHeaderRow(Row row, List<Field<T>> fields) {
-        int cellCount = 0;
-        for (Field<T> field : fields) {
-            row.createCell(cellCount++, field.getCellType()).setCellValue(field.getHeader());
-        }
-    }
-
-    private void addDataRow(Row row, T datum) {
-        for (int cell = 0; cell < fields.size(); cell++) {
-            switch (fields.get(cell).getCellType()) {
-                case NUMERIC:
-                    row.createCell(cell, fields.get(cell).getCellType())
-                            .setCellValue(Double.parseDouble(String.valueOf(fields.get(cell).getMapper().apply(datum))));
-                    break;
-                default:
-                    row.createCell(cell, fields.get(cell).getCellType())
-                            .setCellValue(String.valueOf(fields.get(cell).getMapper().apply(datum)));
-                    break;
-            }
-
-        }
-    }
-
-    /**
-     * Adapted from the row label source
-     * {@link org.apache.poi.xssf.usermodel.XSSFPivotTable}.
-     *
-     * Strategy suggested by {@link https://stackoverflow.com/a/33701734}
-     */
-    private void addColumnLabel(XSSFPivotTable pivotTable, AreaReference pivotArea, int columnIndex) {
-        CTPivotTableDefinition definition = pivotTable.getCTPivotTableDefinition();
-
-        final int lastRowIndex = pivotArea.getLastCell().getRow() - pivotArea.getFirstCell().getRow();
-
-        CTPivotFields pivotFields = definition.getPivotFields();
-
-        CTPivotField pivotField = CTPivotField.Factory.newInstance();
-        CTItems items = pivotField.addNewItems();
-
-        pivotField.setAxis(STAxis.AXIS_COL);
-        pivotField.setShowAll(false);
-        for (int i = 0; i <= lastRowIndex; i++) {
-            items.addNewItem().setT(STItemType.DEFAULT);
-        }
-        items.setCount(items.sizeOfItemArray());
-        pivotFields.setPivotFieldArray(columnIndex, pivotField);
-
-        CTColFields colFields;
-        if (definition.getColFields() != null) {
-            colFields = definition.getColFields();
-        } else {
-            colFields = definition.addNewColFields();
-        }
-
-        colFields.addNewField().setX(columnIndex);
-        colFields.setCount(colFields.sizeOfFieldArray());
-    }
+    colFields.addNewField().setX(columnIndex);
+    colFields.setCount(colFields.sizeOfFieldArray());
+  }
 
 }
