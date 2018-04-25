@@ -16,6 +16,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.AreaReference;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFPivotTable;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -101,6 +102,9 @@ public class ScheduleCController {
     scheduleCSheet.createRow(0).createCell(0).setCellValue("UC Libraries Statistics (" + startDate.toString() + " to " + endDate.toString() + ")");
     scheduleCSheet.getRow(2).createCell(1).setCellValue(campus.getDescription());
 
+    // Assumption that the "UC Libraries" row is grayed out.
+    XSSFCellStyle disabledStyle = scheduleCSheet.getRow(6).getCell(1).getCellStyle();
+
     // Clear the home campus values on "Schedule C"
     XSSFRow disabledRow1 = scheduleCSheet.getRow(7 + CAMPUS_ORDER.indexOf(campus));
     for (short index = 1; index < disabledRow1.getLastCellNum(); index++) {
@@ -110,12 +114,13 @@ public class ScheduleCController {
           cell.setCellFormula(null);
           cell.setCellValue("");
           cell.setCellType(CellType.BLANK);
+          cell.setCellStyle(disabledStyle);
         }
       }
     }
-    
+
     final XSSFSheet adjustmentsSheet = wb.getSheet("Adjustments");
-    
+
     // Clear the home campus values on "Adjustments"
     XSSFRow disabledRow2 = adjustmentsSheet.getRow(7 + CAMPUS_ORDER.indexOf(campus));
     for (short index = 1; index < disabledRow2.getLastCellNum(); index++) {
@@ -124,6 +129,7 @@ public class ScheduleCController {
         if (cell.getCellTypeEnum() == CellType.NUMERIC) {
           cell.setCellValue("");
           cell.setCellType(CellType.BLANK);
+          cell.setCellStyle(disabledStyle);
         }
       }
     }
