@@ -101,14 +101,29 @@ public class ScheduleCController {
     scheduleCSheet.createRow(0).createCell(0).setCellValue("UC Libraries Statistics (" + startDate.toString() + " to " + endDate.toString() + ")");
     scheduleCSheet.getRow(2).createCell(1).setCellValue(campus.getDescription());
 
-    // Clear the home campus values.
-    XSSFRow disabledRow = scheduleCSheet.getRow(7 + CAMPUS_ORDER.indexOf(campus));
-    for (short index = 1; index < disabledRow.getLastCellNum(); index++) {
+    // Clear the home campus values on "Schedule C"
+    XSSFRow disabledRow1 = scheduleCSheet.getRow(7 + CAMPUS_ORDER.indexOf(campus));
+    for (short index = 1; index < disabledRow1.getLastCellNum(); index++) {
       if (!RLFS.contains(campus) || index % 2 == 0) {
-        XSSFCell cell = disabledRow.getCell(index);
-        if (cell.getCellFormula() != null) {
+        XSSFCell cell = disabledRow1.getCell(index);
+        if (cell.getCellTypeEnum() == CellType.FORMULA) {
           cell.setCellFormula(null);
           cell.setCellValue("");
+          cell.setCellType(CellType.BLANK);
+        }
+      }
+    }
+    
+    final XSSFSheet adjustmentsSheet = wb.getSheet("Adjustments");
+    
+    // Clear the home campus values on "Adjustments"
+    XSSFRow disabledRow2 = adjustmentsSheet.getRow(7 + CAMPUS_ORDER.indexOf(campus));
+    for (short index = 1; index < disabledRow2.getLastCellNum(); index++) {
+      if (!RLFS.contains(campus) || index % 2 == 0) {
+        XSSFCell cell = disabledRow2.getCell(index);
+        if (cell.getCellTypeEnum() == CellType.NUMERIC) {
+          cell.setCellValue("");
+          cell.setCellType(CellType.BLANK);
         }
       }
     }
