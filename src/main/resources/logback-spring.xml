@@ -4,20 +4,34 @@
     
     <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
     <property name="LOG_FILE_MAX_HISTORY" value="90" />
+    
+    <!-- Only relevant for FILE appender -->
     <property name="LOG_FILE_MAX_SIZE" value="10MB" />
     
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
     <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+    
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>${LOG_FILE_MAX_HISTORY}</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+    </appender>
 
     <!-- Defaults -->
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
     </root>
     
-    <!-- When spring.profiles.active=logging is set -->
     <springProfile name="logging">
         <root level="INFO">
-            <appender-ref ref="FILE" />
+            <appender-ref ref="ROLLING" />
         </root>
     </springProfile>
     
