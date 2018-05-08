@@ -5,3 +5,5 @@
 /nbproject/
 /target/
 .DS_Store
+truststore.jks
+logs

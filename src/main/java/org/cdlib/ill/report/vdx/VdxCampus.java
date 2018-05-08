@@ -4,44 +4,44 @@ import java.util.Optional;
 
 public enum VdxCampus {
 
-    None("", "None"),
-    NorthernRegionalLibraryFacility("NRLF", "Northern Regional Library Facility"),
-    SouthernRegionalLibraryFacility("SRLF", "Southern Regional Library Facility"),
-    Berkeley("UCB", "UC Berkeley"),
-    Davis("UCD", "UC Davis"),
-    Irvine("UCI", "UC Irvine"),
-    LosAngeles("UCLA", "UC Los Angeles"),
-    UCLADocumentDelivery("OELA", "UCLA Document Delivery"),
-    Merced("UCM", "UC Merced"),
-    Riverside("UCR", "UC Riverside"),
-    SantaBarbara("UCSB", "UC Santa Barbara"),
-    SantaCruz("UCSC", "UC Santa Cruz"),
-    SanDiego("UCSD", "UC San Diego"),
-    SanFrancisco("UCSF", "UC San Francisco");
+  None("", "None"),
+  NorthernRegionalLibraryFacility("NRLF", "NRLF"),
+  SouthernRegionalLibraryFacility("SRLF", "SRLF"),
+  Berkeley("UCB", "Berkeley"),
+  Davis("UCD", "Davis"),
+  Irvine("UCI", "Irvine"),
+  LosAngeles("UCLA", "Los Angeles"),
+  UCLADocumentDelivery("OELA", "UCLA Document Delivery"),
+  Merced("UCM", "Merced"),
+  Riverside("UCR", "Riverside"),
+  SantaBarbara("UCSB", "Santa Barbara"),
+  SantaCruz("UCSC", "Santa Cruz"),
+  SanDiego("UCSD", "San Diego"),
+  SanFrancisco("UCSF", "San Francisco");
 
-    private final String code;
-    private final String description;
+  private final String code;
+  private final String description;
 
-    private VdxCampus(String code, String description) {
-        this.code = code;
-        this.description = description;
+  private VdxCampus(String code, String description) {
+    this.code = code;
+    this.description = description;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public static Optional<VdxCampus> fromCode(String code) {
+    for (VdxCampus campus : values()) {
+      if (campus.getCode().equalsIgnoreCase(code)) {
+        return Optional.of(campus);
+      }
     }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public static Optional<VdxCampus> fromCode(String code) {
-        for (VdxCampus campus : values()) {
-            if (campus.getCode().equalsIgnoreCase(code)) {
-                return Optional.of(campus);
-            }
-        }
-        return Optional.empty();
-    }
+    return Optional.empty();
+  }
 
 }

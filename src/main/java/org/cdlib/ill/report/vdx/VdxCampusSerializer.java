@@ -7,17 +7,17 @@ import java.io.IOException;
 
 public class VdxCampusSerializer extends StdSerializer<VdxCampus> {
 
-    public VdxCampusSerializer() {
-        this(null);
-    }
+  public VdxCampusSerializer() {
+    this(null);
+  }
 
-    public VdxCampusSerializer(Class<VdxCampus> t) {
-        super(t);
-    }
+  public VdxCampusSerializer(Class<VdxCampus> t) {
+    super(t);
+  }
 
-    @Override
-    public void serialize(VdxCampus campus, JsonGenerator jg, SerializerProvider sp) throws IOException {
-        jg.writeString(campus.getCode());
-    }
+  @Override
+  public void serialize(VdxCampus campus, JsonGenerator jg, SerializerProvider sp) throws IOException {
+    jg.writeString(campus.getCode());
+  }
 
 }

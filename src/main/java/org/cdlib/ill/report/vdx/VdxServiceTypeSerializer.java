@@ -6,17 +6,17 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 
 public class VdxServiceTypeSerializer extends StdSerializer<VdxServiceType> {
-    
-    public VdxServiceTypeSerializer() {
-        this(null);
-    }
-    
-    public VdxServiceTypeSerializer(Class<VdxServiceType> t) {
-        super(t);
-    }
-    
-    @Override
-    public void serialize(VdxServiceType serviceType, JsonGenerator jg, SerializerProvider sp) throws IOException {
-        jg.writeString(serviceType.getCode());
-    }
+
+  public VdxServiceTypeSerializer() {
+    this(null);
+  }
+
+  public VdxServiceTypeSerializer(Class<VdxServiceType> t) {
+    super(t);
+  }
+
+  @Override
+  public void serialize(VdxServiceType serviceType, JsonGenerator jg, SerializerProvider sp) throws IOException {
+    jg.writeString(serviceType.getCode());
+  }
 }

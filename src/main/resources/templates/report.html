@@ -119,7 +119,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_summary.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -133,7 +133,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_summary.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                 </table>
@@ -157,7 +157,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_uc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_uc.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_uc.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -171,7 +171,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_oclc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_oclc.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_oclc.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -185,7 +185,28 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            Schedule C Workbook
+                        </th>
+                        <td>
+                            Preparation of UC Borrowing, OCLC Borrowing, and Lending for the UCOP Schedule C form.<br/>
+                            See instructions and original form at the University of California
+                            <a href="http://libraries.universityofcalifornia.edu/content/administrative-materials-reporting-university-california-library-statistics-2016-17-data">Administrative Materials page</a>.
+                        </td>
+                        <td>
+                            <em>N/A</em>
+                        </td>
+                        <td>
+                            <span th:if="${report.campusCode} ne 'all'">
+                                <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/schedule_c.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            </span>
+                            <span th:if="${report.campusCode} eq 'all'">
+                                <em>Please <a href="#campus">choose a campus</a>.</em>
+                            </span>
                         </td>
                     </tr>
                 </table>
@@ -209,7 +230,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_patron.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_patron.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_patron.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -223,7 +244,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_patron.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_patron.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_patron.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                 </table>
@@ -247,7 +268,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_tat.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_tat.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_tat.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -261,7 +282,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_tat.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_tat.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_tat.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                 </table>
@@ -285,7 +306,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_unfilled.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_unfilled_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_unfilled_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -299,7 +320,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_unfilled.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_unfilled_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_unfilled_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -337,7 +358,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/copyright.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/copyright.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/copyright.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -351,7 +372,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/journal_borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>    
                         </td>
                         <td>
-                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/journal_borrowing.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/journal_borrowing.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
                         </td>
                     </tr>
                 </table>
@@ -433,7 +454,7 @@
         <p class="text-center page-break">
             <br/>
             <br/>
-            Copyright &copy; 2017 The Regents of The University of California &nbsp; <img src="/uc_seal.gif" alt="University of California Seal" /> &nbsp; California Digital Library
+            Copyright &copy; 2018 The Regents of The University of California &nbsp; <img src="/uc_seal.gif" alt="University of California Seal" /> &nbsp; California Digital Library
             <br/>
             <a href="mailto:vdxtrouble-l@ucop.edu">Questions? Comments?</a>
         </p>
