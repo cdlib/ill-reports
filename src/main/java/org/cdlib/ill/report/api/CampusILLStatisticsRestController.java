@@ -107,8 +107,8 @@ public class CampusILLStatisticsRestController {
   @RequestMapping(value = "{campusCode}/borrowing_uc.csv", produces = {"text/csv"})
   public void getVdxBorrowingUC(Writer output,
       @PathVariable("campusCode") String campusCode,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     CsvMapper mapper = new CsvMapper();
     CsvSchema schema = mapper.schemaFor(SpVdxBorrowingUC.class).withHeader();
     List<SpVdxBorrowingUC> data = spVdxBorrowingUCRepo.getBorrowingUC(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());

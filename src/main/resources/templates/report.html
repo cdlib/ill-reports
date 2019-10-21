@@ -154,10 +154,10 @@
                             Borrowing from UC by campus, library, responder, service type, ship delivery method.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_uc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_uc_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_uc.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_uc_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
