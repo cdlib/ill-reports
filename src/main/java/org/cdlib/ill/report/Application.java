@@ -45,15 +45,22 @@ public class Application {
         context.addConstraint(constraint);
       }
     };
+    // add an additional connector to handle redirect of HTTP
+    // traffic to the HTTPS port
     tomcat.addAdditionalTomcatConnectors(createCatalinaConnector());
     return tomcat;
   }
 
+  /*
+   * 
+   * Create an HTTP connector that will redirect to the HTTPs port.
+   */
   private Connector createCatalinaConnector() {
     Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
     connector.setScheme("http");
     connector.setSecure(false);
     connector.setPort(insecureHttpPort);
+    System.out.println("Redirecting HTTP traffic to port " + insecureRedirectHttpsPort);
     connector.setRedirectPort(insecureRedirectHttpsPort);
     return connector;
   }
