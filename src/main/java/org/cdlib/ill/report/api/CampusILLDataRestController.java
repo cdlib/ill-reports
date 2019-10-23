@@ -49,11 +49,11 @@ public class CampusILLDataRestController {
   @Autowired
   private SpVdxBorrowingDetailRepository vdxBorrowingDetailRepo;
 
-  @RequestMapping(value = "{campusCode}/borrowing_detail.csv", produces = {"text/csv"})
+  @RequestMapping(value = "{campusCode}/borrowing_detail_{startDate}_{endDate}.csv", produces = {"text/csv"})
   public void getBorrowingDetailCsv(Writer output,
       @PathVariable("campusCode") String campusCode,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     CsvMapper mapper = new CsvMapper();
     CsvSchema schema = mapper.schemaFor(SpVdxBorrowingDetail.class).withHeader();
     List<SpVdxBorrowingDetail> data = vdxBorrowingDetailRepo
@@ -65,10 +65,10 @@ public class CampusILLDataRestController {
     mapper.writer(schema).writeValue(output, data);
   }
 
-  @RequestMapping(value = "{campusCode}/borrowing.xml", produces = {"application/xml"})
+  @RequestMapping(value = "{campusCode}/borrowing_{startDate}_{endDate}.xml", produces = {"application/xml"})
   public HttpEntity<List<VdxBorrowing>> getCampusBorrowingXml(@PathVariable("campusCode") String campusCode,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
     return new ResponseEntity<>(vdxBorrowingRepo.getVdxBorrowing(
         VdxCampus.fromCode(campusCode)
             .map(EnumSet::of)
@@ -76,10 +76,10 @@ public class CampusILLDataRestController {
         startDate, endDate), HttpStatus.OK);
   }
 
-  @RequestMapping(value = "{campusCode}/borrowing.json", produces = {"application/json"})
+  @RequestMapping(value = "{campusCode}/borrowing_{startDate}_{endDate}.json", produces = {"application/json"})
   public HttpEntity<List<VdxBorrowing>> getCampusBorrowingJson(@PathVariable("campusCode") String campusCode,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
     return new ResponseEntity<>(vdxBorrowingRepo.getVdxBorrowing(
         VdxCampus.fromCode(campusCode)
             .map(EnumSet::of)
@@ -87,11 +87,11 @@ public class CampusILLDataRestController {
         startDate, endDate), HttpStatus.OK);
   }
 
-  @RequestMapping(value = "{campusCode}/borrowing.csv", produces = {"text/csv"})
+  @RequestMapping(value = "{campusCode}/borrowing_{startDate}_{endDate}.csv", produces = {"text/csv"})
   public void getCampusBorrowingCsv(Writer output,
       @PathVariable("campusCode") String campusCode,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate)
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate)
       throws IOException {
     CsvMapper mapper = new CsvMapper();
     CsvSchema schema = mapper.schemaFor(VdxBorrowing.class).withHeader();
@@ -103,10 +103,10 @@ public class CampusILLDataRestController {
     mapper.writer(schema).writeValue(output, data);
   }
 
-  @RequestMapping(value = "{campusCode}/lending.xml", produces = {"application/xml"})
+  @RequestMapping(value = "{campusCode}/lending_{startDate}_{endDate}.xml", produces = {"application/xml"})
   public HttpEntity<List<VdxLending>> getCampusLendingXml(@PathVariable("campusCode") String campusCode,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
     return new ResponseEntity<>(vdxLendingRepo.getVdxLending(
         VdxCampus.fromCode(campusCode)
             .map(EnumSet::of)
@@ -114,10 +114,10 @@ public class CampusILLDataRestController {
         startDate, endDate), HttpStatus.OK);
   }
 
-  @RequestMapping(value = "{campusCode}/lending.json", produces = {"application/json"})
+  @RequestMapping(value = "{campusCode}/lending_{startDate}_{endDate}.json", produces = {"application/json"})
   public HttpEntity<List<VdxLending>> getCampusLendingJson(@PathVariable("campusCode") String campusCode,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
     return new ResponseEntity<>(vdxLendingRepo.getVdxLending(
         VdxCampus.fromCode(campusCode)
             .map(EnumSet::of)
@@ -125,11 +125,11 @@ public class CampusILLDataRestController {
         startDate, endDate), HttpStatus.OK);
   }
 
-  @RequestMapping(value = "{campusCode}/lending.csv", produces = {"text/csv"})
+  @RequestMapping(value = "{campusCode}/lending_{startDate}_{endDate}.csv", produces = {"text/csv"})
   public void getCampusLendingCsv(Writer output,
       @PathVariable("campusCode") String campusCode,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate)
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate)
       throws IOException {
     CsvMapper mapper = new CsvMapper();
     CsvSchema schema = mapper.schemaFor(VdxLending.class).withHeader();
@@ -141,11 +141,11 @@ public class CampusILLDataRestController {
     mapper.writer(schema).writeValue(output, data);
   }
 
-  @RequestMapping(value = "{campusCode}/lending_unfilled.csv", produces = {"text/csv"})
+  @RequestMapping(value = "{campusCode}/lending_unfilled_{startDate}_{endDate}.csv", produces = {"text/csv"})
   public void getLendingUnfilledCsv(Writer output,
       @PathVariable("campusCode") String campusCode,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     CsvMapper mapper = new CsvMapper();
     CsvSchema schema = mapper.schemaFor(SpVdxLendingUnfilledDetail.class).withHeader();
     List<SpVdxLendingUnfilledDetail> data = vdxLendingUnfilledRepo
@@ -155,11 +155,11 @@ public class CampusILLDataRestController {
     mapper.writer(schema).writeValue(output, data);
   }
 
-  @RequestMapping(value = "{campusCode}/lending_billing.csv", produces = {"text/csv"})
+  @RequestMapping(value = "{campusCode}/lending_billing_{startDate}_{endDate}.csv", produces = {"text/csv"})
   public void getLendingBillingCsv(Writer output,
       @PathVariable("campusCode") String campusCode,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     CsvMapper mapper = new CsvMapper();
     CsvSchema schema = mapper.schemaFor(SpVdxLendingBilling.class).withHeader();
     List<SpVdxLendingBilling> data = vdxLendingBillingRepo
