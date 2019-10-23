@@ -116,10 +116,10 @@
                             Summary of borrowing requests by campus, library, and responder category (UC, ISO partner, OCLC).
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_summary.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_summary_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_summary_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -130,10 +130,10 @@
                             Summary of lending requests by campus, library, and requester category (UC, ISO partner, OCLC).
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_summary.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_summary_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_summary_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                 </table>
@@ -168,10 +168,10 @@
                             Borrowing from OCLC by campus, library, responder, service type.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_oclc.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_oclc_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_oclc.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_oclc_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -182,10 +182,10 @@
                             Summary of lending by campus, library, requester library type, requester location, service type, ship delivery method.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -202,7 +202,7 @@
                         </td>
                         <td>
                             <span th:if="${report.campusCode} ne 'all'">
-                                <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/schedule_c.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                                <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/schedule_c_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                             </span>
                             <span th:if="${report.campusCode} eq 'all'">
                                 <em>Please <a href="#campus">choose a campus</a>.</em>
@@ -227,10 +227,10 @@
                             Summary of borrowing by campus, library, responder, service type, patron category.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_patron.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_patron_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_patron.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_patron_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -241,10 +241,10 @@
                             Summary of lending by campus, library, requester, service type, patron category.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_patron.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_patron_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_patron.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_patron_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                 </table>
@@ -265,10 +265,10 @@
                             Turn-around time for borrowing by campus, library, service type, ship delivery method.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_tat.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_tat_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_tat.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_tat_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -279,10 +279,10 @@
                             Turn-around time for lending by campus, library, service type, ship delivery method.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_tat.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_tat_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_tat.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_tat_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                 </table>
@@ -303,10 +303,10 @@
                             Summary of unfilled borrowing requests by campus, library, service type.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_unfilled.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/borrowing_unfilled_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_unfilled_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/borrowing_unfilled_summary_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -317,10 +317,10 @@
                             Summary of unfilled lending requests by campus, library, requester library type, requester location, service type.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_unfilled.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/lending_unfilled_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_unfilled_summary.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/lending_unfilled_summary_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -331,7 +331,7 @@
                             Unfilled lending requests sorted by campus, library, requester library type, requester location, illno.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_unfilled.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_unfilled_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
                             <em>N/A</em>
@@ -355,10 +355,10 @@
                             Copy non returnable requests by title and year of publication.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/copyright.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/copyright_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/copyright.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/copyright_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                     <tr>
@@ -369,10 +369,10 @@
                             Copy non returnable requests by title, year, issue title, pagination, and patron category.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/journal_borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>    
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/' + ${report.campusCode} + '/journal_borrowing_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>    
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/journal_borrowing.xlsx?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/journal_borrowing_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                 </table>
@@ -394,8 +394,8 @@
                         </td>
                         <td>
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                            <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
-                            {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                            <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xml'}">XML</a>
+                            {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing_' + ${searchStartDate} + '_' + ${searchEndDate} + '.json'}">JSON</a>
                         </td>
                         <td>
                             <em>N/A</em>
@@ -409,7 +409,7 @@
                             Selected fields from the borrowing extract.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing_detail.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>    
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing_detail_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>    
                         </td>
                         <td>
                             <em>N/A</em>
@@ -423,9 +423,9 @@
                             Data extract with all fields for download or analysis.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
-                            <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.xml?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">XML</a>
-                            {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending.json?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">JSON</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
+                            <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xml'}">XML</a>
+                            {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_' + ${searchStartDate} + '_' + ${searchEndDate} + '.json'}">JSON</a>
                         </td>
                         <td>
                             <em>N/A</em>
@@ -439,7 +439,7 @@
                             Selected fields from the lending extract.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_billing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>    
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/lending_billing_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>    
                         </td>
                         <td>
                             <em>N/A</em>
