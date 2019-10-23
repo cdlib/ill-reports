@@ -393,7 +393,7 @@
                             Data extract with all fields for download or analysis.
                         </td>
                         <td>
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing.csv?startDate=' + ${searchStartDate} + '&amp;endDate=' + ${searchEndDate}}">CSV</a>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>
                             <i class="fa fa-code" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xml'}">XML</a>
                             {&nbsp;}&nbsp;<a th:href="@{'/ill/data/by-campus/' + ${report.campusCode} + '/borrowing_' + ${searchStartDate} + '_' + ${searchEndDate} + '.json'}">JSON</a>
                         </td>

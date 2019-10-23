@@ -59,7 +59,7 @@ public class ScheduleCController {
   };
 
   @RequestMapping(
-      value = "{campusCode}/_{startDate}_{endDate}.xlsx",
+      value = "{campusCode}/schedule_c_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getScheduleC(
       @PathVariable("campusCode") String campusCode,
