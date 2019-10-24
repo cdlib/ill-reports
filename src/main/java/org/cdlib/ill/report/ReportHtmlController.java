@@ -32,6 +32,10 @@ public class ReportHtmlController {
   }
 
   private LocalDate parseDate(String formatted) {
+    if(formatted.contains("/")) {
+        return LocalDate.parse(formatted, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+    }
+    
     return LocalDate.parse(formatted, DateTimeFormatter.ISO_LOCAL_DATE);
   }
 
