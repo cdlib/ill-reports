@@ -14,6 +14,10 @@ img[alt="Microsoft Excel"] {
     height: 1em;
 }
 
+input[type="date"].form-control {
+	line-height: 20px;
+}
+
 tr.borrowing-row {
     background-color: rgba(255, 229, 82,0.2);
 }

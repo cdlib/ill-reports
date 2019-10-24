@@ -39,15 +39,14 @@
                             <input id="from"
                                    name="from"
                                    class="form-control"
-                                   type="text"
-                                   placeholder="YYYY-MM-DD"
+                                   type="date"
                                    th:value="${searchStartDate}"
                                    required="required"
                                    aria-describedby="beginDateDescr"
                                    th:field="*{from}"
                                    />
                             <p id="beginDateDescr" class="text-muted">
-                                Please enter date as YYYY&#8209;MM&#8209;DD.<br/>
+                                Please enter date as MM/DD/YYYY.<br/>
                                 This date is inclusive.
                             </p>
                         </div>
@@ -56,15 +55,14 @@
                             <input id="to"
                                    name="to"
                                    class="form-control"
-                                   type="text"
-                                   placeholder="YYYY-MM-DD"
+                                   type="date"
                                    th:value="${searchEndDate}"
                                    required="required"
                                    aria-describedby="endDateDescr"
                                    th:field="*{to}"
                                    />
                             <p id="endDateDescr" class="text-muted">
-                                Please enter date as YYYY&#8209;MM&#8209;DD.<br/>
+                                Please enter date as MM/DD/YYYY.<br/>
                                 This date is exclusive.
                             </p>
                         </div>
