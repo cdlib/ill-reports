@@ -46,7 +46,7 @@
                                    th:field="*{from}"
                                    />
                             <p id="beginDateDescr" class="text-muted">
-                                Please enter date as MM/DD/YYYY.<br/>
+                                <span id="helpDate">Please enter date as MM/DD/YYYY.</span><br/>
                                 This date is inclusive.
                             </p>
                         </div>
@@ -62,7 +62,7 @@
                                    th:field="*{to}"
                                    />
                             <p id="endDateDescr" class="text-muted">
-                                Please enter date as MM/DD/YYYY.<br/>
+                                <span id="helpDate">Please enter date as MM/DD/YYYY.</span><br/>
                                 This date is exclusive.
                             </p>
                         </div>
@@ -460,8 +460,26 @@
         </p>
         
         <script>
-           let d = new Date().getFullYear();
-           document.getElementById("year").innerHTML = d
-       </script>
+            let d = new Date().getFullYear();
+            document.getElementById("year").innerHTML = d
+            
+            function checkDateInput() {
+                var input = document.createElement('input');
+                input.setAttribute('type','date');
+
+                var notADateValue = 'not-a-date';
+                input.setAttribute('value', notADateValue); 
+
+                return (input.value !== notADateValue);
+            }
+            
+        	if (checkDateInput()) {
+              $('#helpDate').hide();
+          	}
+        	else{
+        	  $('#helpDate').show();
+        	}
+            
+        </script>
     </body>
 </html>
