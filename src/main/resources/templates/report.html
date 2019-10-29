@@ -473,11 +473,17 @@
                 return (input.value !== notADateValue);
             }
             
+            var helpList = document.getElementsByClassName("helpDate");
+            
         	if (checkDateInput()) {
-              document.getElementsByClass("helpDate").style.display = "none";
+              for(var i = 0; i < helpList.length; i++){
+            	  helpList[i].style.display = "none";
+              }
           	}
         	else{
-         	  document.getElementsByClass("helpDate").style.display = "block";
+                for(var i = 0; i < helpList.length; i++){
+              	  helpList[i].style.display = "block";
+                }
         	}
             
         </script>
