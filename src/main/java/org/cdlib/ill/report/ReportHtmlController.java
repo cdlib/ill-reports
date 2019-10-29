@@ -30,22 +30,8 @@ public class ReportHtmlController {
   private CampusILLReport getCampusReport(String campusCode, LocalDate reportStartDate, LocalDate reportEndDate) {
     return repo.getILLCampusReport(campusCode, reportStartDate, reportEndDate);
   }
-
-  private String convertDateString(String date) {
-      if(date.contains("/")) {
-          String[] arrDate = date.split("/");
-          String newDate = arrDate[2] + "-" + arrDate[0] + "-" + arrDate[1];
-          return newDate;
-      }
-      
-      return date;
-  }
   
   private LocalDate parseDate(String formatted) {
-    if(formatted.contains("/")) {
-        return LocalDate.parse(formatted, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-    }
-    
     return LocalDate.parse(formatted, DateTimeFormatter.ISO_LOCAL_DATE);
   }
 
@@ -60,8 +46,8 @@ public class ReportHtmlController {
   @PostMapping("/")
   public String query(@Valid @ModelAttribute("queryForm") ReportHtmlForm queryForm, BindingResult bindingResult, Model model) {
     model.addAttribute("campuses", EnumSet.complementOf(EnumSet.of(VdxCampus.None)));
-    model.addAttribute("searchStartDate", convertDateString(queryForm.getFrom()));
-    model.addAttribute("searchEndDate", convertDateString(queryForm.getTo()));
+    model.addAttribute("searchStartDate", queryForm.getFrom());
+    model.addAttribute("searchEndDate", queryForm.getTo());
 
     LocalDate from = LocalDate.MIN;
     LocalDate to = LocalDate.MAX;
