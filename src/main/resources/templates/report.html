@@ -453,15 +453,15 @@
             <br/>
             <br/>
             Copyright &copy; 
-            <script>
-            	let d = Date.now().getFullYear();
-            	document.body.innerHTML = d
-            </script>
+			<div id="year"></div>
             The Regents of The University of California &nbsp; <img src="/uc_seal.gif" alt="University of California Seal" /> &nbsp; California Digital Library
             <br/>
             <a href="mailto:vdxtrouble-l@ucop.edu">Questions? Comments?</a>
         </p>
         
-
+        <script>
+           let d = Date.now().getFullYear();
+           document.getElementById("year").innerHTML = d
+       </script>
     </body>
 </html>
