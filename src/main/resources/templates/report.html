@@ -46,7 +46,7 @@
                                    th:field="*{from}"
                                    />
                             <p id="beginDateDescr" class="text-muted">
-                                Please enter date as MM/DD/YYYY.<br/>
+                                <span class="helpDate">Please enter date as YYYY&#8209;MM&#8209;DD.<br/></span>
                                 This date is inclusive.
                             </p>
                         </div>
@@ -62,7 +62,7 @@
                                    th:field="*{to}"
                                    />
                             <p id="endDateDescr" class="text-muted">
-                                Please enter date as MM/DD/YYYY.<br/>
+                                <span class="helpDate">Please enter date as YYYY&#8209;MM&#8209;DD.<br/></span>
                                 This date is exclusive.
                             </p>
                         </div>
@@ -85,7 +85,7 @@
                 <p role="alert"
                    class="text-center text-danger"
                    th:if="${#fields.hasErrors('${queryForm.from}') or #fields.hasErrors('${queryForm.to}')}">
-                    <i class="fa fa-warning" aria-hidden="true"></i> Please enter date as YYYY-MM-DD. For example, enter <code>2000-01-31</code> for January 31, 2000.
+                    <i class="fa fa-warning" aria-hidden="true"></i> Please enter date as MM/DD/YYYY. For example, enter <code>01/31/2000</code> for January 31, 2000.
                 </p>
             </div>
 
@@ -452,9 +452,40 @@
         <p class="text-center page-break">
             <br/>
             <br/>
-            Copyright &copy; 2018 The Regents of The University of California &nbsp; <img src="/uc_seal.gif" alt="University of California Seal" /> &nbsp; California Digital Library
+            Copyright &copy; 
+			<span id="year"></span>
+            The Regents of The University of California &nbsp; <img src="/uc_seal.gif" alt="University of California Seal" /> &nbsp; California Digital Library
             <br/>
             <a href="mailto:vdxtrouble-l@ucop.edu">Questions? Comments?</a>
         </p>
+        
+        <script>
+            let d = new Date().getFullYear();
+            document.getElementById("year").innerHTML = d
+            
+            function checkDateInput() {
+                var input = document.createElement('input');
+                input.setAttribute('type','date');
+
+                var notADateValue = 'not-a-date';
+                input.setAttribute('value', notADateValue); 
+
+                return (input.value !== notADateValue);
+            }
+            
+            var helpList = document.getElementsByClassName("helpDate");
+            
+        	if (checkDateInput()) {
+              for(var i = 0; i < helpList.length; i++){
+            	  helpList[i].style.display = "none";
+              }
+          	}
+        	else{
+                for(var i = 0; i < helpList.length; i++){
+              	  helpList[i].style.display = "block";
+                }
+        	}
+            
+        </script>
     </body>
 </html>
