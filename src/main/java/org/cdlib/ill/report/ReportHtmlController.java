@@ -30,7 +30,7 @@ public class ReportHtmlController {
   private CampusILLReport getCampusReport(String campusCode, LocalDate reportStartDate, LocalDate reportEndDate) {
     return repo.getILLCampusReport(campusCode, reportStartDate, reportEndDate);
   }
-
+  
   private LocalDate parseDate(String formatted) {
     return LocalDate.parse(formatted, DateTimeFormatter.ISO_LOCAL_DATE);
   }

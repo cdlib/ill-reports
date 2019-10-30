@@ -59,13 +59,13 @@ public class ScheduleCController {
   };
 
   @RequestMapping(
-      value = "{campusCode}/schedule_c.xlsx",
+      value = "{campusCode}/schedule_c_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getScheduleC(
       @PathVariable("campusCode") String campusCode,
       OutputStream clientDownload,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
 
     // A specific campus is required.
     VdxCampus campus = VdxCampus.fromCode(campusCode).orElseThrow(NO_SUCH_CAMPUS);

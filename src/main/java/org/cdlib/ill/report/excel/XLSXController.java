@@ -76,13 +76,13 @@ public class XLSXController {
   private SpVdxLendingUnfilledSummaryRepository spVdxLendingUnfilledSummaryRepo;
 
   @RequestMapping(
-      value = "{campusCode}/borrowing_unfilled_summary.xlsx",
+      value = "{campusCode}/borrowing_unfilled_summary_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getBorrowingUnfilledSummary(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingUnfilledSummary.class)
         .fieldText("Borrowing Campus", summary -> summary.getReqCampus().getCode())
         .fieldText("Borrowing Library", summary -> summary.getReqName())
@@ -102,13 +102,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/lending_unfilled_summary.xlsx",
+      value = "{campusCode}/lending_unfilled_summary_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getLendingUnfilledSummary(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxLendingUnfilledSummary.class)
         .fieldText("Lending Campus", summary -> summary.getRespCampus().getCode())
         .fieldText("Lending Library", SpVdxLendingUnfilledSummary::getRespName)
@@ -131,13 +131,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/borrowing_summary.xlsx",
+      value = "{campusCode}/borrowing_summary_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getBorrowingSummary(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingSummary.class)
         .fieldText("Borrowing Campus", summary -> summary.getReqCampus().getCode())
         .fieldText("Borrowing Library", summary -> summary.getReqName())
@@ -156,13 +156,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/lending_summary.xlsx",
+      value = "{campusCode}/lending_summary_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getLendingSummary(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxLendingSummary.class)
         .fieldText("Lending Campus", summary -> summary.getRespCampus().getCode())
         .fieldText("Lending Library", summary -> summary.getRespName())
@@ -181,13 +181,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/borrowing_uc.xlsx",
+      value = "{campusCode}/borrowing_uc_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getBorrowingUC(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException{
     ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingUC.class)
         .fieldText("Borrowing Campus", borrowing -> borrowing.getReqCampus().getCode())
         .fieldText("Borrowing Library", borrowing -> borrowing.getReqName())
@@ -210,13 +210,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/borrowing_oclc.xlsx",
+      value = "{campusCode}/borrowing_oclc_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getBorrowingOCLC(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingOCLC.class)
         .fieldText("Borrowing Campus", borrowing -> borrowing.getReqCampus().getCode())
         .fieldText("Borrowing Library", borrowing -> borrowing.getReqName())
@@ -237,13 +237,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/lending.xlsx",
+      value = "{campusCode}/lending_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getLending(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxLending.class)
         .fieldText("Lending Campus", lending -> lending.getRespCampus().getCode())
         .fieldText("Lending Library", lending -> lending.getRespName())
@@ -268,13 +268,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/borrowing_patron.xlsx",
+      value = "{campusCode}/borrowing_patron_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getBorrowingPatron(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingPatron.class)
         .fieldText("Borrowing Campus", patron -> patron.getReqCampus().getCode())
         .fieldText("Borrowing Library", patron -> patron.getReqName())
@@ -297,13 +297,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/lending_patron.xlsx",
+      value = "{campusCode}/lending_patron_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getLendingPatron(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxLendingPatron.class)
         .fieldText("Lending Campus", patron -> patron.getRespCampus().getCode())
         .fieldText("Lending Library", patron -> patron.getRespName())
@@ -326,13 +326,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/borrowing_tat.xlsx",
+      value = "{campusCode}/borrowing_tat_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getBorrowingTat(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxBorrowingTat.class)
         .fieldText("Borrowing Campus", tat -> tat.getReqCampus().getCode())
         .fieldText("Borrowing Library", tat -> tat.getReqName())
@@ -355,13 +355,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/lending_tat.xlsx",
+      value = "{campusCode}/lending_tat_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getLendingTat(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxLendingTat.class)
         .fieldText("Lending Campus", tat -> tat.getRespCampus().getCode())
         .fieldText("Lending Library", tat -> tat.getRespName())
@@ -384,13 +384,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/copyright.xlsx",
+      value = "{campusCode}/copyright_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getCopyright(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxCopyright.class)
         .fieldText("Borrowing Campus", copy -> copy.getReqCampus().getCode())
         .fieldText("Requested Title", copy -> copy.getReqTitle())
@@ -409,13 +409,13 @@ public class XLSXController {
   }
 
   @RequestMapping(
-      value = "{campusCode}/journal_borrowing.xlsx",
+      value = "{campusCode}/journal_borrowing_{startDate}_{endDate}.xlsx",
       produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   public void getJournalBorrowing(
       @PathVariable("campusCode") String campusCode,
       OutputStream output,
-      @RequestParam(required = false, name = "startDate", defaultValue = "1900-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-      @RequestParam(required = false, name = "endDate", defaultValue = "2100-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpVdxJournalBorrowing.class)
         .fieldText("Borrowing Campus", borrowing -> borrowing.getReqCampus().getCode())
         .fieldText("Borrowing Library", borrowing -> borrowing.getReqName())
