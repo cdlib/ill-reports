@@ -26,8 +26,8 @@ public abstract class VdxData {
 
   @Column(name = "rec_date", nullable = true)
   @JsonProperty("rec_date")
-  @JsonSerialize(using = PreferredLocalDateFormatSerializer.class)
-  private LocalDate recDate;
+  @JsonSerialize(using = PreferredLocalDateTimeFormatSerializer.class)
+  private LocalDateTime recDate;
 
   @Column(name = "entry_date", nullable = false)
   @JsonProperty("entry_date")
@@ -290,11 +290,11 @@ public abstract class VdxData {
     this.illno = illno;
   }
 
-  public LocalDate getRecDate() {
+  public LocalDateTime getRecDate() {
     return recDate;
   }
 
-  public void setRecDate(LocalDate recDate) {
+  public void setRecDate(LocalDateTime recDate) {
     this.recDate = recDate;
   }
 
