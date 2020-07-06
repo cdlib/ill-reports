@@ -11,6 +11,8 @@ import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLCRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingUCRepository;
 import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.procedures.SpEtasEventRepository;
+import org.cdlib.ill.report.vdx.procedures.SpEtasEvents;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatron;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatronRepository;
@@ -81,6 +83,8 @@ public class CampusILLStatisticsRestController {
   private SpVdxBorrowingTatRepository spVdxBorrowingTatRepo;
   @Autowired
   private SpVdxLendingTatRepository spVdxLendingTatRepo;
+  @Autowired
+  private SpEtasEventRepository etasEventRepo;
 
   @RequestMapping(value = "{campusCode}/borrowing_summary_{startDate}_{endDate}.csv", produces = {"text/csv"})
   public void getVdxBorrowingSummary(Writer output,
@@ -224,5 +228,15 @@ public class CampusILLStatisticsRestController {
     List<SpVdxLendingTat> data = spVdxLendingTatRepo.getLendingTat(VdxCampus.fromCode(campusCode).map(VdxCampus::getCode).orElse("%"), startDate, endDate).collect(Collectors.toList());
     mapper.writer(schema).writeValue(output, data);
   }
-
+  
+  @RequestMapping(value = "etas_data_{startDate}_{endDate}.csv", produces = {"text/csv"})
+  public void getETASReportCsv(Writer output,
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+    CsvMapper mapper = new CsvMapper();
+    CsvSchema schema = mapper.schemaFor(SpEtasEvents.class).withHeader();
+    List<SpEtasEvents> data = etasEventRepo
+        .getEtasEvents(startDate, endDate);
+    mapper.writer(schema).writeValue(output, data);
+  }
 }
