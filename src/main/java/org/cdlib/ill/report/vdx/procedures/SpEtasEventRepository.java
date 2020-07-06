@@ -23,7 +23,7 @@ public class SpEtasEventRepository {
         .setParameter(2, endDate)
         .getResultList();
     return results.stream().map((Object[] values) -> {
-      Assert.isTrue(values.length == 16, Constants.BAD_PROCEDURE_MSG);
+      Assert.isTrue(values.length == 6, Constants.BAD_PROCEDURE_MSG);
       Assert.noNullElements(values, Constants.NULL_DATA_MSG);
       return new SpEtasEvents(
           String.valueOf(values[0]),
