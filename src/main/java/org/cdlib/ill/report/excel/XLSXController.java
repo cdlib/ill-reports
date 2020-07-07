@@ -452,11 +452,11 @@ public class XLSXController {
       @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     ReportWorkbookBuilder.newWorkbook(SpEtasEvents.class)
         .fieldText("Borrowing Campus", etas -> etas.getBorrowingCampus())
-        .fieldText("ETAS Links Presented", etas -> etas.getEtasLinkTotal())
-        .fieldText("Total ETAS Requests Placed", etas -> etas.getEtasRequestNumber())
-        .fieldText("Returnables ETAS Requests Placed", etas -> etas.getReturnableRequestNumber())
-        .fieldText("Non-Returnables ETAS Requests Placed", etas -> etas.getNonreturnableRequestNumber())
-        .fieldText("Requests Not Placed", etas -> etas.getRequestNotPlacedNumber())
+        .fieldNum("ETAS Links Presented", etas -> etas.getEtasLinkTotal())
+        .fieldNum("Total ETAS Requests Placed", etas -> etas.getEtasRequestNumber())
+        .fieldNum("Returnables ETAS Requests Placed", etas -> etas.getReturnableRequestNumber())
+        .fieldNum("Non-Returnables ETAS Requests Placed", etas -> etas.getNonreturnableRequestNumber())
+        .fieldNum("Requests Not Placed", etas -> etas.getRequestNotPlacedNumber())
         .data(etasEventRepo.getEtasEvents(
             startDate,
             endDate).collect(Collectors.toList()))
