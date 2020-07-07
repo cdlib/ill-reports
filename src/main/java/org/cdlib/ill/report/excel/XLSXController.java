@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 import org.apache.poi.ss.usermodel.DataConsolidateFunction;
 import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.ill.report.vdx.procedures.SpEtasEventRepository;
+import org.cdlib.ill.report.vdx.procedures.SpEtasEvents;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLCRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatron;
@@ -74,6 +76,8 @@ public class XLSXController {
   private SpVdxBorrowingUnfilledSummaryRepository spVdxBorrowingUnfilledSummaryRepo;
   @Autowired
   private SpVdxLendingUnfilledSummaryRepository spVdxLendingUnfilledSummaryRepo;
+  @Autowired
+  private SpEtasEventRepository etasEventRepo;
 
   @RequestMapping(
       value = "{campusCode}/borrowing_unfilled_summary_{startDate}_{endDate}.xlsx",
@@ -435,6 +439,27 @@ public class XLSXController {
         .pivotRow(2)
         .pivotColumn(6)
         .pivotValue(7, DataConsolidateFunction.SUM, "# of Requests per Publication Year")
+        .build()
+        .write(output);
+  }
+  
+  @RequestMapping(
+      value = "etas_data_{startDate}_{endDate}.xlsx",
+      produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+  public void getEtas(
+      OutputStream output,
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+    ReportWorkbookBuilder.newWorkbook(SpEtasEvents.class)
+        .fieldText("Borrowing Campus", etas -> etas.getBorrowingCampus())
+        .fieldText("ETAS Links Presented", etas -> etas.getEtasLinkTotal())
+        .fieldText("Total ETAS Requests Placed", etas -> etas.getEtasRequestNumber())
+        .fieldText("Returnables ETAS Requests Placed", etas -> etas.getReturnableRequestNumber())
+        .fieldText("Non-Returnables ETAS Requests Placed", etas -> etas.getNonreturnableRequestNumber())
+        .fieldText("Requests Not Placed", etas -> etas.getRequestNotPlacedNumber())
+        .data(etasEventRepo.getEtasEvents(
+            startDate,
+            endDate).collect(Collectors.toList()))
         .build()
         .write(output);
   }

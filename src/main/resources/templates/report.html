@@ -384,7 +384,7 @@
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/etas_data_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>    
                         </td>
                         <td>
-                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/' + ${report.campusCode} + '/journal_borrowing_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/etas_data_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
                 </table>

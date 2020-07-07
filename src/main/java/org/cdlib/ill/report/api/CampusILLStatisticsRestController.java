@@ -235,8 +235,7 @@ public class CampusILLStatisticsRestController {
       @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
     CsvMapper mapper = new CsvMapper();
     CsvSchema schema = mapper.schemaFor(SpEtasEvents.class).withHeader();
-    List<SpEtasEvents> data = etasEventRepo
-        .getEtasEvents(startDate, endDate);
+    List<SpEtasEvents> data = etasEventRepo.getEtasEvents(startDate, endDate).collect(Collectors.toList());
     mapper.writer(schema).writeValue(output, data);
   }
 }
