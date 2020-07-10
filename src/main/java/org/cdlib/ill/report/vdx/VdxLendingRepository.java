@@ -22,4 +22,5 @@ public class VdxLendingRepository {
         .setParameter("endDate", endDate.atStartOfDay())
         .getResultList();
   }
+  
 }
