@@ -453,6 +453,7 @@ public class XLSXController {
     ReportWorkbookBuilder.newWorkbook(SpEtasEvents.class)
         .fieldText("Borrowing Campus", etas -> etas.getBorrowingCampus())
         .fieldNum("ETAS Links Presented", etas -> etas.getEtasLinkTotal())
+        .fieldNum("ETAS Links Clicked", etas -> etas.getEtasClickTotal())
         .fieldNum("Total ETAS Requests Placed", etas -> etas.getEtasRequestNumber())
         .fieldNum("Returnables ETAS Requests Placed", etas -> etas.getReturnableRequestNumber())
         .fieldNum("Non-Returnables ETAS Requests Placed", etas -> etas.getNonreturnableRequestNumber())

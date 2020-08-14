@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
   "Borrowing Campus",
   "ETAS Links Presented",
+  "ETAS Links Clicked",
   "Total ETAS Requests Placed",
   "Returnables ETAS Requests Placed",
   "Non-Returnables ETAS Requests Placed",
