@@ -16,6 +16,8 @@ public class SpEtasEvents {
   private String borrowingCampus;
   @JsonProperty("ETAS Links Presented")
   private Long etasLinkTotal;
+  @JsonProperty("ETAS Links Clicked")
+  private Long etasClickTotal;
   @JsonProperty("Total ETAS Requests Placed")
   private Long etasRequestNumber;
   @JsonProperty("Returnables ETAS Requests Placed")
@@ -28,10 +30,11 @@ public class SpEtasEvents {
   public SpEtasEvents() {
   }
 
-  public SpEtasEvents(String borrowingCampus, Long etasLinkTotal, Long etasRequestNumber, Long returnableRequestNumber, Long nonreturnableRequestNumber, Long requestNotPlacedNumber) {
+  public SpEtasEvents(String borrowingCampus, Long etasLinkTotal, Long etasClickTotal, Long etasRequestNumber, Long returnableRequestNumber, Long nonreturnableRequestNumber, Long requestNotPlacedNumber) {
     super();
     this.borrowingCampus = borrowingCampus;
     this.etasLinkTotal = etasLinkTotal;
+    this.etasClickTotal = etasClickTotal;
     this.etasRequestNumber = etasRequestNumber;
     this.returnableRequestNumber = returnableRequestNumber;
     this.nonreturnableRequestNumber = nonreturnableRequestNumber;
@@ -86,11 +89,20 @@ public class SpEtasEvents {
     this.requestNotPlacedNumber = requestNotPlacedNumber;
   }
 
+  public Long getEtasClickTotal() {
+    return etasClickTotal;
+  }
+
+  public void setEtasClickTotal(Long etasClickTotal) {
+    this.etasClickTotal = etasClickTotal;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
     result = prime * result + ((borrowingCampus == null) ? 0 : borrowingCampus.hashCode());
+    result = prime * result + ((etasClickTotal == null) ? 0 : etasClickTotal.hashCode());
     result = prime * result + ((etasLinkTotal == null) ? 0 : etasLinkTotal.hashCode());
     result = prime * result + ((etasRequestNumber == null) ? 0 : etasRequestNumber.hashCode());
     result = prime * result + ((nonreturnableRequestNumber == null) ? 0 : nonreturnableRequestNumber.hashCode());
@@ -112,6 +124,11 @@ public class SpEtasEvents {
       if (other.borrowingCampus != null)
         return false;
     } else if (!borrowingCampus.equals(other.borrowingCampus))
+      return false;
+    if (etasClickTotal == null) {
+      if (other.etasClickTotal != null)
+        return false;
+    } else if (!etasClickTotal.equals(other.etasClickTotal))
       return false;
     if (etasLinkTotal == null) {
       if (other.etasLinkTotal != null)
