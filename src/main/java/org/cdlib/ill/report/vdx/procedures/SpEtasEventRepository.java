@@ -24,7 +24,7 @@ public class SpEtasEventRepository {
         .setParameter(2, endDate)
         .getResultList();
     return results.stream().map((Object[] values) -> {
-      Assert.isTrue(values.length == 6, Constants.BAD_PROCEDURE_MSG);
+      Assert.isTrue(values.length == 7, Constants.BAD_PROCEDURE_MSG);
       Assert.noNullElements(values, Constants.NULL_DATA_MSG);
       return new SpEtasEvents(
           String.valueOf(values[0]),
@@ -32,8 +32,8 @@ public class SpEtasEventRepository {
           Long.valueOf(String.valueOf(values[2])),
           Long.valueOf(String.valueOf(values[3])),
           Long.valueOf(String.valueOf(values[4])),
-          Long.valueOf(String.valueOf(values[5]))
-          
+          Long.valueOf(String.valueOf(values[5])),
+          Long.valueOf(String.valueOf(values[6]))
       );
     });
   }
