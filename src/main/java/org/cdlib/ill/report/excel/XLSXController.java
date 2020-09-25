@@ -8,6 +8,8 @@ import org.apache.poi.ss.usermodel.DataConsolidateFunction;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.procedures.SpEtasEventRepository;
 import org.cdlib.ill.report.vdx.procedures.SpEtasEvents;
+import org.cdlib.ill.report.vdx.procedures.SpFullViewEventRepository;
+import org.cdlib.ill.report.vdx.procedures.SpFullViewEvents;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLC;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingOCLCRepository;
 import org.cdlib.ill.report.vdx.procedures.SpVdxBorrowingPatron;
@@ -78,6 +80,8 @@ public class XLSXController {
   private SpVdxLendingUnfilledSummaryRepository spVdxLendingUnfilledSummaryRepo;
   @Autowired
   private SpEtasEventRepository etasEventRepo;
+  @Autowired
+  private SpFullViewEventRepository fullViewEventRepo;
 
   @RequestMapping(
       value = "{campusCode}/borrowing_unfilled_summary_{startDate}_{endDate}.xlsx",
@@ -459,6 +463,28 @@ public class XLSXController {
         .fieldNum("Non-Returnables ETAS Requests Placed", etas -> etas.getNonreturnableRequestNumber())
         .fieldNum("Requests Not Placed", etas -> etas.getRequestNotPlacedNumber())
         .data(etasEventRepo.getEtasEvents(
+            startDate,
+            endDate).collect(Collectors.toList()))
+        .build()
+        .write(output);
+  }
+  
+  @RequestMapping(
+      value = "full_view_data_{startDate}_{endDate}.xlsx",
+      produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+  public void getFullView(
+      OutputStream output,
+      @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+      @PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) throws IOException {
+    ReportWorkbookBuilder.newWorkbook(SpFullViewEvents.class)
+        .fieldText("Borrowing Campus", fullView -> fullView.getBorrowingCampus())
+        .fieldNum("Full View Links Presented", fullView -> fullView.getFullViewLinkTotal())
+        .fieldNum("Full View Links Clicked", fullView -> fullView.getFullViewClickTotal())
+        .fieldNum("Total Full View Requests Placed", fullView -> fullView.getFullViewRequestNumber())
+        .fieldNum("Returnables Full View Requests Placed", fullView -> fullView.getReturnableRequestNumber())
+        .fieldNum("Non-Returnables Full View Requests Placed", fullView -> fullView.getNonreturnableRequestNumber())
+        .fieldNum("Requests Not Placed", fullView -> fullView.getRequestNotPlacedNumber())
+        .data(fullViewEventRepo.getFullViewEvents(
             startDate,
             endDate).collect(Collectors.toList()))
         .build()

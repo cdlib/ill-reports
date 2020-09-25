@@ -387,6 +387,21 @@
                             <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/etas_data_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
                         </td>
                     </tr>
+                    
+                    <tr>
+                        <th scope="row">
+                            Full View Data Report
+                        </th>
+                        <td>
+                            Data on how many Full View links were presented, clicked, etc. Not campus specific, so all campuses will be included in the report. 
+                        </td>
+                        <td>
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;<a th:href="@{'/ill/stats/by-campus/full_view_data_' + ${searchStartDate} + '_' + ${searchEndDate} + '.csv'}">CSV</a>    
+                        </td>
+                        <td>
+                            <img src="/excel_icon.png" alt="Microsoft Excel" />&nbsp;<a th:href="@{'/ill/reports/by-campus/full_view_data_' + ${searchStartDate} + '_' + ${searchEndDate} + '.xlsx'}">XLSX</a>
+                        </td>
+                    </tr>
                 </table>
 
                 <table class="table">
