@@ -27,11 +27,13 @@ public class SpEtasEvents {
   private Long nonreturnableRequestNumber;
   @JsonProperty("Requests Not Placed")
   private Long requestNotPlacedNumber;
-  
+  @JsonProperty("Total Requests Placed")
+  private Long totalRequestsPlaced;
+
   public SpEtasEvents() {
   }
 
-  public SpEtasEvents(String borrowingCampus, Long etasLinkTotal, Long etasClickTotal, Long etasRequestNumber, Long returnableRequestNumber, Long nonreturnableRequestNumber, Long requestNotPlacedNumber) {
+  public SpEtasEvents(String borrowingCampus, Long etasLinkTotal, Long etasClickTotal, Long etasRequestNumber, Long returnableRequestNumber, Long nonreturnableRequestNumber, Long requestNotPlacedNumber, Long totalRequestsPlaced) {
     super();
     this.borrowingCampus = borrowingCampus;
     this.etasLinkTotal = etasLinkTotal;
@@ -40,6 +42,7 @@ public class SpEtasEvents {
     this.returnableRequestNumber = returnableRequestNumber;
     this.nonreturnableRequestNumber = nonreturnableRequestNumber;
     this.requestNotPlacedNumber = requestNotPlacedNumber;
+    this.totalRequestsPlaced = totalRequestsPlaced;
   }
 
   public String getBorrowingCampus() {
@@ -97,6 +100,14 @@ public class SpEtasEvents {
   public void setEtasClickTotal(Long etasClickTotal) {
     this.etasClickTotal = etasClickTotal;
   }
+  
+  public Long getTotalRequestsPlaced() {
+    return totalRequestsPlaced;
+  }
+
+  public void setTotalRequestsPlaced(Long totalRequestsPlaced) {
+    this.totalRequestsPlaced = totalRequestsPlaced;
+  }
 
   @Override
   public int hashCode() {
@@ -109,6 +120,7 @@ public class SpEtasEvents {
     result = prime * result + ((nonreturnableRequestNumber == null) ? 0 : nonreturnableRequestNumber.hashCode());
     result = prime * result + ((requestNotPlacedNumber == null) ? 0 : requestNotPlacedNumber.hashCode());
     result = prime * result + ((returnableRequestNumber == null) ? 0 : returnableRequestNumber.hashCode());
+    result = prime * result + ((totalRequestsPlaced == null) ? 0 : totalRequestsPlaced.hashCode());
     return result;
   }
 
@@ -155,6 +167,11 @@ public class SpEtasEvents {
       if (other.returnableRequestNumber != null)
         return false;
     } else if (!returnableRequestNumber.equals(other.returnableRequestNumber))
+      return false;
+    if (totalRequestsPlaced == null) {
+      if (other.totalRequestsPlaced != null)
+        return false;
+    } else if (!totalRequestsPlaced.equals(other.totalRequestsPlaced))
       return false;
     return true;
   }
