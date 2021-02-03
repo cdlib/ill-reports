@@ -458,6 +458,7 @@ public class XLSXController {
         .fieldNum("Returnables ETAS Requests Placed", etas -> etas.getReturnableRequestNumber())
         .fieldNum("Non-Returnables ETAS Requests Placed", etas -> etas.getNonreturnableRequestNumber())
         .fieldNum("Requests Not Placed", etas -> etas.getRequestNotPlacedNumber())
+        .fieldNum("Total Requests Placed", etas -> etas.getTotalRequestsPlaced())
         .data(etasEventRepo.getEtasEvents(
             startDate,
             endDate).collect(Collectors.toList()))
