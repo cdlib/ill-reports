@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
   "Total ETAS Requests Placed",
   "Returnables ETAS Requests Placed",
   "Non-Returnables ETAS Requests Placed",
-  "Requests Not Placed"
+  "Requests Not Placed",
+  "Total UC Requests Placed",
+  "Total OCLC Requests Placed"
 })
 public class SpEtasEvents {
   @JsonProperty("Borrowing Campus")
