@@ -25,13 +25,13 @@ public class SpEtasEventRepositoryTest {
   @Test
   public void testGetEtasEvents() {
     stubNativeQueryResultList(em, Arrays.asList(
-        new Object[]{"UCB", "1", "2", "3", "4", "5", "6", "7"},
-        new Object[]{"UCLA", "1", "2", "3", "4", "5", "6", "7"},
-        new Object[]{"UCB", "4", "8", "9", "7", "2", "4", "9"}
+        new Object[]{"UCB", "1", "2", "3", "4", "5", "6", "7", "8"},
+        new Object[]{"UCLA", "1", "2", "3", "4", "5", "6", "7", "8"},
+        new Object[]{"UCB", "4", "8", "9", "7", "2", "4", "9", "0"}
     ));
-    Assert.assertEquals(Sets.newSet(new SpEtasEvents("UCB", Long.valueOf(1), Long.valueOf(2), Long.valueOf(3), Long.valueOf(4), Long.valueOf(5), Long.valueOf(6), Long.valueOf(7)),
-        new SpEtasEvents("UCLA", Long.valueOf(1), Long.valueOf(2), Long.valueOf(3), Long.valueOf(4), Long.valueOf(5), Long.valueOf(6), Long.valueOf(7)),
-        new SpEtasEvents("UCB", Long.valueOf(4), Long.valueOf(8), Long.valueOf(9), Long.valueOf(7), Long.valueOf(2), Long.valueOf(4), Long.valueOf(9))),
+    Assert.assertEquals(Sets.newSet(new SpEtasEvents("UCB", Long.valueOf(1), Long.valueOf(2), Long.valueOf(3), Long.valueOf(4), Long.valueOf(5), Long.valueOf(6), Long.valueOf(7), Long.valueOf(8)),
+        new SpEtasEvents("UCLA", Long.valueOf(1), Long.valueOf(2), Long.valueOf(3), Long.valueOf(4), Long.valueOf(5), Long.valueOf(6), Long.valueOf(7), Long.valueOf(8)),
+        new SpEtasEvents("UCB", Long.valueOf(4), Long.valueOf(8), Long.valueOf(9), Long.valueOf(7), Long.valueOf(2), Long.valueOf(4), Long.valueOf(9), Long.valueOf(0))),
         repo.getEtasEvents(null, null).collect(Collectors.toSet())
     );
   }
