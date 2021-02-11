@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
   "Total ETAS Requests Placed",
   "Returnables ETAS Requests Placed",
   "Non-Returnables ETAS Requests Placed",
-  "Requests Not Placed"
+  "Requests Not Placed",
+  "Total UC Requests Placed",
+  "Total OCLC Requests Placed"
 })
 public class SpEtasEvents {
   @JsonProperty("Borrowing Campus")
@@ -27,11 +29,15 @@ public class SpEtasEvents {
   private Long nonreturnableRequestNumber;
   @JsonProperty("Requests Not Placed")
   private Long requestNotPlacedNumber;
-  
+  @JsonProperty("Total UC Requests Placed")
+  private Long totalUCRequestsPlaced;
+  @JsonProperty("Total OCLC Requests Placed")
+  private Long totalOCLCRequestsPlaced;
+
   public SpEtasEvents() {
   }
 
-  public SpEtasEvents(String borrowingCampus, Long etasLinkTotal, Long etasClickTotal, Long etasRequestNumber, Long returnableRequestNumber, Long nonreturnableRequestNumber, Long requestNotPlacedNumber) {
+  public SpEtasEvents(String borrowingCampus, Long etasLinkTotal, Long etasClickTotal, Long etasRequestNumber, Long returnableRequestNumber, Long nonreturnableRequestNumber, Long requestNotPlacedNumber, Long totalUCRequestsPlaced, Long totalOCLCRequestsPlaced) {
     super();
     this.borrowingCampus = borrowingCampus;
     this.etasLinkTotal = etasLinkTotal;
@@ -40,6 +46,8 @@ public class SpEtasEvents {
     this.returnableRequestNumber = returnableRequestNumber;
     this.nonreturnableRequestNumber = nonreturnableRequestNumber;
     this.requestNotPlacedNumber = requestNotPlacedNumber;
+    this.totalUCRequestsPlaced = totalUCRequestsPlaced;
+    this.totalOCLCRequestsPlaced = totalOCLCRequestsPlaced;
   }
 
   public String getBorrowingCampus() {
@@ -98,6 +106,22 @@ public class SpEtasEvents {
     this.etasClickTotal = etasClickTotal;
   }
 
+  public Long getTotalUCRequestsPlaced() {
+    return totalUCRequestsPlaced;
+  }
+
+  public void setTotalUCRequestsPlaced(Long totalUCRequestsPlaced) {
+    this.totalUCRequestsPlaced = totalUCRequestsPlaced;
+  }
+
+  public Long getTotalOCLCRequestsPlaced() {
+    return totalOCLCRequestsPlaced;
+  }
+
+  public void setTotalOCLCRequestsPlaced(Long totalOCLCRequestsPlaced) {
+    this.totalOCLCRequestsPlaced = totalOCLCRequestsPlaced;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -109,6 +133,8 @@ public class SpEtasEvents {
     result = prime * result + ((nonreturnableRequestNumber == null) ? 0 : nonreturnableRequestNumber.hashCode());
     result = prime * result + ((requestNotPlacedNumber == null) ? 0 : requestNotPlacedNumber.hashCode());
     result = prime * result + ((returnableRequestNumber == null) ? 0 : returnableRequestNumber.hashCode());
+    result = prime * result + ((totalOCLCRequestsPlaced == null) ? 0 : totalOCLCRequestsPlaced.hashCode());
+    result = prime * result + ((totalUCRequestsPlaced == null) ? 0 : totalUCRequestsPlaced.hashCode());
     return result;
   }
 
@@ -155,6 +181,16 @@ public class SpEtasEvents {
       if (other.returnableRequestNumber != null)
         return false;
     } else if (!returnableRequestNumber.equals(other.returnableRequestNumber))
+      return false;
+    if (totalOCLCRequestsPlaced == null) {
+      if (other.totalOCLCRequestsPlaced != null)
+        return false;
+    } else if (!totalOCLCRequestsPlaced.equals(other.totalOCLCRequestsPlaced))
+      return false;
+    if (totalUCRequestsPlaced == null) {
+      if (other.totalUCRequestsPlaced != null)
+        return false;
+    } else if (!totalUCRequestsPlaced.equals(other.totalUCRequestsPlaced))
       return false;
     return true;
   }
