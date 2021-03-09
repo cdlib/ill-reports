@@ -67,6 +67,10 @@ public class VdxRequestData implements Serializable {
   @Column(name = "req_author", nullable = false)
   @JsonProperty("req_author")
   private String reqAuthor;
+  
+  @Column(name="language", nullable = false)
+  @JsonProperty("language")
+  private String language;
 
   @Column(name = "req_issue_title", nullable = false)
   @JsonProperty("req_issue_title")
@@ -200,6 +204,14 @@ public class VdxRequestData implements Serializable {
     this.reqAuthor = reqAuthor;
   }
 
+  public String getLanguage() {
+    return language;
+  }
+  
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+  
   public String getReqIssueTitle() {
     return reqIssueTitle;
   }
