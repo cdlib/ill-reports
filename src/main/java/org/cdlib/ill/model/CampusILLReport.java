@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 
-public class CampusILLReport extends ResourceSupport {
+public class CampusILLReport extends RepresentationModel {
 
   private String title;
   private String campusCode;
