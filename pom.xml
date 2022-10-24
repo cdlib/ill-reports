@@ -17,9 +17,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <jpa.version>2.1.0</jpa.version>
+        <jpa.version>2.2.1</jpa.version>
         <eclipselink.version>2.6.4</eclipselink.version>
-        <mysql.version>6.0.6</mysql.version>
+        <mysql.version>8.0.31</mysql.version>
         <mockito.override.version>2.8.9</mockito.override.version>
         <apache.poi.version>4.1.2</apache.poi.version>
     </properties>
