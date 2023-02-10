@@ -10,11 +10,13 @@ import java.util.Objects;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import org.cdlib.ill.report.api.PreferredLocalDateFormatSerializer;
 import org.cdlib.ill.report.api.PreferredLocalDateTimeFormatSerializer;
+import org.cdlib.ill.report.api.LocalDateTimeNoOpConverter;
 
 @MappedSuperclass
 public abstract class VdxData {
@@ -27,11 +29,13 @@ public abstract class VdxData {
   @Column(name = "rec_date", nullable = true)
   @JsonProperty("rec_date")
   @JsonSerialize(using = PreferredLocalDateTimeFormatSerializer.class)
+  @Convert(converter = LocalDateTimeNoOpConverter.class)
   private LocalDateTime recDate;
 
   @Column(name = "entry_date", nullable = false)
   @JsonProperty("entry_date")
   @JsonSerialize(using = PreferredLocalDateTimeFormatSerializer.class)
+  @Convert(converter = LocalDateTimeNoOpConverter.class)
   private LocalDateTime entryDate;
 
   @Column(name = "need_date", nullable = true)
@@ -175,6 +179,7 @@ public abstract class VdxData {
   @Column(name = "statuschange_date", nullable = true)
   @JsonProperty("statuschange_date")
   @JsonSerialize(using = PreferredLocalDateTimeFormatSerializer.class)
+  @Convert(converter = LocalDateTimeNoOpConverter.class)
   private LocalDateTime statuschangeDate;
 
   @Column(name = "shipped_medium_type", nullable = false)
