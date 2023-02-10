@@ -3,15 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.cdlib</groupId>
     <artifactId>ill-reports</artifactId>
-    <version>1.2.8</version>
+    <version>1.2.9</version>
     <packaging>jar</packaging>
-    
-    <developers>
-        <developer>
-            <name>Michael Morris-Pearce</name>
-            <organizationUrl>https://cdlib.org</organizationUrl>
-        </developer>
-    </developers>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
