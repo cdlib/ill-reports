@@ -38,7 +38,7 @@ public class SpVdxBorrowingDetailRepository {
       return new SpVdxBorrowingDetail(
           String.valueOf(values[0]),
           Long.valueOf(String.valueOf(values[1])),
-          LOCAL_DATE_TIME_CONVERTER.convertToEntityAttribute((Timestamp) values[2]),
+          (LocalDateTime)values[2],
           VdxBorrowerCategory.fromCode(String.valueOf(values[3])).orElseThrow(Constants.BAD_DATA_EX_SUPPLIER),
           String.valueOf(values[4]),
           String.valueOf(values[5]),
