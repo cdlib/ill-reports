@@ -4,6 +4,6 @@ import java.time.format.DateTimeFormatter;
 
 public class PreferredLocalDateTimeFormat {
 
-  public static final String PATTERN = "MM/dd/yyyy hh:mm:ss a";
+  public static final String PATTERN = "MM/dd/yyyy HH:mm:ss a";
   public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(PATTERN);
 }
