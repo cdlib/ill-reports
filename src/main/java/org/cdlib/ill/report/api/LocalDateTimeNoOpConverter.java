@@ -20,9 +20,4 @@ public class LocalDateTimeNoOpConverter implements AttributeConverter<LocalDateT
   public LocalDateTime convertToEntityAttribute(LocalDateTime date) {
     return date == null ? null : date;
   }
-  
-  @Nullable
-  public Timestamp convertToEntityAttribute(Timestamp date) {
-    return date == null ? null : date;
-  }
 }
