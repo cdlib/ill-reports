@@ -18,6 +18,12 @@ import org.cdlib.ill.report.api.PreferredLocalDateFormatSerializer;
 import org.cdlib.ill.report.api.PreferredLocalDateTimeFormatSerializer;
 import org.cdlib.ill.report.api.LocalDateTimeNoOpConverter;
 
+/*
+ * Note that a NoOp converter is applied to all DateTime entity fields to 
+ * prevent a ClassCastException caused by the MySQL 8 controller returning 
+ * a LocalDateTime value, as the ORM framework is expecting a java.util.Date
+ * value.
+ */
 @MappedSuperclass
 public abstract class VdxData {
 

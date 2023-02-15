@@ -1,18 +1,14 @@
 package org.cdlib.ill.report.vdx.procedures;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.AttributeConverter;
 import javax.persistence.EntityManager;
 import org.cdlib.ill.report.Constants;
 import org.cdlib.ill.report.vdx.VdxBorrowerCategory;
 import org.cdlib.ill.report.vdx.VdxServiceType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -20,8 +16,6 @@ import org.springframework.util.Assert;
 @Transactional(readOnly = true)
 @Repository
 public class SpVdxBorrowingDetailRepository {
-
-  private static final AttributeConverter<LocalDateTime, Date> LOCAL_DATE_TIME_CONVERTER = new Jsr310JpaConverters.LocalDateTimeConverter();
 
   @Autowired
   private EntityManager em;
