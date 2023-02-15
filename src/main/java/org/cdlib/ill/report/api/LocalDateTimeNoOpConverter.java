@@ -19,12 +19,12 @@ public class LocalDateTimeNoOpConverter implements AttributeConverter<LocalDateT
   @Nullable
   @Override
   public LocalDateTime convertToDatabaseColumn(LocalDateTime date) {
-    return date == null ? null : date;
+    return date;
   }
 
   @Nullable
   @Override
   public LocalDateTime convertToEntityAttribute(LocalDateTime date) {
-    return date == null ? null : date;
+    return date;
   }
 }
