@@ -8,11 +8,14 @@ public class ReportHtmlForm {
   @NotNull
   @Pattern(regexp = "(Search)")
   private String command;
+  
   @NotNull
   @Pattern(regexp = "all|OELA|NRLF|SRLF|UCB|UCD|UCI|UCLA|UCM|UCR|UCSB|UCSC|UCSD|UCSF")
   private String campus;
+  
   @NotNull
   private String from;
+  
   @NotNull
   private String to;
 
@@ -46,6 +49,12 @@ public class ReportHtmlForm {
 
   public void setTo(String to) {
     this.to = to;
+  }
+
+  @Override
+  public String toString() {
+    return "ReportHtmlForm [command=" + command + ", campus=" + campus + ", from=" + from + ", to="
+        + to + "]";
   }
 
 }
