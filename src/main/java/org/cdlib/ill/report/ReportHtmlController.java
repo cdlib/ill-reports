@@ -1,5 +1,7 @@
 package org.cdlib.ill.report;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.instrument.Instrumentation;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -8,6 +10,9 @@ import java.util.EnumSet;
 import javax.validation.Valid;
 import org.cdlib.ill.model.CampusILLReport;
 import org.cdlib.ill.report.vdx.VdxCampus;
+import org.cdlib.westweb.web.service.ArchiveActionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +25,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class ReportHtmlController {
 
+  private Logger logger = LoggerFactory.getLogger(ReportHtmlController.class);
+
   @Autowired
   private CampusILLReportService repo;
 
@@ -27,10 +34,11 @@ public class ReportHtmlController {
     return repo.getILLCampusReport("All Campuses", "all", "%", reportStartDate, reportEndDate);
   }
 
-  private CampusILLReport getCampusReport(String campusCode, LocalDate reportStartDate, LocalDate reportEndDate) {
+  private CampusILLReport getCampusReport(String campusCode, LocalDate reportStartDate,
+      LocalDate reportEndDate) {
     return repo.getILLCampusReport(campusCode, reportStartDate, reportEndDate);
   }
-  
+
   private LocalDate parseDate(String formatted) {
     return LocalDate.parse(formatted, DateTimeFormatter.ISO_LOCAL_DATE);
   }
@@ -44,7 +52,15 @@ public class ReportHtmlController {
   }
 
   @PostMapping("/")
-  public String query(@Valid @ModelAttribute("queryForm") ReportHtmlForm queryForm, BindingResult bindingResult, Model model) {
+  public String query(@Valid @ModelAttribute("queryForm") ReportHtmlForm queryForm,
+      BindingResult bindingResult, Model model) {
+    logger.debug("Received form:\n" + queryForm.toString());
+    try {
+      logger.debug(
+          "Serialized form size:" + Integer.valueOf(queryForm.toString().getBytes("ASCII").length));
+    } catch (UnsupportedEncodingException e) {
+      throw new IllegalArgumentException(e);
+    }
     model.addAttribute("campuses", EnumSet.complementOf(EnumSet.of(VdxCampus.None)));
     model.addAttribute("searchStartDate", queryForm.getFrom());
     model.addAttribute("searchEndDate", queryForm.getTo());
@@ -55,7 +71,8 @@ public class ReportHtmlController {
     try {
       from = parseDate(queryForm.getFrom());
     } catch (DateTimeParseException ex) {
-      bindingResult.addError(new FieldError("queryForm", "from", "Date does not match YYYY-MM-DD."));
+      bindingResult
+          .addError(new FieldError("queryForm", "from", "Date does not match YYYY-MM-DD."));
     }
     try {
       to = parseDate(queryForm.getTo());
@@ -66,7 +83,8 @@ public class ReportHtmlController {
     if (bindingResult.hasErrors()) {
       model.addAttribute("campusDefault", queryForm.getCampus());
     } else {
-      model.addAttribute("campusDefault", VdxCampus.fromCode(queryForm.getCampus()).map(VdxCampus::getCode).orElse("all"));
+      model.addAttribute("campusDefault",
+          VdxCampus.fromCode(queryForm.getCampus()).map(VdxCampus::getCode).orElse("all"));
       model.addAttribute("reports",
           Arrays.asList(VdxCampus.fromCode(queryForm.getCampus()).isPresent()
               ? getCampusReport(VdxCampus.fromCode(queryForm.getCampus())
@@ -77,10 +95,21 @@ public class ReportHtmlController {
                   to)
               : getAllCampusReport(
                   from,
-                  to)
-          ));
+                  to)));
     }
     return "report";
+  }
+
+  static class ObjectSizeFetcher {
+    private static Instrumentation instrumentation;
+
+    public static void premain(String args, Instrumentation inst) {
+      instrumentation = inst;
+    }
+
+    public static long getObjectSize(Object o) {
+      return instrumentation.getObjectSize(o);
+    }
   }
 
 }
