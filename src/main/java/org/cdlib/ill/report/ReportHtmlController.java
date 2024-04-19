@@ -53,13 +53,13 @@ public class ReportHtmlController {
   @PostMapping("/")
   public String query(@Valid @ModelAttribute("queryForm") ReportHtmlForm queryForm,
       BindingResult bindingResult, Model model) {
-    logger.debug("Received form:\n" + queryForm.toString());
-    try {
-      logger.debug(
-          "Serialized form size:" + Integer.valueOf(queryForm.toString().getBytes("ASCII").length));
-    } catch (UnsupportedEncodingException e) {
-      throw new IllegalArgumentException(e);
+    
+    if (!isValid(queryForm, bindingResult)) {
+      return "redirect:/";
     }
+    logger.info("Received form: " + queryForm.toString());
+    
+    
     model.addAttribute("campuses", EnumSet.complementOf(EnumSet.of(VdxCampus.None)));
     model.addAttribute("searchStartDate", queryForm.getFrom());
     model.addAttribute("searchEndDate", queryForm.getTo());
@@ -98,17 +98,9 @@ public class ReportHtmlController {
     }
     return "report";
   }
-
-  static class ObjectSizeFetcher {
-    private static Instrumentation instrumentation;
-
-    public static void premain(String args, Instrumentation inst) {
-      instrumentation = inst;
-    }
-
-    public static long getObjectSize(Object o) {
-      return instrumentation.getObjectSize(o);
-    }
+  
+  private boolean isValid(ReportHtmlForm form, BindingResult bindingResult) {
+    return false;
   }
 
 }
