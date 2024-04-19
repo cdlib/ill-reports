@@ -58,7 +58,7 @@ public class ReportHtmlController {
     }
 
     LocalDate from = parseDate(queryForm.getFrom());
-    LocalDate to = parseDate(queryForm.getFrom());
+    LocalDate to = parseDate(queryForm.getTo());
 
     model.addAttribute("campuses", EnumSet.complementOf(EnumSet.of(VdxCampus.None)));
     model.addAttribute("searchStartDate", from);
