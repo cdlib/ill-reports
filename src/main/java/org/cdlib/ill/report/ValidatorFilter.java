@@ -55,16 +55,15 @@ public class ValidatorFilter implements Filter {
 
   private void logPost(HttpServletRequest httpRequest) {
     logger.debug("POST request from " + httpRequest.getRemoteAddr());
-    logger.debug("size: " + String.valueOf(httpRequest.getContentLength()));
+    logger.debug("request content length: " + String.valueOf(httpRequest.getContentLength()));
     Map<String, String[]> params = httpRequest.getParameterMap();
+    logger.debug(String.valueOf(params.size()) + " parameters in request.");
     for (String key : params.keySet()) {
       String[] vals = params.get(key);
-      if (vals == null) {
-        logger.debug(key + "=null");
-      } else if (vals.length == 0) {
-        logger.debug(key + "=");
+      if (vals == null || vals.length == 0) {
+        logger.debug(key + " = null");
       } else {
-        logger.debug(key + "=" + vals[0]);
+        logger.debug(key + " = " + vals[0]);
       }
     }
   }
