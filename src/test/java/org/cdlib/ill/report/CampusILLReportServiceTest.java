@@ -51,5 +51,5 @@ public class CampusILLReportServiceTest {
       return LIBRARY_B.equals(library.getName()) && Objects.equals(4L, library.getTotalBorrowing());
     }));
   }
-
+  
 }

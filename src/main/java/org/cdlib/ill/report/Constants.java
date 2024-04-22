@@ -10,4 +10,5 @@ public final class Constants {
   public static final Supplier<RuntimeException> BAD_DATA_EX_SUPPLIER = () -> {
     return BAD_DATA_EX;
   };
+  public static final String CAMPUSES_MATCH = "all|OELA|NRLF|SRLF|UCB|UCD|UCI|UCLA|UCM|UCR|UCSB|UCSC|UCSD|UCSF";
 }

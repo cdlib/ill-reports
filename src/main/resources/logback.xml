@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="root"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/apps/illreports/deploy/logs/root.log</File>
+		<encoder>
+			<pattern>%p %d{dd MMM yyyy HH:mm:ss,SSS} %t %c - %m%n</pattern>
+		</encoder>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<maxIndex>5</maxIndex>
+			<FileNamePattern> /apps/illreports/deploy/logs/root.log.%i</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10000KB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<appender name="application"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/apps/illreports/deploy/logs/application.log</File>
+		<encoder>
+			<pattern>%p %d{dd MMM yyyy HH:mm:ss,SSS} %t %c - %m%n</pattern>
+		</encoder>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<maxIndex>5</maxIndex>
+			<FileNamePattern> /apps/illreports/deploy/logs/application.log.%i</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10000KB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<!-- Defaults -->
+	<root level="INFO">
+		<appender-ref ref="root" />
+	</root>
+
+	<logger name="org.cdlib.ill" level="DEBUG">
+		<appender-ref ref="application" />
+	</logger>
+
+</configuration>
