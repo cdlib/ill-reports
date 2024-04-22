@@ -27,17 +27,23 @@ public class ValidatorFilter implements Filter {
       throws IOException, ServletException {
 
     HttpServletRequest httpRequest = (HttpServletRequest) request;
-    logRequest(httpRequest);
     if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
+      logGet(httpRequest);
       chain.doFilter(httpRequest, response);
     } else {
+      logPost(httpRequest);
       if (isValid(httpRequest)) {
         chain.doFilter(httpRequest, response);
       }
     }
   }
+  
+  private void logGet(HttpServletRequest request) {
+    logger.info("GET request" + " from " + request.getRemoteAddr());
+  }
 
-  private void logRequest(HttpServletRequest httpRequest) {
+  private void logPost(HttpServletRequest httpRequest) {
+    logger.info("POST request from " + httpRequest.getRemoteAddr());
     logger.info("size: " + String.valueOf(httpRequest.getContentLength()));
     Map<String, String[]> params = httpRequest.getParameterMap();
     for (String key : params.keySet()) {
