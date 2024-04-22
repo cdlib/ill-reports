@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
-    
-    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
-    <property name="LOG_FILE_MAX_HISTORY" value="90" />
-    
-    <!-- Only relevant for FILE appender -->
-    <property name="LOG_FILE_MAX_SIZE" value="10MB" />
-    
-    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
-    <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
-    
-    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_FILE}</file>
-        <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
-        </encoder>
-        <prudent>true</prudent>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>${LOG_FILE_MAX_HISTORY}</maxHistory>
-            <cleanHistoryOnStart>true</cleanHistoryOnStart>
-        </rollingPolicy>
-    </appender>
 
-    <!-- Defaults -->
-    <root level="INFO">
-        <appender-ref ref="CONSOLE" />
-    </root>
-    
-    <springProfile name="logging">
-        <root level="INFO">
-            <appender-ref ref="ROLLING" />
-        </root>
-    </springProfile>
-    
+	<appender name="root"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/apps/illreports/deploy/logs/root.log</File>
+		<encoder>
+			<pattern>%p %d{dd MMM yyyy HH:mm:ss,SSS} %t %c - %m%n</pattern>
+		</encoder>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<maxIndex>5</maxIndex>
+			<FileNamePattern> /apps/illreports/deploy/logs/root.log.%i</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10000KB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<appender name="application"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/apps/illreports/deploy/logs/application.log</File>
+		<encoder>
+			<pattern>%p %d{dd MMM yyyy HH:mm:ss,SSS} %t %c - %m%n</pattern>
+		</encoder>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<maxIndex>5</maxIndex>
+			<FileNamePattern> /apps/illreports/deploy/logs/application.log.%i</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10000KB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<!-- Defaults -->
+	<root level="INFO">
+		<appender-ref ref="root" />
+	</root>
+
+	<logger name="org.cdlib.ill" level="DEBUG">
+		<appender-ref ref="application" />
+	</logger>
+
 </configuration>
