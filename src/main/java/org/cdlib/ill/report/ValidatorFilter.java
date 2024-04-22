@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -16,30 +18,39 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/*
+ * Evaluates incoming requests and checks whether they meet criteria to be legitimate requests. Drop
+ * those that do not meet criteria.
+ * 
+ * Logs info about incoming requests, particularly HTTP POST requests.
+ */
 @Component
 @Order(1)
 public class ValidatorFilter implements Filter {
 
   private static Logger logger = LoggerFactory.getLogger(ValidatorFilter.class);
+  private List<String> blackList = new ArrayList<>();
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
 
     HttpServletRequest httpRequest = (HttpServletRequest) request;
+    if (blackList.contains(httpRequest.getRemoteAddr())) {
+      logger.info("Request" + " from " + request.getRemoteAddr() + " rejected by blacklist.");
+      return;
+    }
     if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
-      logGet(httpRequest);
+      logger.info("GET request" + " from " + request.getRemoteAddr());
       chain.doFilter(httpRequest, response);
     } else {
       logPost(httpRequest);
-      if (isValid(httpRequest)) {
+      if (isValidPost(httpRequest)) {
         chain.doFilter(httpRequest, response);
+      } else {
+        blackList.add(httpRequest.getRemoteAddr());
       }
     }
-  }
-  
-  private void logGet(HttpServletRequest request) {
-    logger.info("GET request" + " from " + request.getRemoteAddr());
   }
 
   private void logPost(HttpServletRequest httpRequest) {
@@ -58,7 +69,7 @@ public class ValidatorFilter implements Filter {
     }
   }
 
-  private boolean isValid(HttpServletRequest httpRequest) {
+  private boolean isValidPost(HttpServletRequest httpRequest) {
     if (httpRequest.getContentLength() > 56) {
       return false;
     }
