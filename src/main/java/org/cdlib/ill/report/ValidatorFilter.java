@@ -37,11 +37,11 @@ public class ValidatorFilter implements Filter {
 
     HttpServletRequest httpRequest = (HttpServletRequest) request;
     if (blackList.contains(httpRequest.getRemoteAddr())) {
-      logger.info("Request" + " from " + request.getRemoteAddr() + " rejected by blacklist.");
+      logger.debug("Request" + " from " + request.getRemoteAddr() + " rejected by blacklist.");
       return;
     }
     if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
-      logger.info("GET request" + " from " + request.getRemoteAddr());
+      logger.debug("GET request" + " from " + request.getRemoteAddr());
       chain.doFilter(httpRequest, response);
     } else {
       logPost(httpRequest);
@@ -54,17 +54,17 @@ public class ValidatorFilter implements Filter {
   }
 
   private void logPost(HttpServletRequest httpRequest) {
-    logger.info("POST request from " + httpRequest.getRemoteAddr());
-    logger.info("size: " + String.valueOf(httpRequest.getContentLength()));
+    logger.debug("POST request from " + httpRequest.getRemoteAddr());
+    logger.debug("size: " + String.valueOf(httpRequest.getContentLength()));
     Map<String, String[]> params = httpRequest.getParameterMap();
     for (String key : params.keySet()) {
       String[] vals = params.get(key);
       if (vals == null) {
-        logger.info(key + "=null");
+        logger.debug(key + "=null");
       } else if (vals.length == 0) {
-        logger.info(key + "=");
+        logger.debug(key + "=");
       } else {
-        logger.info(key + "=" + vals[0]);
+        logger.debug(key + "=" + vals[0]);
       }
     }
   }
@@ -110,7 +110,7 @@ public class ValidatorFilter implements Filter {
     if (campus == null) {
       return false;
     }
-    return campus.matches("all|OELA|NRLF|SRLF|UCB|UCD|UCI|UCLA|UCM|UCR|UCSB|UCSC|UCSD|UCSF");
+    return campus.matches(Constants.CAMPUSES_MATCH);
   }
 
   private boolean isValidDate(String date) {

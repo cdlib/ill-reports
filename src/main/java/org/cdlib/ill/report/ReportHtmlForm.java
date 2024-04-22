@@ -10,7 +10,7 @@ public class ReportHtmlForm {
   private String command;
   
   @NotNull
-  @Pattern(regexp = "all|OELA|NRLF|SRLF|UCB|UCD|UCI|UCLA|UCM|UCR|UCSB|UCSC|UCSD|UCSF")
+  @Pattern(regexp = Constants.CAMPUSES_MATCH)
   private String campus;
   
   @NotNull
