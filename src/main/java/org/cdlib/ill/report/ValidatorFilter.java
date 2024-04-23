@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -36,8 +37,10 @@ public class ValidatorFilter implements Filter {
       throws IOException, ServletException {
 
     HttpServletRequest httpRequest = (HttpServletRequest) request;
+    HttpServletResponse httpResponse = (HttpServletResponse) response;
     if (blackList.contains(httpRequest.getRemoteAddr())) {
       logger.debug("Request" + " from " + request.getRemoteAddr() + " rejected by blacklist.");
+      httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
       return;
     }
     if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
@@ -49,6 +52,7 @@ public class ValidatorFilter implements Filter {
         chain.doFilter(httpRequest, response);
       } else {
         blackList.add(httpRequest.getRemoteAddr());
+        httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
       }
     }
   }
@@ -60,7 +64,7 @@ public class ValidatorFilter implements Filter {
     logger.debug(String.valueOf(params.size()) + " parameters in request.");
     for (String key : params.keySet()) {
       String[] vals = params.get(key);
-      if (vals == null || vals.length == 0) {
+      if (vals == null || vals.length == 0 || vals[0] == null) {
         logger.debug(key + " = null");
       } else {
         logger.debug(key + " = " + vals[0]);
