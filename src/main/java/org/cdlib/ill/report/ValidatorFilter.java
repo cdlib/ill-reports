@@ -24,23 +24,24 @@ import org.springframework.stereotype.Component;
  * those that do not meet criteria.
  * 
  * Logs info about incoming requests, particularly HTTP POST requests.
+ * 
+ * Deny all subsequent requests from IPs that have made a disallowed POST.
+ * 
  */
 @Component
 @Order(1)
 public class ValidatorFilter implements Filter {
 
   private static Logger logger = LoggerFactory.getLogger(ValidatorFilter.class);
-  private List<String> blackList = new ArrayList<>();
+  private List<String> denyList = new ArrayList<>();
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
 
     HttpServletRequest httpRequest = (HttpServletRequest) request;
-    HttpServletResponse httpResponse = (HttpServletResponse) response;
-    if (blackList.contains(httpRequest.getRemoteAddr())) {
-      logger.debug("Request" + " from " + request.getRemoteAddr() + " rejected by blacklist.");
-      httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
+    if (denyList.contains(httpRequest.getRemoteAddr())) {
+      logger.debug("Request" + " from " + request.getRemoteAddr() + " rejected by denyList.");
       return;
     }
     if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
@@ -51,8 +52,7 @@ public class ValidatorFilter implements Filter {
       if (isValidPost(httpRequest)) {
         chain.doFilter(httpRequest, response);
       } else {
-        blackList.add(httpRequest.getRemoteAddr());
-        httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        denyList.add(httpRequest.getRemoteAddr());
       }
     }
   }
