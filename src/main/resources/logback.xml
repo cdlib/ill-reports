@@ -35,7 +35,6 @@
 		</triggeringPolicy>
 	</appender>
 
-	<!-- Defaults -->
 	<root level="INFO">
 		<appender-ref ref="root" />
 	</root>
