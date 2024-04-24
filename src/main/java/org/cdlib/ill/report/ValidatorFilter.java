@@ -13,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -45,7 +44,7 @@ public class ValidatorFilter implements Filter {
       return;
     }
     if (httpRequest.getMethod().equalsIgnoreCase("GET")) {
-      logger.debug("GET request" + " from " + request.getRemoteAddr());
+      logger.debug("GET request from " + request.getRemoteAddr());
       chain.doFilter(httpRequest, response);
     } else {
       logPost(httpRequest);
