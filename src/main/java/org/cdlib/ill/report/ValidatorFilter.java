@@ -51,6 +51,7 @@ public class ValidatorFilter implements Filter {
       if (isValidPost(httpRequest)) {
         chain.doFilter(httpRequest, response);
       } else {
+        logger.debug(request.getRemoteAddr() + " added to deny list.");
         denyList.add(httpRequest.getRemoteAddr());
       }
     }
@@ -73,29 +74,37 @@ public class ValidatorFilter implements Filter {
 
   private boolean isValidPost(HttpServletRequest httpRequest) {
     if (httpRequest.getContentLength() > 56) {
+      logger.debug("Content length greater than 56");
       return false;
     }
     if (httpRequest.getContentLength() < 55) {
+      logger.debug("Content length less than 55");
       return false;
     }
 
     Map<String, String[]> params = httpRequest.getParameterMap();
     if (params == null) {
+      logger.debug("params is null");
       return false;
     }
     if (params.size() != 4) {
+      logger.debug("More than 4 parameters");
       return false;
     }
     if (!isValidCommand(httpRequest.getParameter("command"))) {
+      logger.debug("invalid command: " + httpRequest.getParameter("command"));
       return false;
     }
     if (!isValidCampus(httpRequest.getParameter("campus"))) {
+      logger.debug("Invalid campus: " + httpRequest.getParameter("campus"));
       return false;
     }
     if (!isValidDate(httpRequest.getParameter("to"))) {
+      logger.debug("Invalid date: " + httpRequest.getParameter("to"));
       return false;
     }
     if (!isValidDate(httpRequest.getParameter("from"))) {
+      logger.debug("Invalid date: " + httpRequest.getParameter("from"));
       return false;
     }
     return true;
