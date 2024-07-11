@@ -1,4 +1,4 @@
-package org.cdlib.ill.report.api;
+package org.cdlib.ill.report;
 
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
