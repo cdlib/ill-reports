@@ -2,7 +2,7 @@ package org.cdlib.ill.report.vdx.procedures;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxServiceType;
 import org.junit.Assert;

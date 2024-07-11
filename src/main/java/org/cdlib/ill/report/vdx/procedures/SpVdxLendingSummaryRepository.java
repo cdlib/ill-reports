@@ -3,7 +3,7 @@ package org.cdlib.ill.report.vdx.procedures;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Stream;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import org.cdlib.ill.report.Constants;
 import org.cdlib.ill.report.vdx.VdxCampus;
 import org.cdlib.ill.report.vdx.VdxILLCategory;
