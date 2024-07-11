@@ -1,8 +1,8 @@
 package org.cdlib.ill.report.vdx.procedures;
 
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.mockito.Mockito;
 
 public final class EntityManagerMockHelper {

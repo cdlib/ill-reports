@@ -3,7 +3,7 @@ package org.cdlib.ill.report.vdx;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

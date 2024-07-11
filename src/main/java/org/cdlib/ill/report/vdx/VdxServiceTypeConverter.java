@@ -1,7 +1,7 @@
 package org.cdlib.ill.report.vdx;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import org.cdlib.ill.report.Constants;
 
 @Converter(autoApply = true)

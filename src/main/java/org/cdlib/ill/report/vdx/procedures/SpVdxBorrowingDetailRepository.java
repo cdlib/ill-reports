@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import org.cdlib.ill.report.Constants;
 import org.cdlib.ill.report.vdx.VdxBorrowerCategory;
 import org.cdlib.ill.report.vdx.VdxServiceType;
