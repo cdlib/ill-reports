@@ -33,9 +33,9 @@ public class SecurityHeadersFilter implements Filter {
         httpResponse.setHeader("X-XSS-Protection", "1; mode=block");
         httpResponse.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
         
-        // Report-only CSP for testing - check browser console for violations
-        httpResponse.setHeader("Content-Security-Policy-Report-Only", 
-            "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'");
+        // CSP allows Bootstrap from maxcdn.bootstrapcdn.com
+        httpResponse.setHeader("Content-Security-Policy", 
+            "default-src 'self'; style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com; script-src 'self' 'unsafe-inline'");
 
         logger.debug("Set security headers.");
         
