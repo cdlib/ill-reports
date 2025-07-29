@@ -34,8 +34,7 @@ public class SecurityHeadersFilter implements Filter {
         httpResponse.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
         
         // More permissive CSP that allows inline styles and scripts
-        httpResponse.setHeader("Content-Security-Policy", 
-            "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'");
+       // httpResponse.setHeader("Content-Security-Policy", "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'");
 
         logger.debug("Set security headers.");
         
