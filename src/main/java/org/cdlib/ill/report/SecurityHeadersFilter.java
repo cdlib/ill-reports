@@ -19,8 +19,6 @@ import org.springframework.stereotype.Component;
 @WebFilter("/*")
 @Order(2)
 public class SecurityHeadersFilter implements Filter {
-
-  private static Logger logger = LoggerFactory.getLogger(SecurityHeadersFilter.class);
     
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
@@ -28,16 +26,19 @@ public class SecurityHeadersFilter implements Filter {
         
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         
+        // Prevents browsers from MIME-sniffing content types, mitigating MIME confusion attacks
         httpResponse.setHeader("X-Content-Type-Options", "nosniff");
+        
+        // Prevents the page from being displayed in a frame/iframe, mitigating clickjacking attacks
         httpResponse.setHeader("X-Frame-Options", "DENY");
-        httpResponse.setHeader("X-XSS-Protection", "1; mode=block");
+        
+        // Forces HTTPS connections for 1 year including all subdomains, prevents downgrade attacks
         httpResponse.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
         
         // CSP allows Bootstrap from maxcdn.bootstrapcdn.com
+        // Stricter settings will break bootstrap download
         httpResponse.setHeader("Content-Security-Policy", 
             "default-src 'self'; style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com; script-src 'self' 'unsafe-inline'");
-
-        logger.debug("Set security headers.");
         
         chain.doFilter(request, response);
     }
