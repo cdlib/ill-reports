@@ -41,6 +41,9 @@ public class SecurityHeadersFilter implements Filter {
             "object-src 'none'; " +
             "base-uri 'self'; " +
             "form-action 'self'");
+
+        // Isolates browsing context from cross-origin documents, prevents Spectre attacks
+        httpResponse.setHeader("Cross-Origin-Opener-Policy", "same-origin");
         
         chain.doFilter(request, response);
     }
