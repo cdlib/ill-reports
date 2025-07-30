@@ -33,10 +33,14 @@ public class SecurityHeadersFilter implements Filter {
         // Forces HTTPS connections for 1 year including all subdomains, prevents downgrade attacks
         httpResponse.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
         
-        // CSP allows Bootstrap from maxcdn.bootstrapcdn.com
-        // Stricter settings will break bootstrap download
+        // CSP with unsafe-inline for scripts - less secure but maintains functionality
         httpResponse.setHeader("Content-Security-Policy", 
-            "default-src 'self'; style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com; script-src 'self' 'unsafe-inline'");
+            "default-src 'self'; " +
+            "style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com; " +
+            "script-src 'self' 'unsafe-inline'; " +
+            "object-src 'none'; " +
+            "base-uri 'self'; " +
+            "form-action 'self'");
         
         chain.doFilter(request, response);
     }
