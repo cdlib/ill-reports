@@ -33,12 +33,11 @@ public class SecurityHeadersFilter implements Filter {
         // Forces HTTPS connections for 1 year including all subdomains, prevents downgrade attacks
         httpResponse.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
         
-        // CSP following Mozilla Observatory recommendations
-        // No JavaScript libraries used in application, so script-src can be strict
+        // CSP with unsafe-inline for scripts - less secure but maintains functionality
         httpResponse.setHeader("Content-Security-Policy", 
             "default-src 'self'; " +
             "style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com; " +
-            "script-src 'self'; " +
+            "script-src 'self' 'unsafe-inline'; " +
             "object-src 'none'; " +
             "base-uri 'self'; " +
             "form-action 'self'");
